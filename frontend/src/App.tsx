@@ -1,10 +1,11 @@
-import "./App.css";
+import { RouterProvider } from "react-router-dom";
+import MainRouter from "./main-router";
 
 function App() {
   return (
-    <div className="App">
-      <div className="text-3xl font-bold underline">it goes Work!!</div>
-    </div>
+    <>
+      <RouterProvider router={MainRouter}></RouterProvider>
+    </>
   );
 }
 
