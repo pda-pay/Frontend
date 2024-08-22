@@ -1,0 +1,29 @@
+{
+  "name": "140pay",
+  "short_name": "140",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "icons/512140.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/wide-screenshot.png",
+      "sizes": "1200x800",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshots/mobile-screenshot.png",
+      "sizes": "375x667",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
+}
