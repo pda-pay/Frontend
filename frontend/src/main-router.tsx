@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import ApproachPage from "./routes/approach/ApproachPage";
-import ButtonbarLayout from "./components/ButtonbarLayout";
+import MenubarLayout from "./components/MenubarLayout";
 import LoginPage from "./routes/login/LoginPage";
 
 const routers = [
@@ -11,7 +11,7 @@ const routers = [
   },
   {
     path: "/login",
-    element: <ButtonbarLayout />,
+    //element: <MenubarLayout />,
     children: [
       {
         path: "",
