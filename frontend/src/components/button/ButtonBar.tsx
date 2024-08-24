@@ -21,7 +21,10 @@ export default function ButtonBar({
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div
+      className="flex justify-between
+    "
+    >
       <BasicButton
         type="gray"
         disabled={beforedisabled}

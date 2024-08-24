@@ -10,13 +10,14 @@ interface ButtonProps {
 }
 
 const StyledButton = styled.button<ButtonProps>`
-  width: ${(props) => (props.type === "blue" ? "66%" : "33%")};
+  width: ${(props) => (props.type === "blue" ? "65%" : "33%")};
   padding: "8px 16px";
   border: none;
   border-radius: 7px;
   font-size: "12px";
   color: white;
-  background-color: ${(props) => (props.type === "blue" ? "blue" : "gray")};
+  background-color: ${(props) =>
+    props.type === "blue" ? "#3469F2" : "#D9D9D9"};
 
   cursor: pointer;
 
