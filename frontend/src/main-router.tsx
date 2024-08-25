@@ -1,13 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
 import ApproachPage from "./routes/approach/ApproachPage";
-import MenubarLayout from "./components/MenubarLayout";
-import LoginPage from "./routes/login/LoginPage";
+import JoinPage from "./routes/loginnjoin/JoinPage";
+import LoginPage from "./routes/loginnjoin/LoginPage";
 
 const routers = [
   {
     path: "/",
     element: <ApproachPage />,
     // index: true
+  },
+  {
+    path: "/join",
+    element: <JoinPage />,
   },
   {
     path: "/login",
