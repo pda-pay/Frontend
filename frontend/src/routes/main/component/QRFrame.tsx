@@ -21,7 +21,6 @@ export default function QRFrame({ member }: QRProps) {
         </div>
       </BackgroundFrame>
 
-      {/*TODO: 가입 여부에 따라 바뀌게, 서비스 가입으로 이어지게*/}
       {!member && (
         <div
           className="absolute inset-0  opacity-50"

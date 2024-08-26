@@ -14,7 +14,6 @@ export default function MainPage() {
     <div style={{ backgroundColor: "#9abade33" }}>
       <PaddingDiv>
         <div>
-          {/*TODO: 이미 가입돼있으면 이 버튼 display none*/}
           {!member && (
             <LargeButton
               type="blue"
