@@ -18,7 +18,7 @@ export default function MainPage() {
             <LargeButton
               type="blue"
               disabled={member}
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/serviceagree")}
             >
               결제 서비스 가입하기
             </LargeButton>

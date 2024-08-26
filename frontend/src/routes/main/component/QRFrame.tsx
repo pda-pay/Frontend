@@ -24,7 +24,7 @@ export default function QRFrame({ member }: QRProps) {
       {!member && (
         <div
           className="absolute inset-0  opacity-50"
-          onClick={() => navigate("/payment")}
+          onClick={() => navigate("/serviceagree")}
         >
           <ServiceBlockFrame></ServiceBlockFrame>
         </div>

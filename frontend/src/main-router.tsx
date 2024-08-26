@@ -8,6 +8,7 @@ import MainPage from "./routes/main/MainPage";
 import PaymentPage from "./routes/payment/PaymentPage";
 import AllmenuPage from "./routes/allmenu/AllmenuPage";
 import AssetPage from "./routes/asset/AssetPage";
+import ServiceAgreePage from "./routes/agree/ServiceAgreePage";
 
 const routers = [
   {
@@ -18,6 +19,10 @@ const routers = [
   {
     path: "/mydata",
     element: <MydataAgreePage />,
+  },
+  {
+    path: "/serviceagree",
+    element: <ServiceAgreePage />,
   },
   {
     path: "/join",
