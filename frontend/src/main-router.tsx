@@ -9,6 +9,7 @@ import PaymentPage from "./routes/payment/PaymentPage";
 import AllmenuPage from "./routes/allmenu/AllmenuPage";
 import AssetPage from "./routes/asset/AssetPage";
 import ServiceAgreePage from "./routes/agree/ServiceAgreePage";
+import StockCheckPage from "./routes/stockcheck/StockCheckPage";
 
 const routers = [
   {
@@ -42,6 +43,10 @@ const routers = [
         index: true,
       },
     ],
+  },
+  {
+    path: "/stockcheck",
+    element: <StockCheckPage />,
   },
   {
     path: "/payment",
