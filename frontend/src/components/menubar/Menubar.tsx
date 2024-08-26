@@ -5,11 +5,13 @@ import HomeButton from "../button/HomeButton";
 
 export default function Menubar() {
   return (
-    <div className="flex justify-around">
-      <HomeButton />
-      <CardButton />
-      <AssetButton />
-      <AllMenuButton />
+    <div className="fixed bottom-0 left-0 right-0">
+      <div className="w-screen flex justify-around py-3">
+        <HomeButton />
+        <CardButton />
+        <AssetButton />
+        <AllMenuButton />
+      </div>
     </div>
   );
 }
