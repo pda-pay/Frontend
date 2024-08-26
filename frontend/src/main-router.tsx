@@ -5,6 +5,9 @@ import JoinPage from "./routes/loginnjoin/JoinPage";
 import LoginPage from "./routes/loginnjoin/LoginPage";
 import MenubarLayout from "./components/MenubarLayout";
 import MainPage from "./routes/main/MainPage";
+import PaymentPage from "./routes/payment/PaymentPage";
+import AllmenuPage from "./routes/allmenu/AllmenuPage";
+import AssetPage from "./routes/asset/AssetPage";
 
 const routers = [
   {
@@ -27,10 +30,43 @@ const routers = [
   {
     path: "/main",
     element: <MenubarLayout />,
-    childre: [
+    children: [
       {
-        path: "/main",
+        path: "",
         element: <MainPage />,
+        index: true,
+      },
+    ],
+  },
+  {
+    path: "/payment",
+    element: <MenubarLayout />,
+    children: [
+      {
+        path: "",
+        element: <PaymentPage />,
+        index: true,
+      },
+    ],
+  },
+  {
+    path: "/asset",
+    element: <MenubarLayout />,
+    children: [
+      {
+        path: "",
+        element: <AssetPage />,
+        index: true,
+      },
+    ],
+  },
+  {
+    path: "/allmenu",
+    element: <MenubarLayout />,
+    children: [
+      {
+        path: "",
+        element: <AllmenuPage />,
         index: true,
       },
     ],
