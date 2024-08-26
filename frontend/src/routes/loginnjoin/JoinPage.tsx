@@ -9,7 +9,6 @@ export default function JoinPage() {
 
   const handleValidChange = (isValid: boolean) => {
     setIsButtonUnValid(isValid);
-    console.log(isButtonUnValid);
   };
 
   return (

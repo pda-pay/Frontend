@@ -50,7 +50,8 @@ export default function JoinInput({ onValidChange }: JoinProps) {
     setPhoneNumber(event.target.value);
   };
 
-  //아이디 중복 검사 후 idDup 변경 여부 결정 & 에러 메시지 출력
+  //TODO: 아이디 중복 검사 후 idDup 변경 여부 결정 & 에러 메시지 출력
+  //TODO: 전화번호 인증 로직 추가
 
   useEffect(() => {
     if (password == null) setErrorPsw(null);
