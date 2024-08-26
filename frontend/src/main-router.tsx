@@ -1,7 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import ApproachPage from "./routes/approach/ApproachPage";
+import MydataAgreePage from "./routes/agree/MydataAgreePage";
 import JoinPage from "./routes/loginnjoin/JoinPage";
 import LoginPage from "./routes/loginnjoin/LoginPage";
+import MenubarLayout from "./components/MenubarLayout";
+import MainPage from "./routes/main/MainPage";
 
 const routers = [
   {
@@ -10,16 +13,24 @@ const routers = [
     // index: true
   },
   {
+    path: "/mydata",
+    element: <MydataAgreePage />,
+  },
+  {
     path: "/join",
     element: <JoinPage />,
   },
   {
     path: "/login",
-    //element: <MenubarLayout />,
-    children: [
+    element: <LoginPage />,
+  },
+  {
+    path: "/main",
+    element: <MenubarLayout />,
+    childre: [
       {
-        path: "",
-        element: <LoginPage />,
+        path: "/main",
+        element: <MainPage />,
         index: true,
       },
     ],

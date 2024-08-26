@@ -1,19 +1,16 @@
-import BackgroundFrame from "../../components/backgroundframe/BackgroundFrame";
-import LoginButtonbar from "./component/LoginButtonbar";
+import PaddingDiv from "../../components/settingdiv/PaddingDiv";
+import BoldTitle from "../../components/text/BoldTitle";
+import JoinButtonbar from "./component/JoinButtonbar";
+import JoinInput from "./component/JoinInput";
 
 export default function JoinPage() {
   return (
-    <div className="w-screen h-screen p-5 flex flex-col justify-between">
+    <PaddingDiv>
       <div>
-        this is loginpage! hi~
-        <BackgroundFrame color="blue">
-          this!
-          <br />
-          !!!
-          <br />
-        </BackgroundFrame>
+        <BoldTitle>안녕하세여!</BoldTitle>
       </div>
-      <LoginButtonbar />
-    </div>
+      <JoinInput />
+      <JoinButtonbar />
+    </PaddingDiv>
   );
 }
