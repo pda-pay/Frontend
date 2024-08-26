@@ -1,12 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import BasicButton from "../../../components/button/BasicButton";
 
-export default function JoinButtonbar() {
+interface ButtonProps {
+  valid: boolean;
+}
+
+export default function JoinButtonbar({ valid }: ButtonProps) {
   const navigate = useNavigate();
   return (
     <BasicButton
       type="blue"
-      disabled={false}
+      disabled={valid}
       onClick={() => navigate("/mydata")}
     >
       다음
