@@ -5,8 +5,10 @@ import StockCard from "./StockCard";
 
 const Wrapper = styled.div`
   position: relative;
-  width: 100%;
-  margin: 0 auto;
+  //width: 105%;
+  margin-left: -5%; /* 중앙에 맞추기 위해 좌측으로 이동 */
+  margin-right: -5%; /* 필요시 우측으로도 이동 */
+  //margin: 0 auto;
 
   .slick-list {
     padding: 0 80px;
@@ -17,16 +19,16 @@ const Wrapper = styled.div`
   }
 
   .slick-current {
-    transform: scale(1.1);
+    //transform: scale(1.1);
   }
 `;
 
 export default function CardList() {
   const settings = {
     infinite: true,
-    centerMode: false,
-    centerPadding: "10px",
-    slidesToShow: 3,
+    centerMode: true,
+    centerPadding: "25px",
+    slidesToShow: 1,
     speed: 500,
     focusOnSelect: true,
     dots: true,

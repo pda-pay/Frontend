@@ -9,12 +9,29 @@ interface CardProps {
   //children: React.ReactNode;
 }
 
-const StyledCard = styled.div`
+interface ColorProps {
+  bgColor: string;
+}
+
+const colors = [
+  "#f7e8bc",
+  "#9abade",
+  "#f7bcea",
+  "#caf7bc",
+  "#b2de9a",
+  "#de9abd",
+];
+const getRandomColor = () => {
+  return colors[Math.floor(Math.random() * colors.length)];
+};
+
+const StyledCard = styled.div<ColorProps>`
   border-radius: 20px;
   padding: 20px;
-  width: 237px;
-  height: 150px;
-  background-color: #9abade;
+  width: 316px;
+  height: 200px;
+  //background-color: #9abade;
+  background-color: ${(props) => props.bgColor}; /* 랜덤 색상을 설정 */
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
   margin: 0 10px; /* 카드 사이의 간격을 넓힘 */
 `;
@@ -27,7 +44,7 @@ export default function StockCard({
   limit,
 }: CardProps) {
   return (
-    <StyledCard>
+    <StyledCard bgColor={getRandomColor()}>
       <div className="flex flex-col gap-1.5">
         <div className="flex justify-between">
           <p className="font-bold">{stockName}</p>{" "}
