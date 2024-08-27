@@ -5,21 +5,11 @@ import StockCard from "./StockCard";
 
 const Wrapper = styled.div`
   position: relative;
-  //width: 105%;
-  margin-left: -5%; /* 중앙에 맞추기 위해 좌측으로 이동 */
-  margin-right: -5%; /* 필요시 우측으로도 이동 */
-  //margin: 0 auto;
-
-  .slick-list {
-    padding: 0 80px;
-  }
+  margin-left: -5%;
+  margin-right: -5%;
 
   .slick-slide {
     transition: transform 0.3s ease;
-  }
-
-  .slick-current {
-    //transform: scale(1.1);
   }
 `;
 
@@ -47,22 +37,39 @@ export default function CardList() {
   ];
 
   return (
-    <div>
-      <NormalTitle>신한투자증권</NormalTitle>
-
-      <Wrapper>
-        <Slider {...settings}>
-          {cards.map((card, index) => (
-            <StockCard
-              stockName={card[0]}
-              stockLevel={card[1]}
-              stockCount={card[2]}
-              stockPrice={card[3]}
-              limit={card[4]}
-            />
-          ))}
-        </Slider>
-      </Wrapper>
+    <div className="flex flex-col gap-10">
+      <div>
+        <NormalTitle>신한투자증권</NormalTitle>
+        <Wrapper>
+          <Slider {...settings}>
+            {cards.map((card, index) => (
+              <StockCard
+                stockName={card[0]}
+                stockLevel={card[1]}
+                stockCount={card[2]}
+                stockPrice={card[3]}
+                limit={card[4]}
+              />
+            ))}
+          </Slider>
+        </Wrapper>
+      </div>
+      <div>
+        <NormalTitle>NH투자증권</NormalTitle>
+        <Wrapper>
+          <Slider {...settings}>
+            {cards.map((card, index) => (
+              <StockCard
+                stockName={card[0]}
+                stockLevel={card[1]}
+                stockCount={card[2]}
+                stockPrice={card[3]}
+                limit={card[4]}
+              />
+            ))}
+          </Slider>
+        </Wrapper>
+      </div>
     </div>
   );
 }

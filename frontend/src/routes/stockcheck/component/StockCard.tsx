@@ -58,7 +58,7 @@ export default function StockCard({
           <p>총 가격 {stockCount * stockPrice}원</p>
         </div>
         <div className="flex flex-row-reverse">
-          <p>확보 가능한 한도 {limit}원</p>
+          <p>확보 가능한 최대 한도 {limit}원</p>
         </div>
       </div>
     </StyledCard>
