@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import SelectStockBar from "./SelectStockBar";
 
 interface CardProps {
   stockName: string;
@@ -53,6 +54,12 @@ export default function StockCard({
         <div className="flex justify-between">
           <p className="font-bold text-red-700	">{stockLevel}등급</p>{" "}
           <p>총 주수 {stockCount}주</p>
+        </div>
+        <div className="flex justify-end gap-3 items-center	">
+          <div>주수 선택 </div>
+          <div className="w-1/3">
+            <SelectStockBar count={stockCount} />
+          </div>
         </div>
         <div className="flex flex-row-reverse">
           <p>총 가격 {stockCount * stockPrice}원</p>

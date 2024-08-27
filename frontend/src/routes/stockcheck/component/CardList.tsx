@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 
 export default function CardList() {
   const settings = {
-    infinite: true,
+    infinite: false,
     centerMode: true,
     centerPadding: "25px",
     slidesToShow: 1,

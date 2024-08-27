@@ -29,7 +29,7 @@ export default function StockCheckPage() {
         </div>
       </div>
 
-      <CardList></CardList>
+      <CardList />
       <ButtonBar
         beforetext="이전"
         nexttext="다음"
