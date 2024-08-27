@@ -7,7 +7,7 @@ import CardList from "./component/CardList";
 import StockLevelModal from "./component/StockLevelModal";
 
 export default function StockCheckPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);

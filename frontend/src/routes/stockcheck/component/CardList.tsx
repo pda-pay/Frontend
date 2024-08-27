@@ -42,7 +42,7 @@ export default function CardList() {
         <NormalTitle>신한투자증권</NormalTitle>
         <Wrapper>
           <Slider {...settings}>
-            {cards.map((card, index) => (
+            {cards.map((card) => (
               <StockCard
                 stockName={card[0]}
                 stockLevel={card[1]}
@@ -58,7 +58,7 @@ export default function CardList() {
         <NormalTitle>NH투자증권</NormalTitle>
         <Wrapper>
           <Slider {...settings}>
-            {cards.map((card, index) => (
+            {cards.map((card) => (
               <StockCard
                 stockName={card[0]}
                 stockLevel={card[1]}
