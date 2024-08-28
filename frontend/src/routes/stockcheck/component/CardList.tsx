@@ -3,6 +3,10 @@ import Slider from "react-slick";
 import styled from "styled-components";
 import StockCard from "./StockCard";
 
+interface StockProps {
+  stocks: [string, string, number, number, number][];
+}
+
 const Wrapper = styled.div`
   position: relative;
   margin-left: -5%;
@@ -13,7 +17,9 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function CardList() {
+//TODO: 선택한 주식 저장하는 로직 저장
+
+export default function CardList({ stocks }: StockProps) {
   const settings = {
     infinite: false,
     centerMode: true,
@@ -28,13 +34,7 @@ export default function CardList() {
     touchThreshold: 10, // 터치 감도 조정
   };
 
-  const cards: [string, string, number, number, number][] = [
-    ["삼성전자", "A", 30, 70000, 1200000],
-    ["엘지전자", "A", 50, 50000, 1200000],
-    ["하이닉스", "A", 40, 80000, 1200000],
-    ["종근당", "A", 20, 20000, 1200000],
-    ["현대오토에버", "A", 20, 60000, 1200000],
-  ];
+  const cards: [string, string, number, number, number][] = stocks;
 
   return (
     <div className="flex flex-col gap-10">
@@ -54,7 +54,7 @@ export default function CardList() {
           </Slider>
         </Wrapper>
       </div>
-      <div>
+      {/* <div>
         <NormalTitle>NH투자증권</NormalTitle>
         <Wrapper>
           <Slider {...settings}>
@@ -69,7 +69,7 @@ export default function CardList() {
             ))}
           </Slider>
         </Wrapper>
-      </div>
+      </div> */}
     </div>
   );
 }
