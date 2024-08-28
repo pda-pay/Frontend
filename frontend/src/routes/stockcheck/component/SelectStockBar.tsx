@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
 import Select from "react-select";
 
 interface SelectProps {
   count: number;
+  handleSelectedChage: (selected: number) => void;
 }
 
 const customStyles = {
@@ -35,35 +35,31 @@ const customStyles = {
   }),
 };
 
-export default function SelectStockBar({ count }: SelectProps) {
-  const [selectCount, setSelectCount] = useState<number>(0);
-
+export default function SelectStockBar({
+  count,
+  handleSelectedChage,
+}: SelectProps) {
   const range: { value: number; label: number }[] = [];
-  for (let i = count; i >= 0; i--) {
+  for (let i = 0; i <= count; i++) {
     range.push({ value: i, label: i });
   }
 
-  const handleSelectedChange = (selected: any) => {
+  const onChangeSelected = (selected: any) => {
     if (
       selected &&
       selected.value !== null &&
       selected &&
       selected.value !== undefined
     ) {
-      setSelectCount(selected.value);
+      handleSelectedChage(selected.value);
     }
   };
-
-  // selected 상태가 변경될 때마다 콘솔에 출력
-  useEffect(() => {
-    console.log(selectCount);
-  }, [selectCount]);
 
   return (
     <Select
       options={range}
       defaultValue={range[0]}
-      onChange={handleSelectedChange}
+      onChange={onChangeSelected}
       styles={customStyles}
     />
   );

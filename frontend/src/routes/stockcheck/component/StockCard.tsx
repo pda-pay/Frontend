@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import SelectStockBar from "./SelectStockBar";
 
 interface CardProps {
+  stockId: number;
   stockName: string;
   stockLevel: string;
   stockPrice: number;
   stockCount: number;
   limit: number;
+  handleSelectedCountList: (index: number, newCount: number) => void;
+
   //children: React.ReactNode;
 }
 
@@ -39,19 +42,25 @@ const StyledCard = styled.div<ColorProps>`
 `;
 
 export default function StockCard({
+  stockId,
   stockName,
   stockLevel,
   stockPrice,
   stockCount,
   limit,
+  handleSelectedCountList,
 }: CardProps) {
-  //TODO: 로직 확인 필요
-  // useEffect(() => {
-  //   handleSelectedStock(selected);
-  // }, [selected]);
+  const [selectCount, setSelectCount] = useState<number>(0);
 
-  //TODO: selectedstockbar에서 변경 사항이 생기면 handleSelected를 사용해서 selected 업데이트
-  //selected가 업데이트가 완전히 끝나면 그때서야 handleSelectedStock 호출
+  //여기까지 선택주수 가져옴!
+  const handleSelectedChange = (selected: number) => {
+    setSelectCount(selected);
+  };
+
+  //여기서 선택주수 배열에 집어넣기
+  useEffect(() => {
+    handleSelectedCountList(stockId, selectCount);
+  }, [selectCount]);
 
   return (
     <StyledCard bgColor={getRandomColor()}>
@@ -61,20 +70,23 @@ export default function StockCard({
           <p>전일 종가 {stockPrice}원</p>
         </div>
         <div className="flex justify-between">
-          <p className="font-bold text-red-700	">{stockLevel}등급</p>{" "}
+          <p className="font-bold text-red-700	">{stockLevel}등급</p>
           <p>총 주수 {stockCount}주</p>
         </div>
         <div className="flex justify-end gap-3 items-center	">
           <div>주수 선택 </div>
           <div className="w-1/3">
-            <SelectStockBar count={stockCount} />
+            <SelectStockBar
+              count={stockCount}
+              handleSelectedChage={handleSelectedChange}
+            />
           </div>
         </div>
         <div className="flex flex-row-reverse">
           <p>총 가격 {stockCount * stockPrice}원</p>
         </div>
         <div className="flex flex-row-reverse">
-          <p>확보 가능한 최대 한도 {limit}원</p>
+          <p>확보 가능한 최대 한도 {limit * stockCount}원</p>
         </div>
       </div>
     </StyledCard>

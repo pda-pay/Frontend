@@ -5,6 +5,7 @@ import StockCard from "./StockCard";
 
 interface StockProps {
   stocks: [string, string, number, number, number][];
+  handleSelectedCountList: (index: number, newCount: number) => void;
 }
 
 const Wrapper = styled.div`
@@ -19,7 +20,10 @@ const Wrapper = styled.div`
 
 //TODO: 선택한 주식 저장하는 로직 저장
 
-export default function CardList({ stocks }: StockProps) {
+export default function CardList({
+  stocks,
+  handleSelectedCountList,
+}: StockProps) {
   const settings = {
     infinite: false,
     centerMode: true,
@@ -44,11 +48,13 @@ export default function CardList({ stocks }: StockProps) {
           <Slider {...settings}>
             {cards.map((card, index) => (
               <StockCard
+                stockId={index}
                 stockName={card[0]}
                 stockLevel={card[1]}
                 stockCount={card[2]}
                 stockPrice={card[3]}
                 limit={card[4]}
+                handleSelectedCountList={handleSelectedCountList}
               />
             ))}
           </Slider>

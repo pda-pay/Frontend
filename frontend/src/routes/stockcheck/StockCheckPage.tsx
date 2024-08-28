@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ButtonBar from "../../components/button/ButtonBar";
 import QuestionButton from "../../components/button/QuestionButton";
@@ -10,20 +10,51 @@ import MoveButton from "../../components/button/MoveButton";
 
 export default function StockCheckPage() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  //TODO: 이거 백엔드에서 받아온 증권 정보들
+  //종목명, 등급, 보유주수, 전일종가, 단위별 가능한도
+  const stocks: [string, string, number, number, number][] = [
+    ["삼성전자", "A", 30, 70000, 12000],
+    ["엘지전자", "A", 50, 50000, 12000],
+    ["하이닉스", "A", 40, 80000, 12000],
+    ["종근당", "A", 20, 20000, 12000],
+    ["현대오토에버", "A", 20, 60000, 12000],
+  ];
+  const [selectedCountList, setSelectedCountList] = useState<number[]>(() =>
+    Array(stocks.length).fill(0)
+  );
+  const [selectedStock, setSelectedStock] = useState<
+    [string, string, number, number, number][]
+  >([...stocks]);
   const navigate = useNavigate();
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  //TODO: 이거 백엔드에서 받아온 증권 정보들
-  //종목명, 등급, 보유주수, 전일종가, 최대한도
-  const stocks: [string, string, number, number, number][] = [
-    ["삼성전자", "A", 30, 70000, 1200000],
-    ["엘지전자", "A", 50, 50000, 1200000],
-    ["하이닉스", "A", 40, 80000, 1200000],
-    ["종근당", "A", 20, 20000, 1200000],
-    ["현대오토에버", "A", 20, 60000, 1200000],
-  ];
+  //선택주수 배열 업데이트
+  const handleSelectedCountList = (index: number, newCount: number) => {
+    setSelectedCountList((prevArray) => [
+      ...prevArray.slice(0, index),
+      newCount,
+      ...prevArray.slice(index + 1),
+    ]);
+  };
+
+  const updateSelectedStock = useCallback(() => {
+    setSelectedStock((prevSelectedStock) => {
+      const updatedSelectedStock = selectedStock.map((prevRow, index) => {
+        const updateRow: [string, string, number, number, number] = [
+          ...prevRow,
+        ];
+        updateRow[2] = selectedCountList[index];
+        return updateRow;
+      });
+      return updatedSelectedStock;
+    });
+  }, [selectedCountList]);
+
+  useEffect(() => {
+    updateSelectedStock();
+  }, [updateSelectedStock]);
 
   let totalLimit = 0;
   for (let i = 0; i < stocks.length; i++) {
@@ -31,6 +62,7 @@ export default function StockCheckPage() {
   }
 
   //TODO: 주식 자동 선택 api 요청 보내기
+  //아닌가? 내가 하는건가?
   const autoSelect = () => {
     navigate("/selectedstock");
   };
@@ -52,7 +84,10 @@ export default function StockCheckPage() {
         </div>
       </div>
 
-      <CardList stocks={stocks} />
+      <CardList
+        stocks={stocks}
+        handleSelectedCountList={handleSelectedCountList}
+      />
 
       <div>
         <div className="mb-5">
