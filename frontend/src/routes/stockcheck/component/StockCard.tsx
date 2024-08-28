@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import SelectStockBar from "./SelectStockBar";
 
@@ -44,6 +45,14 @@ export default function StockCard({
   stockCount,
   limit,
 }: CardProps) {
+  //TODO: 로직 확인 필요
+  // useEffect(() => {
+  //   handleSelectedStock(selected);
+  // }, [selected]);
+
+  //TODO: selectedstockbar에서 변경 사항이 생기면 handleSelected를 사용해서 selected 업데이트
+  //selected가 업데이트가 완전히 끝나면 그때서야 handleSelectedStock 호출
+
   return (
     <StyledCard bgColor={getRandomColor()}>
       <div className="flex flex-col gap-1.5">
