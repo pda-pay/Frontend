@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ButtonBar from "../../components/button/ButtonBar";
 import QuestionButton from "../../components/button/QuestionButton";
@@ -56,16 +57,42 @@ export default function StockCheckPage() {
     updateSelectedStock();
   }, [updateSelectedStock]);
 
-  let totalLimit = 0;
-  for (let i = 0; i < stocks.length; i++) {
-    totalLimit += stocks[i][4];
-  }
-
   //TODO: 주식 자동 선택 api 요청 보내기
   //아닌가? 내가 하는건가?
   const autoSelect = () => {
     navigate("/selectedstock");
   };
+
+  //상태 넘겨주고
+  const moveToSelectedPage = () => {
+    navigate("/selectedstock", { state: { selectedStock: selectedStock } });
+  };
+
+  //상태 받기
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state) {
+      const { gotStock } = location.state as {
+        gotStock: [string, string, number, number, number][];
+      };
+
+      gotStock.map((row, index) => {
+        handleSelectedCountList(index, row[2]);
+      });
+
+      // console.log("넘어옴!");
+    }
+  }, [location.state]);
+
+  // useEffect(() => {
+  //   console.log(selectedStock);
+  // }, [selectedStock]);
+
+  let totalLimit = 0;
+  for (let i = 0; i < stocks.length; i++) {
+    totalLimit += stocks[i][4] * stocks[i][3];
+  }
 
   return (
     <PaddingDiv>
@@ -98,7 +125,7 @@ export default function StockCheckPage() {
             </BoldTitle>
             <MoveButton
               onClick={() => {
-                navigate("/selectedstock");
+                moveToSelectedPage();
               }}
             >
               선택한 주식 보기
@@ -115,6 +142,7 @@ export default function StockCheckPage() {
           nexttext="다음"
           beforeurl="/serviceagree"
           nexturl="/priority"
+          nextstate={{ selectedStock: selectedStock }}
         ></ButtonBar>
       </div>
     </PaddingDiv>

@@ -1,8 +1,22 @@
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import ButtonBar from "../../components/button/ButtonBar";
 import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import NormalTitle from "../../components/text/NormalTitle";
 
 export default function SelectedStockPage() {
+  //const navigate = useNavigate();
+  const location = useLocation();
+
+  const { selectedStock } = location.state as {
+    selectedStock: [string, string, number, number, number][];
+  };
+  const [gotStock, setGotStock] =
+    useState<[string, string, number, number, number][]>(selectedStock);
+
+  const [updatedStock, setUpdatedStock] =
+    useState<[string, string, number, number, number][]>(selectedStock);
+
   return (
     <PaddingDiv>
       <NormalTitle>
@@ -13,7 +27,9 @@ export default function SelectedStockPage() {
         beforetext="이전"
         nexttext="완료"
         beforeurl="/stockcheck"
+        beforestate={{ gotStock: gotStock }}
         nexturl="/priority"
+        nextstate={{ updatedStock: updatedStock }}
       />
     </PaddingDiv>
   );
