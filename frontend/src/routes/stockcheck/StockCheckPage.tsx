@@ -80,18 +80,16 @@ export default function StockCheckPage() {
       gotStock.map((row, index) => {
         handleSelectedCountList(index, row[2]);
       });
-
-      // console.log("넘어옴!");
     }
   }, [location.state]);
 
-  // useEffect(() => {
-  //   console.log(selectedStock);
-  // }, [selectedStock]);
+  useEffect(() => {
+    console.log(selectedStock);
+  }, [selectedStock]);
 
   let totalLimit = 0;
   for (let i = 0; i < stocks.length; i++) {
-    totalLimit += stocks[i][4] * stocks[i][3];
+    totalLimit += stocks[i][4] * stocks[i][2];
   }
 
   return (
