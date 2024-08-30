@@ -41,7 +41,7 @@ export default function StockCheckPage() {
   };
 
   const updateSelectedStock = useCallback(() => {
-    setSelectedStock((prevSelectedStock) => {
+    setSelectedStock((/*prevSelectedStock*/) => {
       const updatedSelectedStock = selectedStock.map((prevRow, index) => {
         const updateRow: [string, string, number, number, number] = [
           ...prevRow,
@@ -65,7 +65,9 @@ export default function StockCheckPage() {
 
   //상태 넘겨주고
   const moveToSelectedPage = () => {
-    navigate("/selectedstock", { state: { selectedStock: selectedStock } });
+    navigate("/selectedstock", {
+      state: { selectedStock: selectedStock, stocks: stocks },
+    });
   };
 
   //상태 받기
@@ -112,6 +114,7 @@ export default function StockCheckPage() {
       <CardList
         stocks={stocks}
         handleSelectedCountList={handleSelectedCountList}
+        selectedCountList={selectedCountList}
       />
 
       <div>
@@ -140,7 +143,7 @@ export default function StockCheckPage() {
           nexttext="다음"
           beforeurl="/serviceagree"
           nexturl="/priority"
-          nextstate={{ selectedStock: selectedStock }}
+          nextstate={{ selectedStock: selectedStock, stocks: stocks }}
         ></ButtonBar>
       </div>
     </PaddingDiv>

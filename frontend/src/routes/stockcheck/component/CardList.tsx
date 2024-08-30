@@ -6,6 +6,7 @@ import StockCard from "./StockCard";
 interface StockProps {
   stocks: [string, string, number, number, number][];
   handleSelectedCountList: (index: number, newCount: number) => void;
+  selectedCountList: number[];
 }
 
 const Wrapper = styled.div`
@@ -23,6 +24,7 @@ const Wrapper = styled.div`
 export default function CardList({
   stocks,
   handleSelectedCountList,
+  selectedCountList,
 }: StockProps) {
   const settings = {
     infinite: false,
@@ -55,6 +57,7 @@ export default function CardList({
                 stockPrice={card[3]}
                 limit={card[4]}
                 handleSelectedCountList={handleSelectedCountList}
+                selected={selectedCountList[index]}
               />
             ))}
           </Slider>

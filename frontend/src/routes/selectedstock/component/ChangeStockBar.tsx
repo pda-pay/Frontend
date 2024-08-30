@@ -1,9 +1,10 @@
 import Select from "react-select";
 
 interface SelectProps {
+  index: number;
   count: number;
-  selectedCount: number;
-  handleSelectedChage: (selected: number) => void;
+  selected: number | null;
+  handleSelectedChage: (index: number, value: number) => void;
 }
 
 const customStyles = {
@@ -36,9 +37,10 @@ const customStyles = {
   }),
 };
 
-export default function SelectStockBar({
+export default function ChangeStockBar({
+  index,
   count,
-  selectedCount,
+  selected,
   handleSelectedChage,
 }: SelectProps) {
   const range: { value: number; label: number }[] = [];
@@ -46,23 +48,21 @@ export default function SelectStockBar({
     range.push({ value: i, label: i });
   }
 
-  console.log("선택한 주식량" + selectedCount);
   const onChangeSelected = (selected: any) => {
-    console.log("onChangeSelected");
     if (
       selected &&
       selected.value !== null &&
       selected &&
       selected.value !== undefined
     ) {
-      handleSelectedChage(selected.value);
+      handleSelectedChage(index, selected.value);
     }
   };
 
   return (
     <Select
       options={range}
-      value={range[selectedCount]}
+      defaultValue={selected !== null ? range[selected] : range[0]}
       onChange={onChangeSelected}
       styles={customStyles}
     />

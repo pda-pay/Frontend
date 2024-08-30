@@ -10,6 +10,7 @@ interface CardProps {
   stockCount: number;
   limit: number;
   handleSelectedCountList: (index: number, newCount: number) => void;
+  selected: number;
 
   //children: React.ReactNode;
 }
@@ -49,6 +50,7 @@ export default function StockCard({
   stockCount,
   limit,
   handleSelectedCountList,
+  selected,
 }: CardProps) {
   const [selectCount, setSelectCount] = useState<number>(0);
 
@@ -78,6 +80,7 @@ export default function StockCard({
           <div className="w-1/3">
             <SelectStockBar
               count={stockCount}
+              selectedCount={selected}
               handleSelectedChage={handleSelectedChange}
             />
           </div>
