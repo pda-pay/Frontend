@@ -10,6 +10,9 @@ import AllmenuPage from "./routes/allmenu/AllmenuPage";
 import AssetPage from "./routes/asset/AssetPage";
 import ServiceAgreePage from "./routes/agree/ServiceAgreePage";
 import StockCheckPage from "./routes/stockcheck/StockCheckPage";
+import ScannerPage from "./routes/scanner/ScannerPage";
+import TransactionFailPage from "./routes/scanner/TransactionFailPage";
+import TransactionSuccessPage from "./routes/scanner/TransactionSuccessPage";
 
 const routers = [
   {
@@ -80,6 +83,18 @@ const routers = [
         index: true,
       },
     ],
+  },
+  {
+    path: "/scanner",
+    element: <ScannerPage />,
+  },
+  {
+    path: "/transaction-fail-result",
+    element: <TransactionFailPage />,
+  },
+  {
+    path: "/transaction-success-result",
+    element: <TransactionSuccessPage />,
   },
 ];
 
