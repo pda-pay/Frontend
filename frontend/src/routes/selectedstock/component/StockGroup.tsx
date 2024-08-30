@@ -15,7 +15,7 @@ export default function StockGroup({
   handleUpdatedStock,
 }: StockProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [clickedValue, setClickedValue] = useState<number | null>(null);
+  const [clickedValue, setClickedValue] = useState<number>(0);
   const [maxValue, setMaxValue] = useState<number>(0);
   const [nowIndex, setNowIndex] = useState<number>(0);
   const openModal = () => setIsModalOpen(true);
@@ -33,7 +33,7 @@ export default function StockGroup({
   };
 
   const handleCloseModal = () => {
-    setClickedValue(null);
+    setClickedValue(0);
     setMaxValue(0);
     setNowIndex(0);
     closeModal();

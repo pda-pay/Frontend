@@ -12,6 +12,7 @@ import ServiceAgreePage from "./routes/agree/ServiceAgreePage";
 import StockCheckPage from "./routes/stockcheck/StockCheckPage";
 import SelectedStockPage from "./routes/selectedstock/SelectedStockPage";
 import PriorityPage from "./routes/priority/PriorityPage";
+import SettingLimitPage from "./routes/settinglimit/SettingLimitPage";
 
 const routers = [
   {
@@ -90,6 +91,10 @@ const routers = [
   {
     path: "/priority",
     element: <PriorityPage />,
+  },
+  {
+    path: "/limit",
+    element: <SettingLimitPage />,
   },
 ];
 

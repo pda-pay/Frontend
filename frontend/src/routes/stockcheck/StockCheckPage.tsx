@@ -79,9 +79,21 @@ export default function StockCheckPage() {
         gotStock: [string, string, number, number, number][];
       };
 
-      gotStock.map((row, index) => {
-        handleSelectedCountList(index, row[2]);
-      });
+      const { priorityToCheck } = location.state as {
+        priorityToCheck: [string, string, number, number, number][];
+      };
+
+      if (gotStock && Array.isArray(gotStock)) {
+        gotStock.map((row, index) => {
+          handleSelectedCountList(index, row[2]);
+        });
+      }
+
+      if (priorityToCheck && Array.isArray(priorityToCheck)) {
+        priorityToCheck.map((row, index) => {
+          handleSelectedCountList(index, row[2]);
+        });
+      }
     }
   }, [location.state]);
 
@@ -121,7 +133,7 @@ export default function StockCheckPage() {
         <div className="mb-5">
           <div className="flex justify-between mb-5">
             <BoldTitle>
-              확보 가능한 최대 한도: <br />
+              현재 확보 가능한 최대 한도: <br />
               {totalLimit} 원
             </BoldTitle>
             <MoveButton
