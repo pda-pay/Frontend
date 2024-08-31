@@ -7,6 +7,7 @@ import LevelInfoModal from "./component/LevelInfoModel";
 import OwnStockList from "./component/OwnStockList";
 import MoveButton from "../../components/button/MoveButton";
 import ButtonBar from "../../components/button/ButtonBar";
+import { useLocation } from "react-router-dom";
 //import { useNavigate } from "react-router-dom";
 
 export default function StockPage() {
@@ -37,7 +38,8 @@ export default function StockPage() {
 
   //0이면 증권조회 컴포넌트 출력, 1이면 선택한 주식 컴포넌트 출력
   const [page, setPage] = useState<number>(0);
-  //선택한 주식 목록
+
+  //선택한 주식 목록: length = 9
   //회사코드, 회사명, 종목명, 등급, 전일종가, 선택한 주수, 전체 주수, 한도, 계좌번호
   const [selectedStock, setSelectedStock] = useState<
     [string, string, string, string, number, number, number, number, string][]
@@ -220,6 +222,29 @@ export default function StockPage() {
   useEffect(() => {
     setLimit(calculateLimit);
   }, [selectedStock]);
+
+  //다음 페이지에서 주식을 다시 받아옴
+  const location = useLocation();
+
+  const { priorityToStock } = location.state as {
+    priorityToStock: [
+      string,
+      string,
+      string,
+      string,
+      number,
+      number,
+      number,
+      number,
+      string
+    ][];
+  };
+
+  useEffect(() => {
+    if (priorityToStock) {
+      setSelectedStock(priorityToStock);
+    }
+  }, [location.state]);
 
   return (
     <div>

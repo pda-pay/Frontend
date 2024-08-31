@@ -8,17 +8,23 @@ export default function PriorityPage() {
   const location = useLocation();
 
   const { selectedStock } = location.state as {
-    selectedStock: [string, string, number, number, number][];
+    selectedStock: [
+      string,
+      string,
+      string,
+      string,
+      number,
+      number,
+      number,
+      number,
+      string
+    ][];
   };
 
-  const { stocks } = location.state as {
-    stocks: [string, string, number, number, number][];
-  };
-
-  let nowLimit: number = 0;
+  let limit: number = 0;
   for (let i = 0; i < selectedStock.length; i++) {
-    if (selectedStock[i][2] != 0) {
-      nowLimit += selectedStock[i][4] * selectedStock[i][2];
+    if (selectedStock[i][5] != 0) {
+      limit += selectedStock[i][5] * selectedStock[i][7];
     }
   }
 
@@ -27,7 +33,7 @@ export default function PriorityPage() {
       <div>
         <NormalTitle>
           현재 확보한 총 한도는
-          <span className="font-bold text-blue-700"> {nowLimit}원</span> 입니다.
+          <span className="font-bold text-blue-700"> {limit}원</span> 입니다.
         </NormalTitle>
         <div className="text-sm	text-gray-400">
           + 버튼을 통해 반대매매 시 우선으로 처리할 증권을 추가해보세요.
@@ -45,7 +51,7 @@ export default function PriorityPage() {
         beforeurl="/stock"
         beforestate={{ priorityToStock: selectedStock }}
         nexturl="/limit"
-        nextstate={{ stocks: stocks }}
+        nextstate={{ stock: selectedStock }}
       />
     </PaddingDiv>
   );
