@@ -4,6 +4,7 @@ import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import NormalTitle from "../../components/text/NormalTitle";
 import ButtonBar from "../../components/button/ButtonBar";
 import { IoAddCircle } from "react-icons/io5";
+import PriorityFrame from "./component/PriorityFrame";
 
 export default function PriorityPage() {
   const location = useLocation();
@@ -54,36 +55,38 @@ export default function PriorityPage() {
 
   const settingUnPriority = () => {
     selectedStock.map((stock, index) => {
-      setUnPriority(
-        (
-          prev: [
-            number, //0: 인덱스
-            string, //1: 증권사 코드
-            string, //2: 증권사명
-            string, //3: 종목명
-            string, //4: 등급
-            number, //5: 전일종가
-            number, //6: 우선순위로 고른 주수
-            number, //7: 담보로 잡은 전체 주수
-            number, //8: 한도
-            string //9: 계좌 번호
-          ][]
-        ) => [
-          ...prev,
-          [
-            index,
-            stock[0],
-            stock[1],
-            stock[2],
-            stock[3],
-            stock[4],
-            0,
-            stock[5],
-            stock[7],
-            stock[8],
-          ],
-        ]
-      );
+      if (stock[5] !== 0) {
+        setUnPriority(
+          (
+            prev: [
+              number, //0: 인덱스
+              string, //1: 증권사 코드
+              string, //2: 증권사명
+              string, //3: 종목명
+              string, //4: 등급
+              number, //5: 전일종가
+              number, //6: 우선순위로 남은 주수
+              number, //7: 담보로 잡은 전체 주수
+              number, //8: 한도
+              string //9: 계좌 번호
+            ][]
+          ) => [
+            ...prev,
+            [
+              index,
+              stock[0],
+              stock[1],
+              stock[2],
+              stock[3],
+              stock[4],
+              stock[5],
+              stock[5],
+              stock[7],
+              stock[8],
+            ],
+          ]
+        );
+      }
     });
   };
 
@@ -92,6 +95,12 @@ export default function PriorityPage() {
   }, []);
 
   useEffect(() => {
+    console.log("우선순위 주식");
+    console.log(priority);
+  }, [priority]);
+
+  useEffect(() => {
+    console.log("우선순위 X 주식");
     console.log(unPriority);
   }, [unPriority]);
 
@@ -117,7 +126,7 @@ export default function PriorityPage() {
         </div>
       </div>
 
-      <div>{selectedStock}</div>
+      <PriorityFrame priority={priority} unPriority={unPriority} />
 
       <ButtonBar
         beforetext="이전"
