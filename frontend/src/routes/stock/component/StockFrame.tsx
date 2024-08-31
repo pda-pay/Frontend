@@ -136,7 +136,6 @@ export default function StockFrame({ stocks, handleTemp }: StockProps) {
                 >
                   <thead>
                     <tr>
-                      <th>증권사명</th>
                       <th>종목명</th>
                       <th>선택한 주수</th>
                       <th>전일 종가</th>
@@ -156,7 +155,6 @@ export default function StockFrame({ stocks, handleTemp }: StockProps) {
                             cursor: "pointer",
                           }}
                         >
-                          <td>{stock[2]}</td>
                           <td>{stock[3]}</td>
                           <td>{stock[6]}</td>
                           <td>{stock[5]}</td>
