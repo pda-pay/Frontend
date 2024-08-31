@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import NormalTitle from "../../components/text/NormalTitle";
@@ -43,8 +42,8 @@ export default function PriorityPage() {
       <ButtonBar
         beforetext="이전"
         nexttext="다음"
-        beforeurl="/stockcheck"
-        beforestate={{ priorityToCheck: selectedStock }}
+        beforeurl="/stock"
+        beforestate={{ priorityToStock: selectedStock }}
         nexturl="/limit"
         nextstate={{ stocks: stocks }}
       />

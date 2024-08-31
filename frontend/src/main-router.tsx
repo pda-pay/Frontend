@@ -9,10 +9,9 @@ import PaymentPage from "./routes/payment/PaymentPage";
 import AllmenuPage from "./routes/allmenu/AllmenuPage";
 import AssetPage from "./routes/asset/AssetPage";
 import ServiceAgreePage from "./routes/agree/ServiceAgreePage";
-import StockCheckPage from "./routes/stockcheck/StockCheckPage";
-import SelectedStockPage from "./routes/selectedstock/SelectedStockPage";
 import PriorityPage from "./routes/priority/PriorityPage";
 import SettingLimitPage from "./routes/settinglimit/SettingLimitPage";
+import StockPage from "./routes/stock/StockPage";
 
 const routers = [
   {
@@ -81,13 +80,17 @@ const routers = [
     ],
   },
   {
-    path: "/stockcheck",
-    element: <StockCheckPage />,
+    path: "/stock",
+    element: <StockPage />,
   },
-  {
-    path: "/selectedstock",
-    element: <SelectedStockPage />,
-  },
+  // {
+  //   path: "/stockcheck",
+  //   element: <StockCheckPage />,
+  // },
+  // {
+  //   path: "/selectedstock",
+  //   element: <SelectedStockPage />,
+  // },
   {
     path: "/priority",
     element: <PriorityPage />,
