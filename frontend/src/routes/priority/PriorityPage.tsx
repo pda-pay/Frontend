@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import NormalTitle from "../../components/text/NormalTitle";
@@ -9,17 +10,90 @@ export default function PriorityPage() {
 
   const { selectedStock } = location.state as {
     selectedStock: [
-      string,
-      string,
-      string,
-      string,
-      number,
-      number,
-      number,
-      number,
-      string
+      string, //0: 증권사 코드
+      string, //1: 증권사명
+      string, //2: 종목명
+      string, //3: 등급
+      number, //4: 전일종가
+      number, //5: 선택한 주수
+      number, //6: 전체 주수
+      number, //7: 한도
+      string //8: 계좌번호
     ][];
   };
+
+  const [priority, setPriority] = useState<
+    [
+      number, //0: 인덱스
+      string, //1: 증권사 코드
+      string, //2: 증권사명
+      string, //3: 종목명
+      string, //4: 등급
+      number, //5: 전일종가
+      number, //6: 우선순위로 고른 주수
+      number, //7: 담보로 잡은 전체 주수
+      number, //8: 한도
+      string //9: 계좌 번호
+    ][]
+  >([]);
+
+  const [unPriority, setUnPriority] = useState<
+    [
+      number, //0: 인덱스
+      string, //1: 증권사 코드
+      string, //2: 증권사명
+      string, //3: 종목명
+      string, //4: 등급
+      number, //5: 전일종가
+      number, //6: 우선순위로 고른 주수
+      number, //7: 담보로 잡은 전체 주수
+      number, //8: 한도
+      string //9: 계좌 번호
+    ][]
+  >([]);
+
+  const settingUnPriority = () => {
+    selectedStock.map((stock, index) => {
+      setUnPriority(
+        (
+          prev: [
+            number, //0: 인덱스
+            string, //1: 증권사 코드
+            string, //2: 증권사명
+            string, //3: 종목명
+            string, //4: 등급
+            number, //5: 전일종가
+            number, //6: 우선순위로 고른 주수
+            number, //7: 담보로 잡은 전체 주수
+            number, //8: 한도
+            string //9: 계좌 번호
+          ][]
+        ) => [
+          ...prev,
+          [
+            index,
+            stock[0],
+            stock[1],
+            stock[2],
+            stock[3],
+            stock[4],
+            0,
+            stock[5],
+            stock[7],
+            stock[8],
+          ],
+        ]
+      );
+    });
+  };
+
+  useEffect(() => {
+    settingUnPriority();
+  }, []);
+
+  useEffect(() => {
+    console.log(unPriority);
+  }, [unPriority]);
 
   let limit: number = 0;
   for (let i = 0; i < selectedStock.length; i++) {

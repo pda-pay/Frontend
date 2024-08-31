@@ -213,6 +213,7 @@ export default function StockPage() {
     setPage(p);
   };
 
+  //TODO: 자동으로 주식 선택
   // const autoSelect = () => {
   //   //한도에 맞춰 주식 선택
   //   //모달창에 입력받고, 선택한 주식 보여주는 페이지로
