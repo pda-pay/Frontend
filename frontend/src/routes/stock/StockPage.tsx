@@ -226,22 +226,21 @@ export default function StockPage() {
   //다음 페이지에서 주식을 다시 받아옴
   const location = useLocation();
 
-  const { priorityToStock } = location.state as {
-    priorityToStock: [
-      string,
-      string,
-      string,
-      string,
-      number,
-      number,
-      number,
-      number,
-      string
-    ][];
-  };
-
   useEffect(() => {
-    if (priorityToStock) {
+    if (location.state) {
+      const { priorityToStock } = location.state as {
+        priorityToStock: [
+          string,
+          string,
+          string,
+          string,
+          number,
+          number,
+          number,
+          number,
+          string
+        ][];
+      };
       setSelectedStock(priorityToStock);
     }
   }, [location.state]);
