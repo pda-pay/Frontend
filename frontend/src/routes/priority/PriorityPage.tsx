@@ -54,16 +54,6 @@ export default function PriorityPage() {
     ][]
   >([]);
 
-  // const validatePri = () => {
-  //   const updatedPri = priority.filter((row) => row[6] !== 0);
-  //   setPriority(updatedPri);
-  // };
-
-  // const validateUnPri = () => {
-  //   const updatedUnPri = unPriority.filter((row) => row[6] !== 0);
-  //   setUnPriority(updatedUnPri);
-  // };
-
   const settingUnPriority = () => {
     selectedStock.map((stock, index) => {
       if (stock[5] !== 0) {
@@ -226,6 +216,32 @@ export default function PriorityPage() {
     setPriority(newPriority);
   };
 
+  const [priorityStock, setPriorityStock] = useState<
+    [
+      number, //0: id
+      string, //1: 증권사 코드
+      string, //2: 증권사명
+      string, //3: 종목명
+      string, //4: 등급
+      number, //5: 전일종가
+      number, //6: 우선순위로 고른 주수
+      number, //7: 담보로 잡은 전체 주수
+      number, //8: 한도
+      string //9: 계좌 번호
+    ][]
+  >([]);
+
+  const settingPriorityStock = () => {
+    //자동으로 우선 순위 적용
+    //일단은, 가격이 높은 순으로
+    const sortedArr = [...unPriority].sort((a, b) => b[5] * b[6] - a[5] * a[6]);
+    setPriorityStock([...priority, ...sortedArr]);
+  };
+
+  useEffect(() => {
+    settingPriorityStock();
+  }, [unPriority]);
+
   return (
     <PaddingDiv>
       <div>
@@ -253,7 +269,7 @@ export default function PriorityPage() {
         beforeurl="/stock"
         beforestate={{ priorityToStock: selectedStock }}
         nexturl="/limit"
-        nextstate={{ stock: selectedStock }}
+        nextstate={{ stock: selectedStock, priorityStock: priorityStock }}
       />
 
       {isModalOpen && (
