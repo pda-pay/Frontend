@@ -126,7 +126,7 @@ export default function StockFrame({ stocks, handleTemp }: StockProps) {
           <div>
             <BoldTitle>{key}</BoldTitle>
             <BackgroundFrame color="blue">
-              <div className="text-sm">
+              <div className="text-xs">
                 <table
                   style={{
                     width: "100%",

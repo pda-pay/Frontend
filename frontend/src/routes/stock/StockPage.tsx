@@ -3,7 +3,7 @@ import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import ShowSelectedPage from "./ShowSelectedPage";
 import BoldTitle from "../../components/text/BoldTitle";
 import QuestionButton from "../../components/button/QuestionButton";
-import LevelInfoModal from "./component/LevelInfoModel";
+import LevelInfoModal from "./component/LevelInfoModal";
 import OwnStockList from "./component/OwnStockList";
 import MoveButton from "../../components/button/MoveButton";
 import ButtonBar from "../../components/button/ButtonBar";
@@ -213,6 +213,7 @@ export default function StockPage() {
     setPage(p);
   };
 
+  //TODO: 자동으로 주식 선택
   // const autoSelect = () => {
   //   //한도에 맞춰 주식 선택
   //   //모달창에 입력받고, 선택한 주식 보여주는 페이지로
@@ -226,22 +227,21 @@ export default function StockPage() {
   //다음 페이지에서 주식을 다시 받아옴
   const location = useLocation();
 
-  const { priorityToStock } = location.state as {
-    priorityToStock: [
-      string,
-      string,
-      string,
-      string,
-      number,
-      number,
-      number,
-      number,
-      string
-    ][];
-  };
-
   useEffect(() => {
-    if (priorityToStock) {
+    if (location.state) {
+      const { priorityToStock } = location.state as {
+        priorityToStock: [
+          string,
+          string,
+          string,
+          string,
+          number,
+          number,
+          number,
+          number,
+          string
+        ][];
+      };
       setSelectedStock(priorityToStock);
     }
   }, [location.state]);
