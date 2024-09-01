@@ -54,6 +54,16 @@ export default function PriorityPage() {
     ][]
   >([]);
 
+  // const validatePri = () => {
+  //   const updatedPri = priority.filter((row) => row[6] !== 0);
+  //   setPriority(updatedPri);
+  // };
+
+  // const validateUnPri = () => {
+  //   const updatedUnPri = unPriority.filter((row) => row[6] !== 0);
+  //   setUnPriority(updatedUnPri);
+  // };
+
   const settingUnPriority = () => {
     selectedStock.map((stock, index) => {
       if (stock[5] !== 0) {
@@ -149,7 +159,8 @@ export default function PriorityPage() {
       });
 
       // unpriority 업데이트
-      setUnPriority(changedArr);
+      setUnPriority(changedArr.filter((row) => row[6] !== 0));
+      //setUnPriority(changedArr);
 
       //priority에 추가
       const addRow: [
@@ -180,6 +191,37 @@ export default function PriorityPage() {
     }
   };
 
+  const deletePriority = (rowIndex: number) => {
+    //지울 종목
+    const tempRow: [
+      number, //0: id
+      string, //1: 증권사 코드
+      string, //2: 증권사명
+      string, //3: 종목명
+      string, //4: 등급
+      number, //5: 전일종가
+      number, //6: 우선순위로 넣은 주수
+      number, //7: 담보로 잡은 전체 주수
+      number, //8: 한도
+      string //9: 계좌 번호
+    ] = priority[rowIndex];
+
+    const newUnPri = [...unPriority];
+
+    unPriority.map((row, index) => {
+      if (row[0] === tempRow[0] && row[9] === tempRow[9]) {
+        newUnPri[index][6] = unPriority[index][6] + tempRow[6];
+      } else if (index !== unPriority.length - 1) {
+        newUnPri.push([...tempRow]);
+      }
+    });
+
+    setUnPriority(newUnPri);
+
+    const newPriority = priority.filter((row, index) => rowIndex !== index);
+    setPriority(newPriority);
+  };
+
   return (
     <PaddingDiv>
       <div>
@@ -195,7 +237,11 @@ export default function PriorityPage() {
         </div>
       </div>
 
-      <PriorityFrame priority={priority} unPriority={unPriority} />
+      <PriorityFrame
+        priority={priority}
+        unPriority={unPriority}
+        deletePriority={deletePriority}
+      />
 
       <ButtonBar
         beforetext="이전"

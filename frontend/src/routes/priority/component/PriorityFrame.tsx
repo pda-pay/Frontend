@@ -26,15 +26,20 @@ interface PriProps {
     number, //8: 한도
     string //9: 계좌 번호
   ][];
+  deletePriority: (rowIndex: number) => void;
 }
 
-export default function PriorityFrame({ priority, unPriority }: PriProps) {
+export default function PriorityFrame({
+  priority,
+  unPriority,
+  deletePriority,
+}: PriProps) {
   return (
     <div>
       <BoldTitle>우선순위 적용한 담보 주식</BoldTitle>
-      <div className="text-sm	text-gray-400">
+      {/* <div className="text-sm	text-gray-400">
         종목을 클릭해서 주수 수정이 가능합니다.
-      </div>
+      </div> */}
       <BackgroundFrame color="blue">
         {priority.length !== 0 ? (
           <div className="text-xs">
@@ -53,10 +58,11 @@ export default function PriorityFrame({ priority, unPriority }: PriProps) {
                   <th>전일 종가</th>
                   <th>등급</th>
                   <th>가능 한도</th>
+                  <th>삭제</th>
                 </tr>
               </thead>
               <tbody>
-                {priority.map((stock) => (
+                {priority.map((stock, rowIndex) => (
                   <tr>
                     <td>{stock[2]}</td>
                     <td>{stock[3]}</td>
@@ -64,6 +70,7 @@ export default function PriorityFrame({ priority, unPriority }: PriProps) {
                     <td>{stock[5]}</td>
                     <td>{stock[4]}</td>
                     <td>{stock[8]}</td>
+                    <td onClick={() => deletePriority(rowIndex)}>-</td>
                   </tr>
                 ))}
               </tbody>
