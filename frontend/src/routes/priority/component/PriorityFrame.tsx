@@ -83,8 +83,7 @@ export default function PriorityFrame({
 
       <BoldTitle>우선순위 적용하지 않은 주식</BoldTitle>
       <div className="text-sm	text-gray-400">
-        우선순위를 정하지 않은 담보주식은 고객님이 정하신 우선순위의 후순위로
-        서비스 로직에 따라 배치됩니다.
+        우선순위를 정하지 않은 담보주식은 서비스 로직에 따라 정렬됩니다.
       </div>
       <BackgroundFrame color="blue">
         {unPriority.length !== 0 ? (

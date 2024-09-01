@@ -265,7 +265,7 @@ export default function PriorityPage() {
 
       <ButtonBar
         beforetext="이전"
-        nexttext="다음"
+        nexttext="완료"
         beforeurl="/stock"
         beforestate={{ priorityToStock: selectedStock }}
         nexturl="/limit"
