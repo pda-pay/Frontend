@@ -4,11 +4,11 @@ export default function LoginInput() {
   const [userId, setUserId] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
 
-  const handleUserId = (event) => {
+  const handleUserId = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserId(event.target.value);
   };
 
-  const handlePassword = (event) => {
+  const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 

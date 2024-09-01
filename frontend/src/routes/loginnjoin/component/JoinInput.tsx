@@ -30,23 +30,23 @@ export default function JoinInput({ onValidChange }: JoinProps) {
     return phoneRegex.test(number);
   };
 
-  const handleUserName = (event) => {
+  const handleUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(event.target.value);
   };
 
-  const handleUserId = (event) => {
+  const handleUserId = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserId(event.target.value);
   };
 
-  const handlePassword = (event) => {
+  const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
-  const handleCheckPsw = (event) => {
+  const handleCheckPsw = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCheckPsw(event.target.value);
   };
 
-  const handlePhoneNumber = (event) => {
+  const handlePhoneNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(event.target.value);
   };
 

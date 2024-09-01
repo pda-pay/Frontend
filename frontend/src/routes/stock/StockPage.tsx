@@ -3,7 +3,7 @@ import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import ShowSelectedPage from "./ShowSelectedPage";
 import BoldTitle from "../../components/text/BoldTitle";
 import QuestionButton from "../../components/button/QuestionButton";
-import LevelInfoModal from "./component/LevelInfoModel";
+import LevelInfoModal from "./component/LevelInfoModal";
 import OwnStockList from "./component/OwnStockList";
 import MoveButton from "../../components/button/MoveButton";
 import ButtonBar from "../../components/button/ButtonBar";

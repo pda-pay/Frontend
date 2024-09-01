@@ -5,6 +5,7 @@ import NormalTitle from "../../components/text/NormalTitle";
 import ButtonBar from "../../components/button/ButtonBar";
 import { IoAddCircle } from "react-icons/io5";
 import PriorityFrame from "./component/PriorityFrame";
+import SetPriorityModal from "./component/SetPriorityModal";
 
 export default function PriorityPage() {
   const location = useLocation();
@@ -25,7 +26,7 @@ export default function PriorityPage() {
 
   const [priority, setPriority] = useState<
     [
-      number, //0: 인덱스
+      number, //0: id
       string, //1: 증권사 코드
       string, //2: 증권사명
       string, //3: 종목명
@@ -40,13 +41,13 @@ export default function PriorityPage() {
 
   const [unPriority, setUnPriority] = useState<
     [
-      number, //0: 인덱스
+      number, //0: id
       string, //1: 증권사 코드
       string, //2: 증권사명
       string, //3: 종목명
       string, //4: 등급
       number, //5: 전일종가
-      number, //6: 우선순위로 고른 주수
+      number, //6: 남은 주수
       number, //7: 담보로 잡은 전체 주수
       number, //8: 한도
       string //9: 계좌 번호
@@ -59,7 +60,7 @@ export default function PriorityPage() {
         setUnPriority(
           (
             prev: [
-              number, //0: 인덱스
+              number, //0: id
               string, //1: 증권사 코드
               string, //2: 증권사명
               string, //3: 종목명
@@ -104,12 +105,80 @@ export default function PriorityPage() {
     console.log(unPriority);
   }, [unPriority]);
 
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   let limit: number = 0;
   for (let i = 0; i < selectedStock.length; i++) {
     if (selectedStock[i][5] != 0) {
       limit += selectedStock[i][5] * selectedStock[i][7];
     }
   }
+
+  const addPriority = (rowIdx: number, value: number) => {
+    if (value > 0) {
+      const changedArr: [
+        number, //0: id
+        string, //1: 증권사 코드
+        string, //2: 증권사명
+        string, //3: 종목명
+        string, //4: 등급
+        number, //5: 전일종가
+        number, //6: 우선순위로 남은 주수
+        number, //7: 담보로 잡은 전체 주수
+        number, //8: 한도
+        string //9: 계좌 번호
+      ][] = unPriority.map((row, index) => {
+        if (index === rowIdx) {
+          return [
+            row[0],
+            row[1],
+            row[2],
+            row[3],
+            row[4],
+            row[5],
+            row[6] - value,
+            row[7],
+            row[8],
+            row[9],
+          ];
+        }
+        return row;
+      });
+
+      // unpriority 업데이트
+      setUnPriority(changedArr);
+
+      //priority에 추가
+      const addRow: [
+        number, //0: id
+        string, //1: 증권사 코드
+        string, //2: 증권사명
+        string, //3: 종목명
+        string, //4: 등급
+        number, //5: 전일종가
+        number, //6: 우선순위로 넣은 주수
+        number, //7: 담보로 잡은 전체 주수
+        number, //8: 한도
+        string //9: 계좌 번호
+      ] = [
+        unPriority[rowIdx][0],
+        unPriority[rowIdx][1],
+        unPriority[rowIdx][2],
+        unPriority[rowIdx][3],
+        unPriority[rowIdx][4],
+        unPriority[rowIdx][5],
+        value,
+        unPriority[rowIdx][7],
+        unPriority[rowIdx][8],
+        unPriority[rowIdx][9],
+      ];
+
+      setPriority([...priority, addRow]);
+    }
+  };
 
   return (
     <PaddingDiv>
@@ -122,7 +191,7 @@ export default function PriorityPage() {
           + 버튼을 통해 반대매매 시 우선으로 처리할 증권을 추가해보세요.
         </div>
         <div className="flex justify-center">
-          <IoAddCircle className="size-32 text-gray-400" />
+          <IoAddCircle className="size-32 text-gray-400" onClick={openModal} />
         </div>
       </div>
 
@@ -136,6 +205,15 @@ export default function PriorityPage() {
         nexturl="/limit"
         nextstate={{ stock: selectedStock }}
       />
+
+      {isModalOpen && (
+        <SetPriorityModal
+          unPriority={unPriority}
+          isModalOpen={isModalOpen}
+          handleCloseModal={closeModal}
+          addPriority={addPriority}
+        />
+      )}
     </PaddingDiv>
   );
 }
