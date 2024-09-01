@@ -59,6 +59,7 @@ export default function SetPriorityModal({
     }
 
     closeInput();
+    handleCloseModal();
   };
 
   const validateInput = (ip: number) => {
@@ -176,44 +177,6 @@ export default function SetPriorityModal({
           )}
         </div>
       )}
-
-      {/* <NormalTitle>우선 순위가 정해지지 않은 담보 주식</NormalTitle>
-      {unPriority.length !== 0 ? (
-        <div className="text-xs">
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              textAlign: "center",
-            }}
-          >
-            <thead>
-              <tr>
-                <th>증권사명</th>
-                <th>종목명</th>
-                <th>남은 주수</th>
-                <th>전일 종가</th>
-                <th>등급</th>
-                <th>가능 한도</th>
-              </tr>
-            </thead>
-            {unPriority.map((stock, index) => (
-              <tbody>
-                <tr>
-                  <td>{stock[2]}</td>
-                  <td>{stock[3]}</td>
-                  <td>{stock[6]}</td>
-                  <td>{stock[5]}</td>
-                  <td>{stock[4]}</td>
-                  <td>{stock[8]}</td>
-                </tr>
-              </tbody>
-            ))}
-          </table>
-        </div>
-      ) : (
-        <div>없습니다</div>
-      )} */}
     </BasicModal>
   );
 }

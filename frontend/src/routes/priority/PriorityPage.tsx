@@ -205,16 +205,20 @@ export default function PriorityPage() {
       number, //8: 한도
       string //9: 계좌 번호
     ] = priority[rowIndex];
-
+    console.log("지울 항목 " + tempRow);
     const newUnPri = [...unPriority];
 
-    unPriority.map((row, index) => {
-      if (row[0] === tempRow[0] && row[9] === tempRow[9]) {
-        newUnPri[index][6] = unPriority[index][6] + tempRow[6];
-      } else if (index !== unPriority.length - 1) {
-        newUnPri.push([...tempRow]);
-      }
-    });
+    if (unPriority.length === 0) {
+      newUnPri.push([...tempRow]);
+    } else {
+      unPriority.map((row, index) => {
+        if (row[0] === tempRow[0] && row[9] === tempRow[9]) {
+          newUnPri[index][6] = unPriority[index][6] + tempRow[6];
+        } else if (index === unPriority.length - 1) {
+          newUnPri.push([...tempRow]);
+        }
+      });
+    }
 
     setUnPriority(newUnPri);
 
