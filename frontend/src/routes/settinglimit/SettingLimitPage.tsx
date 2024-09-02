@@ -13,7 +13,7 @@ export default function SettingLimitPage() {
 
   const [limit, setLimit] = useState<number>(data[0]);
   const [mortgageRate, setMortgageRate] = useState<number>(data[2] / limit);
-  const [errLimit, setErrLimit] = useState<boolean>(false);
+  const [errLimit, setErrLimit] = useState<boolean>();
 
   const [inputValue, setInputValue] = useState<string>("");
 
@@ -55,9 +55,9 @@ export default function SettingLimitPage() {
       <div>
         <NormalTitle>현재 고객님의 한도 현황입니다.</NormalTitle>
         <BackgroundFrame color="blue">
-          <BoldTitle>현재 한도: {limit}</BoldTitle>
-          <BoldTitle>최대 한도: {data[1]}</BoldTitle>
-          <NormalTitle>담보: {data[2]}</NormalTitle>
+          <BoldTitle>현재 한도: {limit} 원</BoldTitle>
+          <BoldTitle>최대 한도: {data[1]} 원</BoldTitle>
+          <NormalTitle>담보: {data[2]} 원</NormalTitle>
           <NormalTitle>담보 유지 비율: {mortgageRate}%</NormalTitle>
         </BackgroundFrame>
         <div className="text-sm	text-gray-400">
@@ -76,6 +76,7 @@ export default function SettingLimitPage() {
                 name="limit"
                 value={inputValue}
                 onChange={updateLimit}
+                placeholder={data[1].toString()}
                 className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
               />
               {errLimit && (
@@ -94,7 +95,7 @@ export default function SettingLimitPage() {
         beforeurl="/priority"
         nexttext="완료"
         nextdisabled={errLimit}
-        nexturl="/"
+        nexturl="/account"
       />
     </PaddingDiv>
   );
