@@ -14,6 +14,7 @@ import SettingLimitPage from "./routes/settinglimit/SettingLimitPage";
 import StockPage from "./routes/stock/StockPage";
 import SettingAccountPage from "./routes/account/SettingAccountPage";
 import SettingDatePage from "./routes/paymentdate/SettingDatePage";
+import ConfirmPage from "./routes/confirm/ConfirmPage";
 
 const routers = [
   {
@@ -85,14 +86,6 @@ const routers = [
     path: "/stock",
     element: <StockPage />,
   },
-  // {
-  //   path: "/stockcheck",
-  //   element: <StockCheckPage />,
-  // },
-  // {
-  //   path: "/selectedstock",
-  //   element: <SelectedStockPage />,
-  // },
   {
     path: "/priority",
     element: <PriorityPage />,
@@ -108,6 +101,10 @@ const routers = [
   {
     path: "/paymentdate",
     element: <SettingDatePage />,
+  },
+  {
+    path: "/confirm",
+    element: <ConfirmPage />,
   },
 ];
 
