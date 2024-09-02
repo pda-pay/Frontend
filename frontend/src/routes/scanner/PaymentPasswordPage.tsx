@@ -20,7 +20,7 @@ export default function PaymentPasswordPage() {
 
     axios
       .post(
-        "http://localhost:8080/api/payment/auth",
+        "http://43.201.53.172:8080/api/payment/auth",
         {
           userId: userId,
           paymentPassword: password,
@@ -32,7 +32,6 @@ export default function PaymentPasswordPage() {
         }
       )
       .then((res) => {
-        console.log(res.data.token);
         navigate("/scanner", { state: res.data.token });
       })
       .catch((err) => {

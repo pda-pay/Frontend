@@ -1,0 +1,95 @@
+import { QRCodeCanvas } from "qrcode.react";
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import CryptoJS from "crypto-js";
+import PaddingDiv from "../../components/settingdiv/PaddingDiv";
+import LargeButton from "../../components/button/LargeButton";
+
+export default function QRPage() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [seconds, setSeconds] = useState(300);
+  const [isAvailable, setAvailable] = useState(true);
+
+  const [qrValue, setQrValue] = useState<string>("");
+  const wsRef = useRef<WebSocket | null>(null);
+
+  useEffect(() => {
+    const state = location.state;
+
+    const franchiseCode = 123;
+    const amount = state.amount;
+
+    const currentTime = Date.now().toString();
+    const combined = franchiseCode + currentTime;
+    const transactionId = CryptoJS.SHA256(combined).toString(CryptoJS.enc.Hex);
+
+    console.log({
+      transactionId: transactionId,
+      franchiseCode: franchiseCode,
+      paymentAmount: amount,
+    });
+
+    setQrValue({
+      transactionId: transactionId,
+      franchiseCode: franchiseCode,
+      paymentAmount: amount,
+    });
+
+    wsRef.current = new WebSocket(
+      "ws://43.201.53.172:8080/api/payment/socket?id=" + transactionId
+    );
+
+    wsRef.current.onmessage = (event: MessageEvent) => {
+      console.log(event.data);
+    };
+
+    return () => {
+      wsRef.current.close();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (seconds <= 0) {
+      setAvailable(false);
+    }
+
+    const interval = setInterval(() => {
+      setSeconds((prevSeconds) => prevSeconds - 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [seconds]);
+
+  return (
+    <PaddingDiv>
+      <div className="flex flex-col justify-between items-center h-full pt-10">
+        {isAvailable && (
+          <QRCodeCanvas
+            value={JSON.stringify(qrValue)}
+            className="border-primary border-4 rounded-xl"
+            size={300}
+          />
+        )}
+
+        {isAvailable && (
+          <p className="text-xl">만료까지 남은 시간: {seconds} 초</p>
+        )}
+        {!isAvailable && (
+          <div className="text-xl flex flex-col items-center">
+            <p>QR코드가 만료되었습니다.</p>
+            <p>다시 생성해주세요.</p>
+          </div>
+        )}
+
+        <LargeButton
+          type="blue"
+          children={"다시 생성"}
+          onClick={() => {
+            navigate("/franchise/createqr");
+          }}
+        />
+      </div>
+    </PaddingDiv>
+  );
+}

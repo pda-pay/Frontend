@@ -14,6 +14,9 @@ import ScannerPage from "./routes/scanner/ScannerPage";
 import TransactionFailPage from "./routes/scanner/TransactionFailPage";
 import TransactionSuccessPage from "./routes/scanner/TransactionSuccessPage";
 import PaymentPasswordPage from "./routes/scanner/PaymentPasswordPage";
+import FranchiseQrCreatePage from "./routes/franchise/FranchiseQrCreatePage";
+import QRPage from "./routes/franchise/QRPage";
+import FranchiseLoginPage from "./routes/franchise/FranchiseLoginPage";
 
 const routers = [
   {
@@ -36,6 +39,18 @@ const routers = [
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/franchise/login",
+    element: <FranchiseLoginPage />,
+  },
+  {
+    path: "/franchise/createqr",
+    element: <FranchiseQrCreatePage />,
+  },
+  {
+    path: "/franchise/qr",
+    element: <QRPage />,
   },
   {
     path: "/main",
