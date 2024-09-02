@@ -12,6 +12,8 @@ import ServiceAgreePage from "./routes/agree/ServiceAgreePage";
 import PriorityPage from "./routes/priority/PriorityPage";
 import SettingLimitPage from "./routes/settinglimit/SettingLimitPage";
 import StockPage from "./routes/stock/StockPage";
+import SettingAccountPage from "./routes/account/SettingAccountPage";
+import SettingDatePage from "./routes/paymentdate/SettingDatePage";
 
 const routers = [
   {
@@ -98,6 +100,14 @@ const routers = [
   {
     path: "/limit",
     element: <SettingLimitPage />,
+  },
+  {
+    path: "/account",
+    element: <SettingAccountPage />,
+  },
+  {
+    path: "/paymentdate",
+    element: <SettingDatePage />,
   },
 ];
 
