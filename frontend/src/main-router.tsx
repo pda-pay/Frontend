@@ -15,6 +15,7 @@ import StockPage from "./routes/stock/StockPage";
 import SettingAccountPage from "./routes/account/SettingAccountPage";
 import SettingDatePage from "./routes/paymentdate/SettingDatePage";
 import ConfirmPage from "./routes/confirm/ConfirmPage";
+import SimplePage from "./routes/simplepsw/SimplePage";
 
 const routers = [
   {
@@ -105,6 +106,10 @@ const routers = [
   {
     path: "/confirm",
     element: <ConfirmPage />,
+  },
+  {
+    path: "/simple",
+    element: <SimplePage />,
   },
 ];
 
