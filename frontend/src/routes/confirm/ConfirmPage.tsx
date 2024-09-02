@@ -271,7 +271,7 @@ export default function ConfirmPage() {
         beforetext="이전"
         nexttext="다음"
         beforeurl="/paymentdate"
-        nexturl="/"
+        nexturl="/simple"
       ></ButtonBar>
     </PaddingDiv>
   );
