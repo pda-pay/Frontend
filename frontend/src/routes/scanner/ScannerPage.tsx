@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import QrScanner from "qr-scanner";
 import QrFrame from "../../assets/qr-frame.svg";
 import axios from "axios";
+import BeatLoaderDiv from "../../components/spinner/BeatLoaderDiv";
 
 export default function ScannerPage() {
   const scanner = useRef<QrScanner>();
@@ -15,11 +16,14 @@ export default function ScannerPage() {
   const qrBoxEl = useRef<HTMLDivElement>(null);
   const [qrOn, setQrOn] = useState<boolean>(true);
   const navigate = useNavigate();
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   const onScanSuccess = (result: QrScanner.ScanResult) => {
     const transactionData = result.data;
 
     scanner?.current?.stop();
+
+    setLoading(true);
 
     axios
       .post("http://localhost:8080/api/payment/request", transactionData, {
@@ -70,6 +74,7 @@ export default function ScannerPage() {
 
   return (
     <div>
+      {isLoading && <BeatLoaderDiv />}
       <div className="absolute top-0 left-0 w-full h-[20%] bg-black bg-opacity-30 z-10 pt-1">
         <IoChevronBackOutline size="50" color="white" onClick={onClickBack} />
       </div>

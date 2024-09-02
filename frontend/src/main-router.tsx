@@ -13,6 +13,7 @@ import StockCheckPage from "./routes/stockcheck/StockCheckPage";
 import ScannerPage from "./routes/scanner/ScannerPage";
 import TransactionFailPage from "./routes/scanner/TransactionFailPage";
 import TransactionSuccessPage from "./routes/scanner/TransactionSuccessPage";
+import PaymentPasswordPage from "./routes/scanner/PaymentPasswordPage";
 
 const routers = [
   {
@@ -95,6 +96,10 @@ const routers = [
   {
     path: "/transaction-success-result",
     element: <TransactionSuccessPage />,
+  },
+  {
+    path: "/payment-pw-verify",
+    element: <PaymentPasswordPage />,
   },
 ];
 
