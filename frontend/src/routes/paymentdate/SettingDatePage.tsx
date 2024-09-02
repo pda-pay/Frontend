@@ -1,5 +1,4 @@
 import { useState } from "react";
-import BackgroundFrame from "../../components/backgroundframe/BackgroundFrame";
 import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import BoldTitle from "../../components/text/BoldTitle";
 import NormalTitle from "../../components/text/NormalTitle";
@@ -58,7 +57,7 @@ export default function SettingDatePage() {
         beforetext="이전"
         beforeurl="/account"
         nexttext="완료"
-        nexturl="/"
+        nexturl="/confirm"
         nextdisabled={!isClicked}
       />
     </PaddingDiv>
