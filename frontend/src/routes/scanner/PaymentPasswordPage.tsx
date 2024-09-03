@@ -4,19 +4,21 @@ import axios from "axios";
 import BeatLoaderDiv from "../../components/spinner/BeatLoaderDiv";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import PinInput from "react-pin-input";
 
 export default function PaymentPasswordPage() {
   const [password, setPassword] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const userId = 2;
-  const input = useRef(null);
 
   useEffect(() => {
     if (password?.length < 6) return;
 
     setLoading(true);
     const title = "잘못된 비밀번호입니다.";
+
+    console.log(password);
 
     axios
       .post(
@@ -40,35 +42,33 @@ export default function PaymentPasswordPage() {
           title: `<span style="font-size: 20px; font-weight : bolder;"> ${title}</span>`,
           confirmButtonColor: "blue",
         });
-        input.current.value = "";
       })
       .finally(() => {
         setLoading(false);
       });
   }, [password]);
 
-  const handlePassword = (event) => {
-    console.log(event);
-    setPassword(event.target.value);
+  const handlePassword = (value, index) => {
+    setPassword(value);
   };
 
   return (
     <>
       {isLoading && <BeatLoaderDiv />}
       <PaddingDiv>
-        <div className="flex justify-between flex-col h-[40vh]">
+        <div className="flex justify-between flex-col h-[40vh] items-center">
           <p className="mt-16 text-xl text-center font-bold">
             결제 비밀번호 6자리를 입력해주세요.
           </p>
-
-          <input
-            type="number"
-            name="userId"
-            maxLength={6}
+          <PinInput
+            length={6}
+            initialValue=""
+            secret={true}
+            focus={true}
+            type="numeric"
+            autoSelect={true}
+            inputMode="numeric"
             onChange={handlePassword}
-            className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-            placeholder="결제 비밀번호"
-            ref={input}
           />
         </div>
       </PaddingDiv>

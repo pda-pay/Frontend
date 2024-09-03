@@ -60,7 +60,6 @@ export default function QRPage() {
       const seconds = String(date.getSeconds()).padStart(2, "0");
 
       const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-      console.log(event);
       Swal.fire({
         icon: "success",
         title: `<span style="font-size: 20px; font-weight : bolder;">결제 완료</span>`,

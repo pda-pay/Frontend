@@ -69,7 +69,7 @@ export default function ScannerPage() {
   }, []);
 
   const onClickBack = () => {
-    navigate(-1);
+    navigate("/main");
   };
 
   return (
@@ -93,7 +93,11 @@ export default function ScannerPage() {
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 w-full h-[20%] bg-black bg-opacity-30 z-10" />
+      <div className="flex justify-center items-center absolute bottom-0 left-0 w-full h-[20%] bg-black bg-opacity-30 z-10">
+        <p className="z-20 text-lg text-white">
+          결제 QR을 화면 정중앙에 스캔해주세요.
+        </p>
+      </div>
     </div>
   );
 }
