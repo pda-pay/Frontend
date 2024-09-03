@@ -24,13 +24,13 @@ export default function JoinInput({
   //비밀번호 형식이 올바른지 검사하는 함수
   const validatePassword = (password: string): boolean => {
     const passwordRegex =
-      /^(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{5,}$/;
+      /^(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{8,}$/;
     return passwordRegex.test(password);
   };
 
   // 전화번호 형식이 올바른지 검사하는 함수
   const validatePhoneNumber = (number: string): boolean => {
-    const phoneRegex = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/;
+    const phoneRegex = /^[0-9]{11}$/;
     return phoneRegex.test(number);
   };
 
@@ -158,7 +158,7 @@ export default function JoinInput({
           비밀번호를 입력해주세요.
         </span>
         <p className="block text-sm font-medium text-slate-700 text-gray-300">
-          비밀번호는 특수문자, 숫자를 무조건 포함하는 5자리 이상이어야 합니다.
+          비밀번호는 특수문자, 숫자를 무조건 포함하는 8자리 이상이어야 합니다.
         </p>
         <input
           type="password"
@@ -201,13 +201,15 @@ export default function JoinInput({
           name="phoneNumber"
           value={phoneNumber} // state에 저장된 전화번호를 input의 value로 설정
           onChange={handlePhoneNumber} // 입력이 변경될 때 state를 업데이트
-          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          pattern="[0-9]{11}"
           className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-          placeholder="000-0000-0000"
+          placeholder="00000000000"
         />
         {errorPhoneNumber && (
           <p className="mt-2 text-sm text-red-600">
-            {"전화번호 형식이 올바르지 않습니다. 형식) 000-0000-0000"}
+            {
+              "전화번호 형식이 올바르지 않습니다. - 를 제거한 숫자만 입력해주세요."
+            }
           </p>
         )}
       </label>
