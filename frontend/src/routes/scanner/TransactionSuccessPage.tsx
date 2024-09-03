@@ -9,8 +9,6 @@ export default function TransactionSuccessPage() {
   const location = useLocation();
   const result = location.state;
 
-  console.log(result);
-
   return (
     <PaddingDiv>
       <p className="mt-16 text-xl text-center font-bold">

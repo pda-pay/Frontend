@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import CryptoJS from "crypto-js";
 import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import LargeButton from "../../components/button/LargeButton";
+import Swal from "sweetalert2";
 
 export default function QRPage() {
   const location = useLocation();
@@ -37,12 +38,37 @@ export default function QRPage() {
       paymentAmount: amount,
     });
 
+    const event = {
+      data: {
+        paymentDate: 123,
+        paymentAmount: 10000,
+      },
+    };
+
     wsRef.current = new WebSocket(
       "ws://43.201.53.172:8080/api/payment/socket?id=" + transactionId
     );
-
     wsRef.current.onmessage = (event: MessageEvent) => {
-      console.log(event.data);
+      const result = JSON.parse(event.data);
+      const date = new Date(result.paymentDate);
+
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 +1
+      const day = String(date.getDate()).padStart(2, "0");
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+      const seconds = String(date.getSeconds()).padStart(2, "0");
+
+      const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+      console.log(event);
+      Swal.fire({
+        icon: "success",
+        title: `<span style="font-size: 20px; font-weight : bolder;">결제 완료</span>`,
+        html: `<div> <p> 결제일: ${formattedDateTime}</p>  <p>금액: ${result.paymentAmount}원</p> </div>`,
+        confirmButtonColor: "blue",
+        timer: 2500,
+      });
+      navigate("/franchise/createqr");
     };
 
     return () => {
