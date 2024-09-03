@@ -8,6 +8,8 @@ interface ButtonProps {
   beforeurl: string;
   nextdisabled?: boolean;
   beforedisabled?: boolean;
+  beforestate?: any;
+  nextstate?: any;
 }
 
 export default function ButtonBar({
@@ -17,8 +19,26 @@ export default function ButtonBar({
   beforeurl,
   nextdisabled,
   beforedisabled,
+  beforestate,
+  nextstate,
 }: ButtonProps) {
   const navigate = useNavigate();
+
+  const moveToBefore = () => {
+    if (beforestate !== undefined) {
+      navigate(beforeurl, { state: beforestate });
+    } else {
+      navigate(beforeurl);
+    }
+  };
+
+  const moveToNext = () => {
+    if (nextstate !== undefined) {
+      navigate(nexturl, { state: nextstate });
+    } else {
+      navigate(nexturl);
+    }
+  };
 
   return (
     <div
@@ -28,14 +48,16 @@ export default function ButtonBar({
       <BasicButton
         type="gray"
         disabled={beforedisabled}
-        onClick={() => navigate(beforeurl)}
+        //onClick={() => navigate(beforeurl)}
+        onClick={moveToBefore}
       >
         {beforetext}
       </BasicButton>
       <BasicButton
         type="blue"
         disabled={nextdisabled}
-        onClick={() => navigate(nexturl)}
+        //onClick={() => navigate(nexturl)}
+        onClick={moveToNext}
       >
         {nexttext}
       </BasicButton>

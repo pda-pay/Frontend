@@ -14,7 +14,7 @@ export default function ServiceAgreePage() {
         </AgreeFrame>
       </div>
       <ButtonBar
-        nexturl="/stockcheck"
+        nexturl="/stock"
         beforeurl="/main"
         nexttext="동의"
         beforetext="비동의"
