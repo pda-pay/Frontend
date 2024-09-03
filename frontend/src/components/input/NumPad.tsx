@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import LargeButton from "../button/LargeButton";
 import { useNavigate } from "react-router-dom";
 
@@ -6,11 +6,11 @@ export default function NumPad() {
   const [inputValue, setInputValue] = useState("");
   const navigate = useNavigate();
 
-  const handleInput = (num) => {
+  const handleInput = (num: string) => {
     if (num === "<-") {
       const rawValue = inputValue.replace(/,/g, "");
       const newValue = rawValue.slice(0, -1);
-      setInputValue(new Intl.NumberFormat().format(newValue));
+      setInputValue(new Intl.NumberFormat().format(Number(newValue)));
       return;
     }
 
@@ -18,7 +18,7 @@ export default function NumPad() {
     if (rawValue.length >= 8) return;
 
     const newValue = rawValue + num;
-    setInputValue(new Intl.NumberFormat().format(newValue));
+    setInputValue(new Intl.NumberFormat().format(Number(newValue)));
   };
 
   const onBtnClick = () => {
@@ -51,7 +51,11 @@ export default function NumPad() {
   );
 }
 
-function Pad({ onInput }) {
+type PadProps = {
+  onInput: (input: string) => void;
+};
+
+function Pad({ onInput }: PadProps) {
   const buttons = [
     "1",
     "2",

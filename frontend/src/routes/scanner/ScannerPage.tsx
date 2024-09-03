@@ -1,6 +1,5 @@
 import "./QrStyles.css";
 
-import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -14,7 +13,6 @@ export default function ScannerPage() {
   const scanner = useRef<QrScanner>();
   const videoEl = useRef<HTMLVideoElement>(null);
   const qrBoxEl = useRef<HTMLDivElement>(null);
-  const [qrOn, setQrOn] = useState<boolean>(true);
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState<boolean>(false);
   const location = useLocation();

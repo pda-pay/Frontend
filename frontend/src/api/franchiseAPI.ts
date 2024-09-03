@@ -1,7 +1,7 @@
 import BaseApi from "./axiosInstance";
 
 export interface franchiseLoginReqData {
-  code: number;
+  code: number | null;
   password: string;
 }
 

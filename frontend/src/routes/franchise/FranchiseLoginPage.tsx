@@ -3,26 +3,25 @@ import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import BoldTitle from "../../components/text/BoldTitle";
 import BasicButton from "../../components/button/BasicButton";
 import Swal from "sweetalert2";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import franchiseAPI from "../../api/franchiseAPI";
 
 export default function FranchiseLoginPage() {
   const [franshiseId, setFranchiseId] = useState<number | null>(null);
-  const [password, setPassword] = useState<string | null>(null);
+  const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
   const service = new franchiseAPI();
 
-  const handleUserId = (event) => {
+  const handleUserId = (event: any) => {
     setFranchiseId(event.target.value);
   };
 
-  const handlePassword = (event) => {
+  const handlePassword = (event: any) => {
     setPassword(event.target.value);
   };
 
   const clickLoginBtn = async () => {
-    if (franshiseId?.length == 0 || password?.length == 0) {
+    if (franshiseId == null || password?.length == 0) {
       Swal.fire({
         icon: "warning",
         title: `<span style="font-size: 20px; font-weight : bolder;"> 가맹점 코드, 비밀번호를 입력해주세요</span>`,
@@ -31,11 +30,15 @@ export default function FranchiseLoginPage() {
     }
 
     try {
-      const result = await service.login({
+      await service.login({
         code: franshiseId,
         password: password,
       });
-      localStorage.setItem("franchiseCode", franshiseId);
+      if (franshiseId !== null) {
+        localStorage.setItem("franchiseCode", franshiseId.toString());
+      } else {
+        localStorage.removeItem("franchiseCode");
+      }
       navigate("/franchise/createqr");
     } catch (error) {
       console.log(error);
@@ -60,8 +63,8 @@ export default function FranchiseLoginPage() {
           <input
             type="text"
             name="franshiseId"
-            value={franshiseId} // state에 저장된 이름을 input의 value로 설정
-            onChange={handleUserId} // 입력이 변경될 때 state를 업데이트
+            // value={franshiseId}
+            onChange={handleUserId}
             className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
           />
         </label>

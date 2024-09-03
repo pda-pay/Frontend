@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import BeatLoaderDiv from "../../components/spinner/BeatLoaderDiv";
 import { useNavigate } from "react-router-dom";
