@@ -1,54 +1,44 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PaddingDiv from "../../components/settingdiv/PaddingDiv";
-import axios from "axios";
 import BeatLoaderDiv from "../../components/spinner/BeatLoaderDiv";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import PinInput from "react-pin-input";
+import transactionAPI from "../../api/transactionAPI";
 
 export default function PaymentPasswordPage() {
   const [password, setPassword] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  const userId = 2;
+  const service = new transactionAPI();
+  const userId = "2";
+
+  const getToken = async () => {
+    try {
+      const result = await service.getToken({
+        userId: userId,
+        paymentPassword: password,
+      });
+      navigate("/scanner", { state: result.data });
+    } catch (err) {
+      console.log(err);
+      Swal.fire({
+        icon: "warning",
+        title: `<span style="font-size: 20px; font-weight : bolder;">잘못된 비밀번호입니다</span>`,
+        confirmButtonColor: "blue",
+      });
+    }
+  };
 
   useEffect(() => {
     if (password?.length < 6) return;
 
     setLoading(true);
-    const title = "잘못된 비밀번호입니다.";
-
-    console.log(password);
-
-    axios
-      .post(
-        "http://43.201.53.172:8080/api/payment/auth",
-        {
-          userId: userId,
-          paymentPassword: password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        navigate("/scanner", { state: res.data.token });
-      })
-      .catch((err) => {
-        Swal.fire({
-          icon: "warning",
-          title: `<span style="font-size: 20px; font-weight : bolder;"> ${title}</span>`,
-          confirmButtonColor: "blue",
-        });
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    getToken();
+    setLoading(false);
   }, [password]);
 
-  const handlePassword = (value, index) => {
+  const handlePassword = (value: string) => {
     setPassword(value);
   };
 

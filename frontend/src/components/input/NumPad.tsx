@@ -21,6 +21,14 @@ export default function NumPad() {
     setInputValue(new Intl.NumberFormat().format(newValue));
   };
 
+  const onBtnClick = () => {
+    if (inputValue === "0") return;
+
+    navigate("/franchise/qr", {
+      state: { amount: Number(inputValue.replace(/,/g, "")) },
+    });
+  };
+
   return (
     <div className="flex flex-col justify-between items-center h-screen">
       <p className="text-2xl font-bold">결제할 금액을 입력해주세요</p>
@@ -36,11 +44,7 @@ export default function NumPad() {
         <LargeButton
           children={"QR코드 생성"}
           type="blue"
-          onClick={() => {
-            navigate("/franchise/qr", {
-              state: { amount: Number(inputValue.replace(/,/g, "")) },
-            });
-          }}
+          onClick={onBtnClick}
         />
       </div>
     </div>

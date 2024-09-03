@@ -1,5 +1,3 @@
-import React from "react";
-import axios, { Axios } from "axios";
 import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import BackgroundFrame from "../../components/backgroundframe/BackgroundFrame";
 import ButtonBar from "../../components/button/ButtonBar";

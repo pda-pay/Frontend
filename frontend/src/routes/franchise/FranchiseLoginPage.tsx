@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import BoldTitle from "../../components/text/BoldTitle";
-import LoginButtonbar from "../loginnjoin/component/LoginButtonbar";
 import BasicButton from "../../components/button/BasicButton";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import franchiseAPI from "../../api/franchiseAPI";
 
 export default function FranchiseLoginPage() {
-  const [franshiseId, setFranchiseId] = useState<string | null>(null);
+  const [franshiseId, setFranchiseId] = useState<number | null>(null);
   const [password, setPassword] = useState<string | null>(null);
   const navigate = useNavigate();
+  const service = new franchiseAPI();
 
   const handleUserId = (event) => {
     setFranchiseId(event.target.value);
@@ -20,7 +21,7 @@ export default function FranchiseLoginPage() {
     setPassword(event.target.value);
   };
 
-  const clickLoginBtn = () => {
+  const clickLoginBtn = async () => {
     if (franshiseId?.length == 0 || password?.length == 0) {
       Swal.fire({
         icon: "warning",
@@ -28,29 +29,22 @@ export default function FranchiseLoginPage() {
         confirmButtonColor: "blue",
       });
     }
-    axios
-      .post(
-        "/franchise/login",
-        {
-          franchiseCode: 123,
-          password: 123,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((result) => {
-        navigate("/franchise/main");
-      })
-      .catch((err) => {
-        Swal.fire({
-          icon: "warning",
-          title: `<span style="font-size: 20px; font-weight : bolder;"> 로그인 실패</span>`,
-          confirmButtonColor: "blue",
-        });
+
+    try {
+      const result = await service.login({
+        code: franshiseId,
+        password: password,
       });
+      localStorage.setItem("franchiseCode", franshiseId);
+      navigate("/franchise/createqr");
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "warning",
+        title: `<span style="font-size: 20px; font-weight : bolder;"> 로그인 실패</span>`,
+        confirmButtonColor: "blue",
+      });
+    }
   };
 
   return (

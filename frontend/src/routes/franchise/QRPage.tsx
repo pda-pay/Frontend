@@ -19,7 +19,18 @@ export default function QRPage() {
   useEffect(() => {
     const state = location.state;
 
-    const franchiseCode = 123;
+    const franchiseCode = localStorage.getItem("franchiseCode");
+
+    if (franchiseCode == null) {
+      Swal.fire({
+        icon: "warn",
+        title: `<span style="font-size: 20px; font-weight : bolder;">다시 로그인해주세요</span>`,
+        confirmButtonColor: "blue",
+      }).then(() => {
+        navigate("/franchise/login");
+      });
+    }
+
     const amount = state.amount;
 
     const currentTime = Date.now().toString();

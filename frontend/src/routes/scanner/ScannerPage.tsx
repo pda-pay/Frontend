@@ -3,12 +3,12 @@ import "./QrStyles.css";
 import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { IoChevronBackOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import QrScanner from "qr-scanner";
 import QrFrame from "../../assets/qr-frame.svg";
-import axios from "axios";
 import BeatLoaderDiv from "../../components/spinner/BeatLoaderDiv";
+import transactionAPI, { TransactionReqData } from "../../api/transactionAPI";
 
 export default function ScannerPage() {
   const scanner = useRef<QrScanner>();
@@ -17,31 +17,31 @@ export default function ScannerPage() {
   const [qrOn, setQrOn] = useState<boolean>(true);
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState<boolean>(false);
+  const location = useLocation();
+  const service = new transactionAPI();
+
+  const requestTranscation = async (transactionData: TransactionReqData) => {
+    try {
+      const result = await service.requestTransaction(transactionData);
+      navigate("/transaction-success-result", { state: result.data });
+    } catch (error: any) {
+      console.log(error);
+      if (error.response) {
+        navigate("/transaction-fail-result", { state: error.response.data });
+      } else {
+        console.error("Unexpected error:", error);
+      }
+    }
+  };
 
   const onScanSuccess = (result: QrScanner.ScanResult) => {
-    const transactionData = result.data;
+    const transactionData = JSON.parse(result.data);
+    transactionData.token = location.state.token;
 
     scanner?.current?.stop();
-
     setLoading(true);
-
-    axios
-      .post("http://localhost:8080/api/payment/request", transactionData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((result) => {
-        navigate("/transaction-success-result", { state: result.data });
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error.response) {
-          navigate("/transaction-fail-result", { state: error.response.data });
-        } else {
-          console.error("Unexpected error:", error);
-        }
-      });
+    requestTranscation(transactionData);
+    setLoading(false);
   };
 
   useEffect(() => {
