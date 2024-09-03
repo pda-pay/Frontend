@@ -38,13 +38,17 @@ export default function JoinButtonbar({ valid, userInfo }: ButtonProps) {
     }
   };
 
+  const moveNext = () => {
+    navigate("/mydata");
+  };
+
   return (
     <BasicButton
       type="blue"
-      disabled={valid || btnValid}
+      disabled={valid}
       onClick={() => {
         joinFinish();
-        if (btnValid) navigate("/mydata");
+        if (btnValid) moveNext();
       }}
     >
       다음
