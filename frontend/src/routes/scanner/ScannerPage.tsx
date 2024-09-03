@@ -51,12 +51,7 @@ export default function ScannerPage() {
         overlay: qrBoxEl?.current || undefined,
       });
 
-      scanner?.current
-        ?.start()
-        .then(() => setQrOn(true))
-        .catch((err) => {
-          if (err) setQrOn(false);
-        });
+      scanner?.current?.start();
     }
 
     return () => {
