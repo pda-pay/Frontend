@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import NormalTitle from "../../../components/text/NormalTitle";
 import BasicModal from "../../../components/modal/BasicModal";
 import XButton from "../../../components/button/XButton";
@@ -45,11 +46,15 @@ export default function CertificateModal({
         //여기서 에러 메시지 출력하고 state 버튼 비호라성황
         setValidCode(false);
       }
-    } catch (error: any) {
-      setValidCode(false);
-      if (error.response) {
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setValidCode(false);
         console.log("에러 발생: " + error);
       }
+      // setValidCode(false);
+      // if (error.response) {
+      //   console.log("에러 발생: " + error);
+      // }
     }
   };
 

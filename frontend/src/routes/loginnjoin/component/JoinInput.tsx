@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import certificatePhoneNumberAPI from "../../../api/certificateNumberAPI";
 import CertificateModal from "./CertificateModal";
 import joinApi from "../../../api/joinAPI";
+import axios from "axios";
 
 interface JoinProps {
   onValidChange: (isValid: boolean) => void;
@@ -89,10 +90,13 @@ export default function JoinInput({
         setIdDup(!response.data.isAvailable);
         console.log(response.data.isAvailable);
       }
-    } catch (error: any) {
-      if (error.response) {
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
         console.log("에러 발생: " + error);
       }
+      // if (error.response) {
+      //   console.log("에러 발생: " + error);
+      // }
     }
   };
 
@@ -110,10 +114,13 @@ export default function JoinInput({
         //여기서 에러 메시지 출력하고 state 버튼 비호라성황
         setErrorCerti(true);
       }
-    } catch (error: any) {
-      if (error.response) {
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
         console.log("에러 발생: " + error);
       }
+      // if (error.response) {
+      //   console.log("에러 발생: " + error);
+      // }
     }
   };
 
@@ -180,7 +187,7 @@ export default function JoinInput({
   const [valid, setValid] = useState<boolean>(false);
 
   useEffect(() => {
-    const temp: boolean =
+    const temp: boolean | null =
       !idDup &&
       dupCheck &&
       !errorPsw &&
@@ -188,7 +195,7 @@ export default function JoinInput({
       !errorPhoneNumber &&
       !errorCerti &&
       certiCheck;
-    setValid(temp);
+    if (temp !== null) setValid(temp);
   }, [
     idDup,
     dupCheck,

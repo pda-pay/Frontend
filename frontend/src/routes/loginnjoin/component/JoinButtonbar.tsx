@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import joinApi from "../../../api/joinAPI";
 import BasicButton from "../../../components/button/BasicButton";
 import { useState } from "react";
+import axios from "axios";
 
 interface ButtonProps {
   unValid: boolean;
@@ -31,10 +32,13 @@ export default function JoinButtonbar({ unValid, userInfo }: ButtonProps) {
         //여기서 에러 메시지 출력하고 state 버튼 비호라성황
         setBtnValid(false);
       }
-    } catch (error: any) {
-      if (error.response) {
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
         console.log("에러 발생: " + error);
       }
+      // if (error.response) {
+      //   console.log("에러 발생: " + error);
+      // }
     }
   };
 
