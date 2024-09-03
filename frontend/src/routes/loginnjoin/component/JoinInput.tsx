@@ -2,9 +2,13 @@ import { useEffect, useState } from "react";
 
 interface JoinProps {
   onValidChange: (isValid: boolean) => void;
+  handleUserInfo: (index: number, value: string) => void;
 }
 
-export default function JoinInput({ onValidChange }: JoinProps) {
+export default function JoinInput({
+  onValidChange,
+  handleUserInfo,
+}: JoinProps) {
   const [userId, setUserId] = useState<string | null>(null);
   const [idDup, setIdDup] = useState<boolean | null>(null);
   const [password, setPassword] = useState<string | null>(null);
@@ -32,14 +36,17 @@ export default function JoinInput({ onValidChange }: JoinProps) {
 
   const handleUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(event.target.value);
+    handleUserInfo(2, event.target.value);
   };
 
   const handleUserId = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserId(event.target.value);
+    handleUserInfo(0, event.target.value);
   };
 
   const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
+    handleUserInfo(1, event.target.value);
   };
 
   const handleCheckPsw = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +55,7 @@ export default function JoinInput({ onValidChange }: JoinProps) {
 
   const handlePhoneNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(event.target.value);
+    handleUserInfo(3, event.target.value);
   };
 
   //TODO: 아이디 중복 검사 후 idDup 변경 여부 결정 & 에러 메시지 출력

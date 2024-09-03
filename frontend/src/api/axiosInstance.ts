@@ -2,10 +2,10 @@ import axios from "axios";
 
 export default class BaseApi {
   fetcher;
-  constructor(url: string) {
+  constructor() {
     axios.defaults.withCredentials = true;
     this.fetcher = axios.create({
-      baseURL: url,
+      baseURL: import.meta.env.VITE_BACKEND_URL,
       headers: {
         "Content-Type": "application/json",
       },
