@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import certificatePhoneNumberAPI from "../../../api/certificateNumberAPI";
+import CertificateModal from "./CertificateModal";
 
 interface JoinProps {
   onValidChange: (isValid: boolean) => void;
@@ -9,6 +11,7 @@ export default function JoinInput({
   onValidChange,
   handleUserInfo,
 }: JoinProps) {
+  const certiservice = new certificatePhoneNumberAPI();
   const [userId, setUserId] = useState<string | null>(null);
   const [idDup, setIdDup] = useState<boolean | null>(null);
   const [password, setPassword] = useState<string | null>(null);
@@ -19,7 +22,13 @@ export default function JoinInput({
   const [errorPhoneNumber, setErrorPhoneNumber] = useState<boolean | null>(
     null
   );
+  const [errorCerti, setErrorCerti] = useState<boolean | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
+  const [certiCheck, setCertiCheck] = useState<boolean>(false);
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   //비밀번호 형식이 올바른지 검사하는 함수
   const validatePassword = (password: string): boolean => {
@@ -58,8 +67,39 @@ export default function JoinInput({
     handleUserInfo(3, event.target.value);
   };
 
-  //TODO: 아이디 중복 검사 후 idDup 변경 여부 결정 & 에러 메시지 출력
+  const handleCertiCheck = (value: boolean) => {
+    setCertiCheck(value);
+  };
+
+  const certificatePhone = async () => {
+    try {
+      const response = await certiservice.postPhoneNumber({
+        phoneNumber: phoneNumber,
+      });
+
+      if (response.status === 202) {
+        //여기서 버튼 비활성화 state 관리
+        setErrorCerti(false);
+      } else if (response.status === 400 || response.status === 500) {
+        console.log((await response).data.message);
+        //여기서 에러 메시지 출력하고 state 버튼 비호라성황
+        setErrorCerti(true);
+      }
+    } catch (error: any) {
+      if (error.response) {
+        console.log("에러 발생: " + error);
+      }
+    }
+  };
+
   //TODO: 전화번호 인증 로직 추가
+  const handleCertiPhone = () => {
+    //여기서 api 요청
+    if (!errorPhoneNumber) certificatePhone();
+    if (!errorCerti) openModal();
+  };
+
+  //TODO: 아이디 중복 검사 후 idDup 변경 여부 결정 & 에러 메시지 출력
 
   useEffect(() => {
     if (password == null) setErrorPsw(null);
@@ -94,7 +134,9 @@ export default function JoinInput({
     idDup ||
     errorPsw ||
     errorCheckPsw ||
-    errorPhoneNumber
+    errorPhoneNumber ||
+    errorCerti ||
+    !certiCheck
   );
 
   useEffect(() => {
@@ -157,7 +199,7 @@ export default function JoinInput({
         <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
           비밀번호를 입력해주세요.
         </span>
-        <p className="block text-sm font-medium text-slate-700 text-gray-300">
+        <p className="block text-xs font-thin text-slate-700 text-gray-400">
           비밀번호는 특수문자, 숫자를 무조건 포함하는 8자리 이상이어야 합니다.
         </p>
         <input
@@ -193,9 +235,23 @@ export default function JoinInput({
       </label>
 
       <label className="block">
-        <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-          전화번호
-        </span>
+        <div className="flex justify-between items-center">
+          <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
+            전화번호를 입력하고 인증해주세요.
+          </span>
+          {certiCheck ? (
+            <p className="mt-2 text-sm text-blue-600">{"인증완료"}</p>
+          ) : (
+            <button
+              className="text-xs"
+              style={{ backgroundColor: "#9abade33", borderRadius: "20px" }}
+              onClick={handleCertiPhone}
+            >
+              전화번호 인증하기
+            </button>
+          )}
+        </div>
+
         <input
           type="tel"
           name="phoneNumber"
@@ -205,6 +261,7 @@ export default function JoinInput({
           className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
           placeholder="00000000000"
         />
+
         {errorPhoneNumber && (
           <p className="mt-2 text-sm text-red-600">
             {
@@ -212,7 +269,20 @@ export default function JoinInput({
             }
           </p>
         )}
+        {errorCerti && (
+          <p className="mt-2 text-sm text-red-600">
+            {"전화번호 인증 요청에 실패했습니다."}
+          </p>
+        )}
       </label>
+      {isModalOpen && (
+        <CertificateModal
+          phoneNumber={phoneNumber}
+          isModalOpen={isModalOpen}
+          handleCloseModal={closeModal}
+          handleCertiCheck={handleCertiCheck}
+        />
+      )}
     </div>
   );
 }
