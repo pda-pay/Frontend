@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import joinApi from "../../../api/joinAPI";
 import BasicButton from "../../../components/button/BasicButton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface ButtonProps {
-  valid: boolean;
+  unValid: boolean;
   userInfo: string[];
 }
 
-export default function JoinButtonbar({ valid, userInfo }: ButtonProps) {
+export default function JoinButtonbar({ unValid, userInfo }: ButtonProps) {
   const service = new joinApi();
   const navigate = useNavigate();
 
@@ -45,7 +45,7 @@ export default function JoinButtonbar({ valid, userInfo }: ButtonProps) {
   return (
     <BasicButton
       type="blue"
-      disabled={valid}
+      disabled={unValid}
       onClick={() => {
         joinFinish();
         if (btnValid) moveNext();

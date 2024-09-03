@@ -6,7 +6,7 @@ import MoveButton from "../../../components/button/MoveButton";
 import certificatePhoneNumberAPI from "../../../api/certificateNumberAPI";
 
 interface ModalProps {
-  phoneNumber: string | null;
+  phoneNumber: string | undefined;
   isModalOpen: boolean;
   handleCloseModal: () => void;
   handleCertiCheck: (value: boolean) => void;
@@ -76,7 +76,7 @@ export default function CertificateModal({
             </p>
           )}
           {validCode && (
-            <p className="mt-2 text-sm text-red-600">
+            <p className="mt-2 text-sm text-blue-600">
               {"인증이 완료되었습니다."}
             </p>
           )}

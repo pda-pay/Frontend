@@ -1,11 +1,11 @@
 import BaseApi from "./axiosInstance";
 
 export interface CertificateData {
-  phoneNumber: string | null;
+  phoneNumber: string | undefined;
 }
 
 export interface ValidateCodeData {
-  phoneNumber: string | null;
+  phoneNumber: string | undefined;
   code: string;
 }
 
