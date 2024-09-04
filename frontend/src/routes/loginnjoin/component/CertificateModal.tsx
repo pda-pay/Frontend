@@ -45,10 +45,12 @@ export default function CertificateModal({
         console.log((await response).data.message);
         //여기서 에러 메시지 출력하고 state 버튼 비호라성황
         setValidCode(false);
+        handleCertiCheck(false);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setValidCode(false);
+        handleCertiCheck(false);
         console.log("에러 발생: " + error);
       }
       // setValidCode(false);

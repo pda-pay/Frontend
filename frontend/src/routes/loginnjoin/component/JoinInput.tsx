@@ -75,8 +75,8 @@ export default function JoinInput({
     handleUserInfo(3, event.target.value);
   };
 
-  const handleCertiCheck = (value: boolean) => {
-    setCertiCheck(value);
+  const handleCerti = (value: boolean) => {
+    setErrorCerti(!value);
   };
 
   const checkIdDuplicate = async () => {
@@ -108,11 +108,13 @@ export default function JoinInput({
 
       if (response.status === 202) {
         //여기서 버튼 비활성화 state 관리
-        setErrorCerti(false);
+        //setErrorCerti(false);
+        openModal();
+        setCertiCheck(true);
       } else if (response.status === 400 || response.status === 500) {
         console.log((await response).data.message);
         //여기서 에러 메시지 출력하고 state 버튼 비호라성황
-        setErrorCerti(true);
+        //setErrorCerti(true);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -126,10 +128,9 @@ export default function JoinInput({
 
   //TODO: 전화번호 인증 로직 추가
   const handleCertiPhone = () => {
-    setCertiCheck(true);
     //여기서 api 요청
     if (!errorPhoneNumber) certificatePhone();
-    if (!errorCerti) openModal();
+    //if (!errorCerti) openModal();
   };
 
   //TODO: 아이디 중복 검사 후 idDup 변경 여부 결정 & 에러 메시지 출력
@@ -196,6 +197,7 @@ export default function JoinInput({
       !errorCerti &&
       certiCheck;
     if (temp !== null) setValid(temp);
+    else if (temp === null) setValid(false);
   }, [
     idDup,
     dupCheck,
@@ -209,6 +211,13 @@ export default function JoinInput({
   useEffect(() => {
     onValidChange(valid);
   }, [valid]);
+
+  useEffect(() => {
+    console.log("전화번호 인증 여부: " + certiCheck);
+  }, [certiCheck]);
+  useEffect(() => {
+    console.log("전화번호 인증 성공: " + !errorCerti);
+  }, [errorCerti]);
 
   return (
     <div className="flex flex-col gap-10">
@@ -306,7 +315,10 @@ export default function JoinInput({
           <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
             전화번호를 입력하고 인증해주세요.
           </span>
-          {certiCheck ? (
+          {errorCerti !== null &&
+          !errorCerti &&
+          certiCheck !== null &&
+          certiCheck ? (
             <p className="mt-2 text-sm text-blue-600">{"인증완료"}</p>
           ) : (
             <button
@@ -343,7 +355,7 @@ export default function JoinInput({
           errorCerti !== null &&
           certiCheck && (
             <p className="mt-2 text-sm text-red-600">
-              {"전화번호 인증 요청에 실패했습니다."}
+              {"전화번호 인증에 실패했습니다."}
             </p>
           )}
       </label>
@@ -352,7 +364,7 @@ export default function JoinInput({
           phoneNumber={phoneNumber}
           isModalOpen={isModalOpen}
           handleCloseModal={closeModal}
-          handleCertiCheck={handleCertiCheck}
+          handleCertiCheck={handleCerti}
         />
       )}
     </div>
