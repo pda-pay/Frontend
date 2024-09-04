@@ -12,6 +12,7 @@ interface LoginProps {
 export default function LoginButtonbar({ loginId, password }: LoginProps) {
   const service = new loginApi();
   const navigate = useNavigate();
+  //const [name, setName] = useState<string>();
 
   const [errMsg, setErrMsg] = useState<string>();
 
@@ -22,9 +23,8 @@ export default function LoginButtonbar({ loginId, password }: LoginProps) {
         password: password,
       });
 
-      console.log("respnose: " + response);
       if (response.status === 200) {
-        moveNext();
+        navigate("/main", { state: { id: loginId, name: response.data.name } });
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -41,15 +41,18 @@ export default function LoginButtonbar({ loginId, password }: LoginProps) {
     postLoginInfo();
   };
 
-  const moveNext = () => {
-    navigate("/main");
-  };
   return (
     <div>
       {errMsg !== undefined && (
         <p className="mt-2 text-sm text-red-600">{errMsg}</p>
       )}
-      <BasicButton type="blue" disabled={false} onClick={() => clickBtn()}>
+      <BasicButton
+        type="blue"
+        disabled={false}
+        onClick={() => {
+          clickBtn();
+        }}
+      >
         완료
       </BasicButton>
     </div>
