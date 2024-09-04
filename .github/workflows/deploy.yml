@@ -12,23 +12,24 @@ jobs:
     steps:
       - name: Checkout source code.   
         uses: actions/checkout@v3
-        with:
-          sparse-checkout: 'frontend'
-          path: 'frontend'
       
       - name: Check Node v         
         run: node -v
         
       - name: Install dependencies   
-        run: npm install
+        run: |
+          cd frontend
+          npm install
       
       - name: Generate build        
-        run: npm run build
-          
+        run:  |
+          cd frontend
+          npm run build
       
       - name: Deploy                
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
+          cd frontend
           aws s3 cp --recursive --region ap-northeast-2 build s3://ofz-front-bucket
