@@ -12,14 +12,14 @@ jobs:
     steps:
       - name: Checkout source code.   
         uses: actions/checkout@v3
+        with:
+          path: '/frontend'
       
       - name: Check Node v         
         run: node -v
         
       - name: Install dependencies   
-        run: |
-          cd frontend
-          npm install
+        run: npm install
       
       - name: Generate build        
         run: npm run build
