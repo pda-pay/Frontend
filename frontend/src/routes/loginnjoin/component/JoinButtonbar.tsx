@@ -26,7 +26,7 @@ export default function JoinButtonbar({ unValid, userInfo }: ButtonProps) {
 
       if (response.status === 201) {
         //여기서 버튼 비활성화 state 관리
-        setBtnValid(true);
+        moveNext();
       } else if (response.status === 400) {
         console.log((await response).data.message);
         //여기서 에러 메시지 출력하고 state 버튼 비호라성황
@@ -40,7 +40,7 @@ export default function JoinButtonbar({ unValid, userInfo }: ButtonProps) {
   };
 
   const moveNext = () => {
-    navigate("/approach");
+    navigate("/");
   };
 
   return (
@@ -49,7 +49,7 @@ export default function JoinButtonbar({ unValid, userInfo }: ButtonProps) {
       disabled={unValid}
       onClick={() => {
         joinFinish();
-        if (btnValid) moveNext();
+        //if (btnValid) moveNext();
       }}
     >
       다음
