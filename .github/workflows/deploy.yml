@@ -13,7 +13,7 @@ jobs:
       - name: Checkout source code.   
         uses: actions/checkout@v3
         with:
-          path: '/frontend'
+          sparse-checkout: 'frontend'
       
       - name: Check Node v         
         run: node -v
