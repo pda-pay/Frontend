@@ -4,7 +4,7 @@ interface DivProps {
 
 export default function PaddingDiv({ children }: DivProps) {
   return (
-    <div className="w-screen h-screen p-5 py-7 flex flex-col justify-between">
+    <div className="w-screen h-screen p-5 py-7 flex flex-col gap-10">
       {children}
     </div>
   );
