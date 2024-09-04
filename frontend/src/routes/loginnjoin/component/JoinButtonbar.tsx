@@ -36,14 +36,11 @@ export default function JoinButtonbar({ unValid, userInfo }: ButtonProps) {
       if (axios.isAxiosError(error)) {
         console.log("에러 발생: " + error);
       }
-      // if (error.response) {
-      //   console.log("에러 발생: " + error);
-      // }
     }
   };
 
   const moveNext = () => {
-    navigate("/mydata");
+    navigate("/approach");
   };
 
   return (
