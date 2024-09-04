@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import joinApi from "../../../api/joinAPI";
 import BasicButton from "../../../components/button/BasicButton";
-import { useState } from "react";
 import axios from "axios";
 
 interface ButtonProps {
@@ -12,8 +11,6 @@ interface ButtonProps {
 export default function JoinButtonbar({ unValid, userInfo }: ButtonProps) {
   const service = new joinApi();
   const navigate = useNavigate();
-
-  const [btnValid, setBtnValid] = useState<boolean>(false);
 
   const joinFinish = async () => {
     try {
@@ -29,8 +26,6 @@ export default function JoinButtonbar({ unValid, userInfo }: ButtonProps) {
         moveNext();
       } else if (response.status === 400) {
         console.log((await response).data.message);
-        //여기서 에러 메시지 출력하고 state 버튼 비호라성황
-        setBtnValid(false);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
