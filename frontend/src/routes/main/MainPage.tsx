@@ -4,6 +4,7 @@ import LargeButton from "../../components/button/LargeButton";
 import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import NormalTitle from "../../components/text/NormalTitle";
 import QRFrame from "./component/QRFrame";
+import Menubar from "../../components/menubar/Menubar";
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ export default function MainPage() {
           <QRFrame member={userInfo[2]}></QRFrame>
         </div>
       </PaddingDiv>
+      <Menubar userInfo={userInfo} />
     </div>
   );
 }

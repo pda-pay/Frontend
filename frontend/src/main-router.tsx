@@ -3,7 +3,7 @@ import ApproachPage from "./routes/approach/ApproachPage";
 import MydataAgreePage from "./routes/agree/MydataAgreePage";
 import JoinPage from "./routes/loginnjoin/JoinPage";
 import LoginPage from "./routes/loginnjoin/LoginPage";
-import MenubarLayout from "./components/MenubarLayout";
+//import MenubarLayout from "./components/MenubarLayout";
 import MainPage from "./routes/main/MainPage";
 import PaymentPage from "./routes/payment/PaymentPage";
 import AllmenuPage from "./routes/allmenu/AllmenuPage";
@@ -41,47 +41,51 @@ const routers = [
   },
   {
     path: "/main",
-    element: <MenubarLayout />,
-    children: [
-      {
-        path: "",
-        element: <MainPage />,
-        index: true,
-      },
-    ],
+    // element: <MenubarLayout />,
+    // children: [
+    //   {
+    //     path: "",
+    //     element: <MainPage />,
+    //     index: true,
+    //   },
+    // ],
+    element: <MainPage />,
   },
   {
     path: "/payment",
-    element: <MenubarLayout />,
-    children: [
-      {
-        path: "",
-        element: <PaymentPage />,
-        index: true,
-      },
-    ],
+    //element: <MenubarLayout />,
+    element: <PaymentPage />,
+    //   children: [
+    //     {
+    //       path: "",
+    //       element: <PaymentPage />,
+    //       index: true,
+    //     },
+    //   ],
   },
   {
     path: "/asset",
-    element: <MenubarLayout />,
-    children: [
-      {
-        path: "",
-        element: <AssetPage />,
-        index: true,
-      },
-    ],
+    //element:<MenubarLayout />,
+    element: <AssetPage />,
+    // children: [
+    //   {
+    //     path: "",
+    //     element: <AssetPage />,
+    //     index: true,
+    //   },
+    // ],
   },
   {
     path: "/allmenu",
-    element: <MenubarLayout />,
-    children: [
-      {
-        path: "",
-        element: <AllmenuPage />,
-        index: true,
-      },
-    ],
+    //element: <></>,
+    element: <AllmenuPage />,
+    // children: [
+    //   {
+    //     path: "",
+    //     element: <AllmenuPage />,
+    //     index: true,
+    //   },
+    // ],
   },
   {
     path: "/stock",

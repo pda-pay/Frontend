@@ -1,11 +1,15 @@
 import { IoHomeOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
-export default function HomeButton() {
+interface InfoProps {
+  userInfo: [string, string, boolean];
+}
+
+export default function HomeButton({ userInfo }: InfoProps) {
   const navigate = useNavigate();
 
   return (
-    <div onClick={() => navigate("/main")}>
+    <div onClick={() => navigate("/main", { state: { userInfo: userInfo } })}>
       <IoHomeOutline className="size-6"></IoHomeOutline>
       메인
     </div>
