@@ -14,16 +14,25 @@ export default function MainPage() {
   const [userInfo, setUserInfo] = useState<[string, string, boolean]>([
     "",
     "",
-    false,
+    true,
   ]);
 
   useEffect(() => {
     if (location.state) {
-      const { name } = location.state as { name: string };
-      const { id } = location.state as { id: string };
-      setUserInfo([name, id, userInfo[2]]);
+      if (location.state.name && location.state.id) {
+        const { name } = location.state as { name: string };
+        const { id } = location.state as { id: string };
+        setUserInfo([name, id, userInfo[2]]);
+      } else if (location.state.info) {
+        const { info } = location.state as { info: [string, string, boolean] };
+        setUserInfo([info[0], info[1], info[2]]);
+      }
     }
   }, [location.state]);
+
+  useEffect(() => {
+    console.log(userInfo);
+  }, [userInfo]);
 
   //TODO: 여기서 백엔드에게 가입 여부 가져오기
 

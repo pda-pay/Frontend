@@ -9,7 +9,7 @@ export default function HomeButton({ userInfo }: InfoProps) {
   const navigate = useNavigate();
 
   return (
-    <div onClick={() => navigate("/main", { state: { userInfo: userInfo } })}>
+    <div onClick={() => navigate("/main", { state: { info: userInfo } })}>
       <IoHomeOutline className="size-6"></IoHomeOutline>
       메인
     </div>

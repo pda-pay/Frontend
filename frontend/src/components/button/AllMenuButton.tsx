@@ -9,9 +9,7 @@ export default function AllMenuButton({ userInfo }: InfoProps) {
   const navigate = useNavigate();
 
   return (
-    <div
-      onClick={() => navigate("/allmenu", { state: { userInfo: userInfo } })}
-    >
+    <div onClick={() => navigate("/allmenu", { state: { info: userInfo } })}>
       <IoMenu className="size-6"></IoMenu>
       전체
     </div>

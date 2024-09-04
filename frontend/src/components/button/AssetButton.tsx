@@ -9,7 +9,7 @@ export default function AssetButton({ userInfo }: InfoProps) {
   const navigate = useNavigate();
 
   return (
-    <div onClick={() => navigate("/asset", { state: { userInfo: userInfo } })}>
+    <div onClick={() => navigate("/asset", { state: { info: userInfo } })}>
       <IoBarChart className="size-6"></IoBarChart>
       자산
     </div>

@@ -9,9 +9,7 @@ export default function CardButton({ userInfo }: InfoProps) {
   const navigate = useNavigate();
 
   return (
-    <div
-      onClick={() => navigate("/payment", { state: { userInfo: userInfo } })}
-    >
+    <div onClick={() => navigate("/payment", { state: { info: userInfo } })}>
       <IoCardOutline className="size-6"></IoCardOutline>
       결제
     </div>
