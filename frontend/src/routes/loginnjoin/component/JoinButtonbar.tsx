@@ -1,18 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import joinApi from "../../../api/joinAPI";
 import BasicButton from "../../../components/button/BasicButton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import axios from "axios";
 
 interface ButtonProps {
-  valid: boolean;
+  unValid: boolean;
   userInfo: string[];
 }
 
-export default function JoinButtonbar({ valid, userInfo }: ButtonProps) {
+export default function JoinButtonbar({ unValid, userInfo }: ButtonProps) {
   const service = new joinApi();
   const navigate = useNavigate();
 
-  const [btnValid, setBtnValid] = useState<boolean>(true);
+  const [btnValid, setBtnValid] = useState<boolean>(false);
 
   const joinFinish = async () => {
     try {
@@ -25,30 +26,33 @@ export default function JoinButtonbar({ valid, userInfo }: ButtonProps) {
 
       if (response.status === 201) {
         //여기서 버튼 비활성화 state 관리
-        setBtnValid(false);
+        setBtnValid(true);
       } else if (response.status === 400) {
         console.log((await response).data.message);
         //여기서 에러 메시지 출력하고 state 버튼 비호라성황
-        setBtnValid(true);
+        setBtnValid(false);
       }
-    } catch (error: any) {
-      if (error.response) {
-        console.log("에러 발생: " + error.response.data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("에러 발생: " + error);
       }
+      // if (error.response) {
+      //   console.log("에러 발생: " + error);
+      // }
     }
   };
 
-  useEffect(() => {
-    if (!valid) joinFinish();
-  }, [btnValid]);
+  const moveNext = () => {
+    navigate("/mydata");
+  };
 
   return (
     <BasicButton
       type="blue"
-      disabled={valid}
+      disabled={unValid}
       onClick={() => {
         joinFinish();
-        navigate("/mydata");
+        if (btnValid) moveNext();
       }}
     >
       다음
