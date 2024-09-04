@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import BoldTitle from "../../components/text/BoldTitle";
 import JoinButtonbar from "./component/JoinButtonbar";
@@ -14,7 +14,7 @@ export default function JoinPage() {
     ]);
   };
 
-  const [isButtonUnValid, setIsButtonUnValid] = useState<boolean>(false);
+  const [isButtonValid, setIsButtonUnValid] = useState<boolean>(false);
 
   const handleValidChange = (isValid: boolean) => {
     setIsButtonUnValid(isValid);
@@ -23,13 +23,13 @@ export default function JoinPage() {
   return (
     <PaddingDiv>
       <div>
-        <BoldTitle>안녕하세여!</BoldTitle>
+        <BoldTitle>안녕하세요!</BoldTitle>
       </div>
       <JoinInput
         onValidChange={handleValidChange}
         handleUserInfo={handleUserInfo}
       />
-      <JoinButtonbar valid={!isButtonUnValid} userInfo={userInfo} />
+      <JoinButtonbar unValid={!isButtonValid} userInfo={userInfo} />
     </PaddingDiv>
   );
 }
