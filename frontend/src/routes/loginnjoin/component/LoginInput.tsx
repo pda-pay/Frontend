@@ -34,7 +34,7 @@ export default function LoginInput() {
         </span>
         <input
           type="password"
-          inputmode="numeric"
+          // inputmode="numeric"
           name="password"
           value={password} // state에 저장된 이름을 input의 value로 설정
           onChange={handlePassword} // 입력이 변경될 때 state를 업데이트
