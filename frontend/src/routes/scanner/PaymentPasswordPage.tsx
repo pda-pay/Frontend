@@ -11,12 +11,10 @@ export default function PaymentPasswordPage() {
   const [isLoading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const service = new transactionAPI();
-  const userId = "2";
 
   const getToken = async () => {
     try {
       const result = await service.getToken({
-        userId: userId,
         paymentPassword: password,
       });
       navigate("/scanner", { state: result.data });
@@ -29,6 +27,11 @@ export default function PaymentPasswordPage() {
       });
     }
   };
+
+  useEffect(() => {
+    const cookie = document.cookie;
+    console.log(cookie);
+  }, []);
 
   useEffect(() => {
     if (password?.length < 6) return;

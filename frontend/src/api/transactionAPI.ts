@@ -1,7 +1,6 @@
 import BaseApi from "./axiosInstance";
 
 export interface PaymentTokenReqData {
-  userId: string;
   paymentPassword: string;
 }
 
