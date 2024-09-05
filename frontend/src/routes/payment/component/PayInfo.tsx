@@ -4,14 +4,12 @@ import BackgroundFrame from "../../../components/backgroundframe/BackgroundFrame
 import paymentAPI from "../../../api/paymentAPI";
 import BoldTitle from "../../../components/text/BoldTitle";
 import NormalTitle from "../../../components/text/NormalTitle";
+import { useNavigate } from "react-router-dom";
 
-interface PayInfo {
-  userInfo: [string, string, boolean];
-}
-export default function PayInfo({ userInfo }: PayInfo) {
+export default function PayInfo() {
+  const navigate = useNavigate();
   const paymentservice = new paymentAPI();
 
-  //TODO: 여기서 api 호출해서 내역 가져오기
   const [paymentAccount, setPaymentAccount] = useState<number>(1000000);
   const [creditLimit, setCreditLimit] = useState<number>(500000);
   const [accountDeposit, setAccountDeposit] = useState<number>(1000000);
@@ -26,6 +24,7 @@ export default function PayInfo({ userInfo }: PayInfo) {
   const [errMsg, setErrMsg] =
     useState<string>("결제 내역을 가져올 수 없습니다.");
 
+  //TODO: 여기서 api 호출해서 내역 가져오기
   const updatePaymentInfo = async () => {
     try {
       const response = await paymentservice.getPaymentInfo();
@@ -66,11 +65,15 @@ export default function PayInfo({ userInfo }: PayInfo) {
             <div>연결계좌 잔액: {accountDeposit.toLocaleString()}</div>
           </div>
         </div>
-
         <div className="flex flex-col gap-2">
           <div className="flex justify-between">
             <BoldTitle>최근 이용 내역</BoldTitle>{" "}
-            <span className="text-gray-400">더보기</span>
+            <span
+              className="text-gray-400"
+              onClick={() => navigate("/paymenthistory")}
+            >
+              더보기
+            </span>
           </div>
           <div>
             {paymentHistory.map((history) => (

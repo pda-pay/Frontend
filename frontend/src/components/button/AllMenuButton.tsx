@@ -1,15 +1,11 @@
 import { IoMenu } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
-interface InfoProps {
-  userInfo: [string, string, boolean];
-}
-
-export default function AllMenuButton({ userInfo }: InfoProps) {
+export default function AllMenuButton() {
   const navigate = useNavigate();
 
   return (
-    <div onClick={() => navigate("/allmenu", { state: { info: userInfo } })}>
+    <div onClick={() => navigate("/allmenu")}>
       <IoMenu className="size-6"></IoMenu>
       전체
     </div>

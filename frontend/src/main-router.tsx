@@ -3,7 +3,7 @@ import ApproachPage from "./routes/approach/ApproachPage";
 import MydataAgreePage from "./routes/agree/MydataAgreePage";
 import JoinPage from "./routes/loginnjoin/JoinPage";
 import LoginPage from "./routes/loginnjoin/LoginPage";
-//import MenubarLayout from "./components/MenubarLayout";
+import MenubarLayout from "./components/MenubarLayout";
 import MainPage from "./routes/main/MainPage";
 import PaymentPage from "./routes/payment/PaymentPage";
 import AllmenuPage from "./routes/allmenu/AllmenuPage";
@@ -16,6 +16,7 @@ import SettingAccountPage from "./routes/account/SettingAccountPage";
 import SettingDatePage from "./routes/paymentdate/SettingDatePage";
 import ConfirmPage from "./routes/confirm/ConfirmPage";
 import SimplePage from "./routes/simplepsw/SimplePage";
+import PaymentHistoryPage from "./routes/payment/PaymentHistoryPage";
 
 const routers = [
   {
@@ -41,51 +42,47 @@ const routers = [
   },
   {
     path: "/main",
-    // element: <MenubarLayout />,
-    // children: [
-    //   {
-    //     path: "",
-    //     element: <MainPage />,
-    //     index: true,
-    //   },
-    // ],
-    element: <MainPage />,
+    element: <MenubarLayout />,
+    children: [
+      {
+        path: "",
+        element: <MainPage />,
+        index: true,
+      },
+    ],
   },
   {
     path: "/payment",
-    //element: <MenubarLayout />,
-    element: <PaymentPage />,
-    //   children: [
-    //     {
-    //       path: "",
-    //       element: <PaymentPage />,
-    //       index: true,
-    //     },
-    //   ],
+    element: <MenubarLayout />,
+    children: [
+      {
+        path: "",
+        element: <PaymentPage />,
+        index: true,
+      },
+    ],
   },
   {
     path: "/asset",
-    //element:<MenubarLayout />,
-    element: <AssetPage />,
-    // children: [
-    //   {
-    //     path: "",
-    //     element: <AssetPage />,
-    //     index: true,
-    //   },
-    // ],
+    element: <MenubarLayout />,
+    children: [
+      {
+        path: "",
+        element: <AssetPage />,
+        index: true,
+      },
+    ],
   },
   {
     path: "/allmenu",
-    //element: <></>,
-    element: <AllmenuPage />,
-    // children: [
-    //   {
-    //     path: "",
-    //     element: <AllmenuPage />,
-    //     index: true,
-    //   },
-    // ],
+    element: <MenubarLayout />,
+    children: [
+      {
+        path: "",
+        element: <AllmenuPage />,
+        index: true,
+      },
+    ],
   },
   {
     path: "/stock",
@@ -114,6 +111,10 @@ const routers = [
   {
     path: "/simple",
     element: <SimplePage />,
+  },
+  {
+    path: "/paymenthistory",
+    element: <PaymentHistoryPage />,
   },
 ];
 

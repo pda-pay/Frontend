@@ -41,10 +41,7 @@ export default function ButtonBar({
   };
 
   return (
-    <div
-      className="flex justify-between
-    "
-    >
+    <div className="flex justify-between">
       <BasicButton
         type="gray"
         disabled={beforedisabled}

@@ -310,6 +310,8 @@ export default function StockPage() {
                 원하는 한도에 맞게 주식을 자동으로 선택해주세요.
               </div> */}
             </div>
+          </div>
+          <div className="">
             <ButtonBar
               beforetext="이전"
               nexttext="다음"

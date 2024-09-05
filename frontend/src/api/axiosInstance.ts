@@ -6,6 +6,8 @@ export default class BaseApi {
   cookies: Cookies;
 
   constructor() {
+    console.log("백엔드 : " + import.meta.env.VITE_BACKEND_URL);
+
     this.cookies = new Cookies();
     axios.defaults.withCredentials = true;
     this.fetcher = axios.create({
