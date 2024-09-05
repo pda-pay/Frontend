@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function LoginInput() {
+interface LoginProps {
+  handleLoginId: (value: string | undefined) => void;
+  handlePWD: (value: string | undefined) => void;
+}
+
+export default function LoginInput({ handleLoginId, handlePWD }: LoginProps) {
   const [userId, setUserId] = useState<string>();
   const [password, setPassword] = useState<string>();
 
@@ -11,6 +16,14 @@ export default function LoginInput() {
   const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
+
+  useEffect(() => {
+    handleLoginId(userId);
+  }, [userId]);
+
+  useEffect(() => {
+    handlePWD(password);
+  }, [password]);
 
   return (
     <div className="flex flex-col gap-10">
