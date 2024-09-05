@@ -5,7 +5,7 @@ export default class BaseApi {
   constructor() {
     axios.defaults.withCredentials = true;
     this.fetcher = axios.create({
-      baseURL: import.meta.env.VITE_BACKEND_URL,
+      baseURL: import.meta.env.REACT_APP_VITE_BACKEND_URL,
       headers: {
         "Content-Type": "application/json",
       },
