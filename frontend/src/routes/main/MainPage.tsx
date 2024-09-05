@@ -14,7 +14,7 @@ export default function MainPage() {
   const [userInfo, setUserInfo] = useState<[string, string, boolean]>([
     "",
     "",
-    true,
+    false,
   ]);
 
   useEffect(() => {

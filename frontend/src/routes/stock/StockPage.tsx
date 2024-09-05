@@ -8,11 +8,34 @@ import OwnStockList from "./component/OwnStockList";
 import MoveButton from "../../components/button/MoveButton";
 import ButtonBar from "../../components/button/ButtonBar";
 import { useLocation } from "react-router-dom";
+import payServiceAPI from "../../api/payServiceAPI";
+import axios from "axios";
 //import { useNavigate } from "react-router-dom";
 
 export default function StockPage() {
   //const navigate = useNavigate();
   //TODO: 보유주 api로 가져오기
+  const payjoinservice = new payServiceAPI();
+
+  const getStocks = async () => {
+    try {
+      const response = await payjoinservice.getAllStock();
+
+      if (response.status === 200) {
+        console.log(response.data.stockMortgagedStocks);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401 || error.response?.status === 403)
+          console.log("에러 발생 " + error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getStocks();
+  }, []);
+
   //회사코드, 회사명, 종목명, 등급, 전일종가, 주수, 한도, 계좌번호
   const ownStock: [
     string,
