@@ -6,20 +6,20 @@ import StockModal from "./StockModal";
 interface StockProps {
   stocks: [
     string,
+    number,
+    number,
     string,
     string,
     string,
+    string,
     number,
     number,
-    number,
-    number,
-    string
+    number
   ][];
   handleTemp: (index: number, amount: number) => void;
 }
 export default function StockFrame({ stocks, handleTemp }: StockProps) {
-  // 0       1      2    3     4        5        6       7     8
-  //회사코드, 회사명, 종목명, 등급, 전일종가, 선택한 주수, 전체 주수, 한도, 계좌번호
+  //0: 계좌번호, 1: 증권사코드, 2: 증권사명, 3: 한도, 4: 담보주수, 5: 보유주수,  6: 등급, 7: 종목코드, 8: 종목명, 9: 전일종가
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [clickedValue, setClickedValue] = useState<number>(0);
@@ -32,58 +32,62 @@ export default function StockFrame({ stocks, handleTemp }: StockProps) {
     [key: string]: [
       number,
       string,
+      number,
+      number,
       string,
       string,
       string,
+      string,
       number,
       number,
-      number,
-      number,
-      string
+      number
     ][];
   }>({});
 
   const handleCategory = (
     arr: [
       string,
+      number,
+      number,
       string,
       string,
       string,
+      string,
       number,
       number,
-      number,
-      number,
-      string
+      number
     ][]
   ) => {
     const grouped: {
       [key: string]: [
         number,
         string,
+        number,
+        number,
         string,
         string,
         string,
+        string,
         number,
         number,
-        number,
-        number,
-        string
+        number
       ][];
     } = {};
 
     arr.forEach((stock, index) => {
-      const key = stock[1];
+      const key = stock[6];
       const newStock: [
         number,
         string,
+        number,
+        number,
         string,
         string,
         string,
+        string,
         number,
         number,
-        number,
-        number,
-        string
+        number
       ] = [index, ...stock];
 
       //이미 해당 증권사 그룹이 생성돼있다면,
@@ -137,29 +141,31 @@ export default function StockFrame({ stocks, handleTemp }: StockProps) {
                   <thead>
                     <tr>
                       <th>종목명</th>
+                      <th>계좌</th>
                       <th>선택한 주수</th>
                       <th>전일 종가</th>
-                      <th>등급</th>
+                      {/* <th>등급</th> */}
                       <th>가능 한도</th>
                     </tr>
                   </thead>
                   <tbody>
                     {stocks.map((stock, index) =>
-                      stock[6] !== 0 ? (
+                      stock[3] !== 0 ? (
                         <tr
                           key={index}
                           onClick={() =>
-                            handleOpenModal(stock[0], stock[6], stock[7])
+                            handleOpenModal(stock[0], stock[3], stock[2])
                           }
                           style={{
                             cursor: "pointer",
                           }}
                         >
-                          <td>{stock[3]}</td>
-                          <td>{stock[6]}</td>
                           <td>{stock[5]}</td>
-                          <td>{stock[4]}</td>
-                          <td>{stock[8]}</td>
+                          <td>{stock[1].slice(0, 3)}</td>
+                          <td>{stock[3]}</td>
+                          <td>{stock[9].toLocaleString()}원</td>
+                          {/* <td>{stock[8]}</td> */}
+                          <td>{stock[10].toLocaleString()}원</td>
                           <div></div>
                         </tr>
                       ) : (

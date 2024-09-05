@@ -5,7 +5,13 @@ import SCard from "./SCard";
 
 interface StockProps {
   stocks: {
-    [key: string]: [
+    [
+      key: string
+    ]: //0: 계좌번호, 1: 보유주수, 2: 담보주수, 3: 종목코드, 4: 종목명, 5: 증권사코드,  6: 증권사명, 7: 등급, 8: 전일종가, 9: 한도
+    [
+      number,
+      string,
+      number,
       number,
       string,
       string,
@@ -13,9 +19,7 @@ interface StockProps {
       string,
       number,
       number,
-      number,
-      number,
-      string
+      number
     ][];
   };
   handleSelectedStock: (index: number, amount: number) => void;
@@ -42,7 +46,7 @@ export default function OwnStockList({
     slidesToShow: 1,
     speed: 500,
     focusOnSelect: true,
-    dots: true,
+    dots: false,
     arrows: false,
     draggable: true, // 드래그 가능 설정
     swipe: true, // 터치 제스처 스와이프 설정
