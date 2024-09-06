@@ -28,6 +28,15 @@ export interface PutPriorityReqData {
   }[];
 }
 
+export interface PutAccountReqData {
+  repaymentAccount: {
+    accountNumber: string;
+    companyCode: string;
+    companyName: string;
+    category: string;
+  };
+}
+
 export default class payServiceAPI extends BaseApi {
   //보유 주식 가져오기
   async getAllStock() {
@@ -62,6 +71,20 @@ export default class payServiceAPI extends BaseApi {
   //한도 가져오기
   async getLimit() {
     const resp = await this.fetcher.get("/payment/users/limit-information");
+    return resp;
+  }
+
+  //한도 보내기
+
+  //은행 계좌 가져오기
+  async getAccount() {
+    const resp = await this.fetcher.get("/payment/users/accounts");
+    return resp;
+  }
+
+  //은행 계좌 보내기
+  async putAccount(data: PutAccountReqData) {
+    const resp = await this.fetcher.put("/payment/users/accounts", data);
     return resp;
   }
 }
