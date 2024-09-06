@@ -1,54 +1,146 @@
 import { ApexOptions } from "apexcharts";
 import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import payServiceAPI from "../../api/payServiceAPI";
 
 export default function StockPieChart() {
   const [series, setSeries] = useState<number[]>([]);
-  const [options, setOptions] = useState<ApexOptions>({});
+  const [options, setOptions] = useState<ApexOptions>({
+    chart: {
+      width: 350,
+    },
+    legend: {
+      position: "bottom",
+    },
+  });
+  const [companyList, setCompanyList] = useState<string[]>([]);
+  const [totalData, setTotalData] = useState<TotalData>({});
+
+  const service = new payServiceAPI();
+
+  interface DataPerCompany {
+    series: number[];
+    labels: string[];
+  }
+
+  interface TotalData {
+    [key: string]: DataPerCompany; // "전체"와 각 회사 이름을 위한 데이터
+  }
+
+  const fetchData = async () => {
+    const result = await service.getAllStock();
+
+    const processedData: TotalData = {
+      전체: {
+        series: [],
+        labels: [],
+      },
+      담보: {
+        series: [],
+        labels: [],
+      },
+    };
+
+    result.data.stockMortgagedStocks.forEach((stock: any) => {
+      const {
+        companyName,
+        stockName,
+        quantity,
+        stockPrice,
+        mortgagedQuantity,
+      } = stock;
+      const totalValue = quantity * stockPrice;
+
+      const mortgaged = mortgagedQuantity * stockPrice;
+      if (mortgaged > 0) {
+        processedData["담보"].series.push(mortgaged);
+        processedData["담보"].labels.push(stockName);
+      }
+
+      // "전체"에 모든 데이터 추가
+      processedData["전체"].series.push(totalValue);
+      processedData["전체"].labels.push(stockName);
+
+      // 회사별 데이터 추가
+      if (!processedData[companyName]) {
+        processedData[companyName] = {
+          series: [],
+          labels: [],
+        };
+      }
+
+      processedData[companyName].series.push(totalValue);
+      processedData[companyName].labels.push(stockName);
+    });
+
+    setCompanyList([...Object.keys(processedData)]);
+    setTotalData(processedData);
+
+    changeChartData(processedData["전체"]);
+  };
 
   useEffect(() => {
-    console.log("test");
-    const s = [44, 30, 20, 13, 43, 10, 10, 5, 2];
-    const l = [
-      "두원기공",
-      "하이닉스",
-      "포스코",
-      "SK",
-      "LG",
-      "삼성전자",
-      "테슬라",
-      "삼성바이오로직스",
-      "두나무",
-    ];
+    fetchData();
+  }, []);
 
-    if (s.length > 6) {
-      const sum = s.slice(6).reduce((acc, curr) => acc + curr, 0);
-      s.splice(6, s.length - 6, sum);
-      l.splice(6, l.length - 6, "기타");
+  const changeChartData = (data: DataPerCompany) => {
+    if (data.labels.length > 6) {
+      const sum = data.series.slice(6).reduce((acc, curr) => acc + curr, 0);
+      data.series.splice(6, data.series.length - 6, sum);
+      data.labels.splice(6, data.labels.length - 6, "기타");
     }
+
+    setSeries(data.series);
 
     const o: ApexOptions = {
       chart: {
         width: 350,
+        animations: {
+          enabled: true,
+          easing: "easeinout",
+          speed: 800,
+          animateGradually: {
+            enabled: true,
+            delay: 150,
+          },
+          dynamicAnimation: {
+            enabled: true,
+            speed: 350,
+          },
+        },
       },
-      labels: l,
       legend: {
         position: "bottom",
       },
+      labels: data.labels,
     };
 
-    setSeries(s);
     setOptions(o);
-  }, []);
+  };
 
   return (
-    <div className="flex justify-center bg-white rounded-lg my-5">
+    <div className="flex flex-col justify-center bg-white rounded-lg my-5">
       <ReactApexChart
         options={options}
         series={series}
         type="pie"
         width={350}
       />
+      <div className="flex flex-row pt-5 pb-2 px-4 justify-start overflow-x-auto whitespace-nowrap">
+        {companyList.map((value, index) => {
+          return (
+            <span
+              key={index}
+              className="inline-block px-2 py-1 mx-2 bg-gray-200 text-gray-800 rounded-lg shadow-md"
+              onClick={() => {
+                changeChartData(totalData[value]);
+              }}
+            >
+              {value}
+            </span>
+          );
+        })}
+      </div>
     </div>
   );
 }
