@@ -3,7 +3,11 @@ import StockSelectBar from "./StockSelectBar";
 
 interface CardProps {
   index: number;
-  stockInfo: [
+  stockInfo: //0: id, 1: 계좌번호, 2: 증권사코드, 3: 증권사명, 4: 한도, 5: 담보주수, 6: 보유주수,  7: 등급, 8: 종목코드, 9: 종목명, 10: 전일종가
+  [
+    number,
+    string,
+    number,
     number,
     string,
     string,
@@ -11,9 +15,7 @@ interface CardProps {
     string,
     number,
     number,
-    number,
-    number,
-    string
+    number
   ];
   handleSelectedStock: (index: number, amount: number) => void;
 }
@@ -52,33 +54,38 @@ export default function SCard({
   handleSelectedStock,
 }: CardProps) {
   return (
-    //회사코드, 회사명, 종목명, 등급, 전일종가, 선택한 주수, 전체 주수, 한도, 계좌번호
     <StyledCard bgColor={getRandomColor()}>
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-1.5 text-sm">
         <div className="flex justify-between">
-          <p className="font-bold">{stockInfo[3]}</p>{" "}
-          <p>전일 종가 {stockInfo[5]}원</p>
+          <p className="font-bold">{stockInfo[5]}</p>
+          <p>전일 종가 {stockInfo[9].toLocaleString()}원</p>
         </div>
         <div className="flex justify-between">
-          <p className="font-bold text-red-700	">{stockInfo[4]}등급</p>
-          <p>총 주수 {stockInfo[7]}주</p>
+          <p className="font-bold text-red-700	">{stockInfo[8]}등급</p>
+          <p>총 주수 {stockInfo[2]}주</p>
         </div>
         <div className="flex justify-end gap-3 items-center	">
           <div>주수 선택 </div>
           <div className="w-1/3">
             <StockSelectBar
               index={index}
-              count={stockInfo[7]}
-              amount={stockInfo[6]}
+              count={stockInfo[2]}
+              amount={stockInfo[3]}
               handleSelectedStock={handleSelectedStock}
             />
           </div>
         </div>
         <div className="flex flex-row-reverse">
-          <p>총 가격 {stockInfo[5] * stockInfo[7]}원</p>
+          <p>총 가격 {(stockInfo[9] * stockInfo[2]).toLocaleString()}원</p>
         </div>
         <div className="flex flex-row-reverse">
-          <p>확보 가능한 최대 한도 {stockInfo[8] * stockInfo[7]}원</p>
+          <p>최대 한도 {(stockInfo[10] * stockInfo[2]).toLocaleString()}원</p>
+        </div>
+        <div className="flex font-thin">
+          <p>
+            계좌 번호:
+            {stockInfo[1]}
+          </p>
         </div>
       </div>
     </StyledCard>

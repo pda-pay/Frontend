@@ -7,14 +7,15 @@ import SelectedStockButtonbar from "./component/SelectedStockButtonbar";
 interface StockProps {
   selectedStock: [
     string,
+    number,
+    number,
     string,
     string,
     string,
+    string,
     number,
     number,
-    number,
-    number,
-    string
+    number
   ][];
   handleSelectedStock: (index: number, amount: number) => void;
   handlePage: (p: number) => void;
@@ -26,42 +27,56 @@ export default function ShowSelectedPage({
   handlePage,
 }: StockProps) {
   const [temp, setTemp] = useState<
-    [string, string, string, string, number, number, number, number, string][]
+    [
+      string,
+      number,
+      number,
+      string,
+      string,
+      string,
+      string,
+      number,
+      number,
+      number
+    ][]
   >([...selectedStock]);
 
   const handleTemp = (index: number, amount: number) => {
     const newRow: [
       string,
+      number,
+      number,
       string,
       string,
       string,
+      string,
       number,
       number,
-      number,
-      number,
-      string
+      number
     ] = [
       temp[index][0],
       temp[index][1],
-      temp[index][2],
+      amount,
       temp[index][3],
       temp[index][4],
-      amount,
+      temp[index][5],
       temp[index][6],
       temp[index][7],
       temp[index][8],
+      temp[index][9],
     ];
 
     const t: [
       string,
+      number,
+      number,
       string,
       string,
       string,
+      string,
       number,
       number,
-      number,
-      number,
-      string
+      number
     ][] = [...temp.slice(0, index), newRow, ...temp.slice(index + 1)];
     setTemp(t);
   };
@@ -72,8 +87,8 @@ export default function ShowSelectedPage({
 
   const clickFinishButton = () => {
     for (let i = 0; i < temp.length; i++) {
-      console.log("click finish button: " + i + "is " + temp[i][5]);
-      handleSelectedStock(i, temp[i][5]);
+      console.log("click finish button: " + i + "is " + temp[i][2]);
+      handleSelectedStock(i, temp[i][2]);
     }
   };
 
@@ -81,7 +96,7 @@ export default function ShowSelectedPage({
   const calculateLimit = () => {
     let totalLimit = 0;
     for (let i = 0; i < temp.length; i++) {
-      totalLimit += temp[i][5] * temp[i][7];
+      totalLimit += temp[i][2] * temp[i][9];
     }
     return totalLimit;
   };
@@ -93,9 +108,13 @@ export default function ShowSelectedPage({
     <PaddingDiv>
       <NormalTitle>
         현재 확보한 총 한도는
-        <span className="font-bold text-blue-700"> {limit}원</span> 입니다.
+        <span className="font-bold text-blue-700">
+          {" "}
+          {limit.toLocaleString()}원
+        </span>{" "}
+        입니다.
         <div className="text-sm	text-gray-400">
-          각 종목을 클릭하면 선택할 주수 조절이 가능합니다.
+          각 종목을 클릭하면 담보로 할 주수 수정이 가능합니다.
         </div>
       </NormalTitle>
 
@@ -104,10 +123,12 @@ export default function ShowSelectedPage({
           <StockFrame stocks={temp} handleTemp={handleTemp} />
         </div>
       </div>
-      <SelectedStockButtonbar
-        handlePage={handlePage}
-        clickFinishButton={clickFinishButton}
-      />
+      <div className="mt-auto">
+        <SelectedStockButtonbar
+          handlePage={handlePage}
+          clickFinishButton={clickFinishButton}
+        />
+      </div>
     </PaddingDiv>
   );
 }
