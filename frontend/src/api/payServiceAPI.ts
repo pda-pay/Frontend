@@ -37,6 +37,10 @@ export interface PutAccountReqData {
   };
 }
 
+export interface PutPaymentDateReqData {
+  repaymentDate: number;
+}
+
 export default class payServiceAPI extends BaseApi {
   //보유 주식 가져오기
   async getAllStock() {
@@ -85,6 +89,12 @@ export default class payServiceAPI extends BaseApi {
   //은행 계좌 보내기
   async putAccount(data: PutAccountReqData) {
     const resp = await this.fetcher.put("/payment/users/accounts", data);
+    return resp;
+  }
+
+  //상환일 보내기
+  async putPaymentDate(data: PutPaymentDateReqData) {
+    const resp = await this.fetcher.put("/payment/users/repayment-date", data);
     return resp;
   }
 }
