@@ -49,16 +49,10 @@ export default function QRPage() {
       paymentAmount: amount,
     });
 
-    // const event = {
-    //   data: {
-    //     paymentDate: 123,
-    //     paymentAmount: 10000,
-    //   },
-    // };
+    const baseUrl = import.meta.env.VITE_SOCKET_URL;
+    console.log(baseUrl);
 
-    wsRef.current = new WebSocket(
-      "ws://43.201.53.172:8080/api/payment/socket?id=" + transactionId
-    );
+    wsRef.current = new WebSocket(`${baseUrl}?id=` + transactionId);
     wsRef.current.onmessage = (event: MessageEvent) => {
       const result = JSON.parse(event.data);
       const date = new Date(result.paymentDate);

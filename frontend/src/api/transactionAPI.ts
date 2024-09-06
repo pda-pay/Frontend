@@ -18,7 +18,7 @@ export default class transactionAPI extends BaseApi {
   }
 
   async requestTransaction(data: TransactionReqData) {
-    const resp = await this.fetcher.post("/payment/requset", data);
+    const resp = await this.fetcher.post("/payment/request", data);
     return resp;
   }
 }
