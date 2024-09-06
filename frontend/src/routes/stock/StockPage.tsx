@@ -92,7 +92,6 @@ export default function StockPage() {
   const putMorgagedStocks = async (): Promise<boolean> => {
     try {
       const temp = makeMortgagedReqData();
-      console.log(temp);
       const response = await payjoinservice.putMortgagedStock(temp);
       if (response.status === 200) {
         const data = response.data;
@@ -453,7 +452,7 @@ export default function StockPage() {
               nexttext="다음"
               beforeurl="/serviceagree"
               nexturl="/priority"
-              nextstate={{ selectedStock: selectedStock }}
+              //nextstate={{ selectedStock: selectedStock }}
               nextOnClick={putMorgagedStocks}
             ></ButtonBar>
           </div>

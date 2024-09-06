@@ -64,8 +64,7 @@ export default function ButtonBar({
     if (nextOnClick !== undefined) {
       //nextOnClick();
       handleNextClick();
-    }
-    navigate(nexturl);
+    } else navigate(nexturl);
   };
 
   // 결과에 따라 메소드를 실행하는 async 함수
