@@ -91,9 +91,9 @@ export default function StockPage() {
   //담보 잡은 주식 보내기
   const putMorgagedStocks = async (): Promise<boolean> => {
     try {
-      const response = await payjoinservice.putMortgagedStock(
-        makeMortgagedReqData()
-      );
+      const temp = makeMortgagedReqData();
+      console.log(temp);
+      const response = await payjoinservice.putMortgagedStock(temp);
       if (response.status === 200) {
         const data = response.data;
         console.log(data);
