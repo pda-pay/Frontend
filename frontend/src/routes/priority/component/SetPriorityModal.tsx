@@ -141,7 +141,7 @@ export default function SetPriorityModal({
       </div>
 
       {!showInput ? (
-        <div>
+        <div className="flex flex-col gap-5">
           <NormalTitle>우선 순위가 정해지지 않은 담보 주식</NormalTitle>
 
           {unPriority.length !== 0 ? (
@@ -169,9 +169,9 @@ export default function SetPriorityModal({
                       <td>{stock[6]}</td>
                       <td>{stock[3]}</td>
                       <td>{stock[1]}</td>
-                      <td>{stock[8]}</td>
+                      <td>{stock[8].toLocaleString()}</td>
                       <td>{stock[7]}</td>
-                      <td>{stock[9]}</td>
+                      <td>{stock[9].toLocaleString()}</td>
                     </tr>
                   </tbody>
                 ))}
@@ -184,11 +184,15 @@ export default function SetPriorityModal({
       ) : (
         <div className="flex flex-col">
           <div>
-            {unPriority[clickedRowIdx][6]} {unPriority[clickedRowIdx][3]}의 몇
-            주를 우선순위에 추가할까요?
+            <span className="font-bold">
+              {unPriority[clickedRowIdx][6]} {unPriority[clickedRowIdx][3]}
+            </span>
+            의 몇 주를 우선순위에 추가할까요?
           </div>
           <label className="block">
-            <span>최대 {unPriority[clickedRowIdx][1]}주 선택 가능합니다.</span>
+            <span className="text-sm text-gray-400">
+              최대 {unPriority[clickedRowIdx][1]}주 선택 가능합니다.
+            </span>
             <input
               ref={inputRef}
               type="number"

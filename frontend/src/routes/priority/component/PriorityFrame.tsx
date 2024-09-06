@@ -51,94 +51,98 @@ export default function PriorityFrame({
   deletePriority,
 }: PriProps) {
   return (
-    <div>
-      <BoldTitle>우선순위 적용한 담보 주식</BoldTitle>
-      {/* <div className="text-sm	text-gray-400">
-        종목을 클릭해서 주수 수정이 가능합니다.
-      </div> */}
-      <BackgroundFrame color="blue">
-        {priority.length !== 0 ? (
-          <div className="text-xs">
-            <table
-              style={{
-                width: "100%",
-                borderCollapse: "collapse",
-                textAlign: "center",
-              }}
-            >
-              <thead>
-                <tr>
-                  <th>증권사명</th>
-                  <th>종목명</th>
-                  <th>선택 주수</th>
-                  <th>전일 종가</th>
-                  <th>등급</th>
-                  <th>가능 한도</th>
-                  <th>삭제</th>
-                </tr>
-              </thead>
-              <tbody>
-                {priority.map((stock, rowIndex) => (
+    <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-2">
+        <BoldTitle>우선순위 적용한 담보 주식</BoldTitle>
+        <BackgroundFrame color="blue">
+          {priority.length !== 0 ? (
+            <div className="text-xs">
+              <table
+                style={{
+                  width: "100%",
+                  borderCollapse: "collapse",
+                  textAlign: "center",
+                }}
+              >
+                <thead>
                   <tr>
-                    <td>{stock[6]}</td>
-                    <td>{stock[3]}</td>
-                    <td>{stock[1]}</td>
-                    <td>{stock[8].toLocaleString()}</td>
-                    <td>{stock[7]}</td>
-                    <td>{stock[9]}</td>
-                    <td onClick={() => deletePriority(rowIndex, stock)}>-</td>
+                    <th>증권사명</th>
+                    <th>종목명</th>
+                    <th>선택 주수</th>
+                    <th>전일 종가</th>
+                    <th>등급</th>
+                    <th>가능 한도</th>
+                    <th>삭제</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div>아직 우선순위를 설정한 담보 주식이 없습니다.</div>
-        )}
-      </BackgroundFrame>
-
-      <BoldTitle>우선순위 적용하지 않은 주식</BoldTitle>
-      <div className="text-sm	text-gray-400">
-        우선순위를 정하지 않은 담보주식은 서비스 로직에 따라 정렬됩니다.
+                </thead>
+                <tbody>
+                  {priority.map((stock, rowIndex) => (
+                    <tr>
+                      <td>{stock[6]}</td>
+                      <td>{stock[3]}</td>
+                      <td>{stock[1]}</td>
+                      <td>{stock[8].toLocaleString()}</td>
+                      <td>{stock[7]}</td>
+                      <td>{stock[9]}</td>
+                      <td onClick={() => deletePriority(rowIndex, stock)}>-</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div>아직 우선순위를 설정한 담보 주식이 없습니다.</div>
+          )}
+        </BackgroundFrame>
       </div>
-      <BackgroundFrame color="blue">
-        {unPriority.length !== 0 ? (
-          <div className="text-xs">
-            <table
-              style={{
-                width: "100%",
-                borderCollapse: "collapse",
-                textAlign: "center",
-              }}
-            >
-              <thead>
-                <tr>
-                  <th>증권사명</th>
-                  <th>종목명</th>
-                  <th>남은 주수</th>
-                  <th>전일 종가</th>
-                  <th>등급</th>
-                  <th>가능 한도</th>
-                </tr>
-              </thead>
-              <tbody>
-                {unPriority.map((stock) => (
-                  <tr>
-                    <td>{stock[6]}</td>
-                    <td>{stock[3]}</td>
-                    <td>{stock[1]}</td>
-                    <td>{stock[8].toLocaleString()}</td>
-                    <td>{stock[7]}</td>
-                    <td>{stock[9]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+
+      <div className="flex flex-col gap-2">
+        <div>
+          <BoldTitle>우선순위 적용하지 않은 주식</BoldTitle>
+          <div className="text-xs	text-gray-400">
+            우선순위를 정하지 않은 담보주식은 서비스 로직에 따라 정렬됩니다.
           </div>
-        ) : (
-          <div>우선순위를 설정하지 않은 담보 주식이 없습니다.</div>
-        )}
-      </BackgroundFrame>
+        </div>
+
+        <BackgroundFrame color="blue">
+          {unPriority.length !== 0 ? (
+            <div className="text-xs">
+              <table
+                style={{
+                  width: "100%",
+                  borderCollapse: "collapse",
+                  textAlign: "center",
+                }}
+              >
+                <thead>
+                  <tr>
+                    <th>증권사명</th>
+                    <th>종목명</th>
+                    <th>남은 주수</th>
+                    <th>전일 종가</th>
+                    <th>등급</th>
+                    <th>가능 한도</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {unPriority.map((stock) => (
+                    <tr>
+                      <td>{stock[6]}</td>
+                      <td>{stock[3]}</td>
+                      <td>{stock[1]}</td>
+                      <td>{stock[8].toLocaleString()}</td>
+                      <td>{stock[7]}</td>
+                      <td>{stock[9]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div>우선순위를 설정하지 않은 담보 주식이 없습니다.</div>
+          )}
+        </BackgroundFrame>
+      </div>
     </div>
   );
 }

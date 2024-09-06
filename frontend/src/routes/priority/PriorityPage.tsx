@@ -102,6 +102,26 @@ export default function PriorityPage() {
     }
   };
 
+  const putPriority = async (): Promise<boolean> => {
+    try {
+      const temp = makePriorityReqData();
+      const response = await payjoinservice.putPriorityStock(temp);
+
+      if (response.status === 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 400) {
+          console.log("우선 순위 put 요청 에러 발생: " + error);
+        }
+      }
+      return false;
+    }
+  };
+
   const saveMortgagedStock = (mStock: mortgagedObject[]) => {
     const temp: [
       string,
@@ -165,7 +185,7 @@ export default function PriorityPage() {
 
   const settingUnPriority = () => {
     console.log("우선순위 없는 주식 세팅 중...");
-    // C 배열을 초기화
+
     const temp: [
       string,
       number,
@@ -378,6 +398,41 @@ export default function PriorityPage() {
     setPriority(newPriority);
   };
 
+  const makePriorityReqData = () => {
+    return {
+      stockPriorities: priority.map(
+        (
+          stock: [
+            string,
+            number,
+            string,
+            string,
+            number,
+            string,
+            string,
+            number,
+            number,
+            number
+          ]
+        ) => ({
+          //0: 계좌번호, 1: 담보잡은주수, 2: 종목코드, 3: 종목명, 4: 우선순위,
+          // 5: 증권사코드, 6: 증권사명, 7: 위험도, 8: 전일종가, 9: 한도
+
+          accountNumber: stock[0],
+          quantity: stock[1],
+          stockCode: stock[2],
+          stockName: stock[3],
+          stockRank: stock[4],
+          companyCode: stock[5],
+          companyName: stock[6],
+          stabilityLevel: stock[7],
+          stockPrice: stock[8],
+          limitPrice: stock[9],
+        })
+      ),
+    };
+  };
+
   return (
     <PaddingDiv>
       <div>
@@ -409,6 +464,7 @@ export default function PriorityPage() {
           beforeurl="/stock"
           beforestate={{ priorityToStock: selectedStock }}
           nexturl="/limit"
+          nextOnClick={putPriority}
           //nextstate={{ stock: selectedStock, priorityStock: priorityStock }}
         />
       </div>
