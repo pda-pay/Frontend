@@ -462,7 +462,7 @@ export default function PriorityPage() {
           beforetext="이전"
           nexttext="완료"
           beforeurl="/stock"
-          beforestate={{ priorityToStock: selectedStock }}
+          //beforestate={{ priorityToStock: selectedStock }}
           nexturl="/limit"
           nextOnClick={putPriority}
           //nextstate={{ stock: selectedStock, priorityStock: priorityStock }}
