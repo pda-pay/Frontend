@@ -413,7 +413,8 @@ export default function PriorityPage() {
             number,
             number,
             number
-          ]
+          ],
+          index
         ) => ({
           //0: 계좌번호, 1: 담보잡은주수, 2: 종목코드, 3: 종목명, 4: 우선순위,
           // 5: 증권사코드, 6: 증권사명, 7: 위험도, 8: 전일종가, 9: 한도
@@ -422,7 +423,7 @@ export default function PriorityPage() {
           quantity: stock[1],
           stockCode: stock[2],
           stockName: stock[3],
-          stockRank: stock[4],
+          stockRank: index + 1,
           companyCode: stock[5],
           companyName: stock[6],
           stabilityLevel: stock[7],

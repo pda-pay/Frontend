@@ -5,84 +5,129 @@ import BoldTitle from "../../components/text/BoldTitle";
 import ConfirmModal from "./component/ConfirmModal";
 import ButtonBar from "../../components/button/ButtonBar";
 import NormalTitle from "../../components/text/NormalTitle";
+import payServiceAPI from "../../api/payServiceAPI";
+import userAPI from "../../api/userAPI";
+import axios from "axios";
+
+type MortgagedObject = {
+  accountNumber: string;
+  quantity: number;
+  stockCode: string;
+  stockName: string;
+  companyCode: string;
+  companyName: string;
+  stabilityLevel: number;
+  stockPrice: number;
+  limitPrice: number;
+};
+
+type PriorityObject = {
+  accountNumber: string;
+  quantity: number;
+  stockCode: string;
+  stockName: string;
+  stockRank: number;
+  companyCode: string;
+  companyName: string;
+  stabilityLevel: number;
+  stockPrice: number;
+  limitPrice: number;
+};
 
 export default function ConfirmPage() {
+  const payjoinservice = new payServiceAPI();
+  const userinfosevice = new userAPI();
+
   //TODO: useLocation으로 가져온 userInfo
-  //const userInfo: [number, string] = [아이디, 이름];
+  const [userInfo, setUserInfo] = useState<[string, boolean, boolean]>([
+    "이름",
+    false,
+    false,
+  ]);
 
   //TODO: api GET 요청으로 받아온 계좌정보
-  const account: string[] = ["신한은행", "1111-1111-1111"];
+  const [account, setAccount] = useState<string[]>([]);
   //TODO: api GET 요청으로 받아온 결제일 정보
-  const payDate: number = 7;
+  const [payDate, setPayDate] = useState<number>(0);
   //TODO: api GET 요청으로 받아온 설정 한도
-  const limit: number = 50000000;
+  const [limit, setLimit] = useState<number>(0);
   //TODO: 담보로 잡은 주식
-  const stocks: [
-    string, // "accountNumber": "456-7890-12345",
-    number, //         "quantity": 250,
-    number, //         "mortgagedQuantity": 0,
-    string, //         "stockCode": "005930",
-    string, //         "stockName": "삼성전자",
-    string, //         "companyCode": "04",
-    string, //         "companyName": "삼성증권",
-    number, //         "stabilityLevel": 1,
-    number, //         "stockPrice": 74300,
-    number //         "limitPrice": 48295.0
-  ][] = [
-    [
-      "1212-1212-1212",
-      50,
-      30,
-      "0590",
-      "삼성전자",
-      "0202",
-      "NH투자증권",
-      1,
-      70000,
-      55000,
-    ],
-    [
-      "2323-2323-2323",
-      80,
-      50,
-      "0120",
-      "하이닉스",
-      "0101",
-      "신한투자증권",
-      1,
-      50000,
-      35000,
-    ],
-    [
-      "2323-2323-2323",
-      50,
-      30,
-      "0590",
-      "삼성전자",
-      "0101",
-      "신한투자증권",
-      1,
-      70000,
-      55000,
-    ],
-    [
-      "3434-3434-3434",
-      20,
-      20,
-      "0590",
-      "삼성전자",
-      "0101",
-      "신한투자증권",
-      1,
-      70000,
-      55000,
-    ],
-  ];
+  const [stocks, setStocks] = useState<
+    [string, number, string, string, string, string, number, number, number][]
+  >([]);
   //TODO: api GET 요청으로 받아온 우선순위 적용된 배열
   //[우선순위, 계좌번호, 담보주수, 종목코드, 종목명, 증권사코드, 증권사명, 위험도, 전일종가, 한도]
   const [priStocks, setPriStocks] = useState<
     [
+      string,
       number,
+      string,
+      string,
+      number,
+      string,
+      string,
+      number,
+      number,
+      number
+    ][]
+  >([]);
+
+  const getUserInfo = async () => {
+    try {
+      const response = await userinfosevice.checkMem();
+
+      if (response.status === 200) {
+        const temp: [string, boolean, boolean] = [
+          response.data.userId,
+          response.data.paymentServiceMember,
+          userInfo[2],
+        ];
+        setUserInfo([...temp]);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 400) {
+          console.log("에러 발생");
+        }
+      }
+      console.log(error);
+    }
+  };
+
+  const getFinalInfo = async () => {
+    try {
+      const response = await payjoinservice.getFinalInfo();
+
+      if (response.status === 200) {
+        const repaymentAccount = response.data.repaymentAccount;
+        setAccount([
+          repaymentAccount.companyName,
+          repaymentAccount.accountNumber,
+          repaymentAccount.companyCode,
+          repaymentAccount.category,
+        ]);
+        setPayDate(response.data.repaymentDate);
+        setLimit(response.data.currentLimit);
+        const mortgagedStocks = response.data.mortgagedStocks;
+        saveMortgagedStock(mortgagedStocks);
+        const stockPriorities = response.data.stockPriorities;
+        savePriorityStock(stockPriorities);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 400)
+          console.log("최종 컨펌 에러 발생: " + error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getUserInfo();
+    getFinalInfo();
+  }, []);
+
+  const saveMortgagedStock = (data: MortgagedObject[]) => {
+    const temp: [
       string,
       number,
       string,
@@ -92,75 +137,52 @@ export default function ConfirmPage() {
       number,
       number,
       number
-    ][]
-  >([
-    [
-      4,
-      "3434-3434-3434",
-      20,
-      "0590",
-      "삼성전자",
-      "0101",
-      "신한투자증권",
-      1,
-      70000,
-      55000,
-    ],
-    [
-      3,
-      "2323-2323-2323",
-      50,
-      "0120",
-      "하이닉스",
-      "0101",
-      "신한투자증권",
-      1,
-      50000,
-      35000,
-    ],
-    [
-      1,
-      "1212-1212-1212",
-      20,
-      "0590",
-      "삼성전자",
-      "0202",
-      "NH투자증권",
-      1,
-      70000,
-      55000,
-    ],
-    [
-      5,
-      "2323-2323-2323",
-      30,
-      "0590",
-      "삼성전자",
-      "0101",
-      "신한투자증권",
-      1,
-      70000,
-      55000,
-    ],
-    [
-      2,
-      "1212-1212-1212",
-      10,
-      "0590",
-      "삼성전자",
-      "0202",
-      "NH투자증권",
-      1,
-      70000,
-      55000,
-    ],
-  ]);
+    ][] = data.map((item) => [
+      item.accountNumber,
+      item.quantity,
+      item.stockCode,
+      item.stockName,
+      item.companyCode,
+      item.companyName,
+      item.stabilityLevel,
+      item.stockPrice,
+      item.limitPrice,
+    ]);
+    setStocks([...temp]);
+  };
+
+  const savePriorityStock = (data: PriorityObject[]) => {
+    const temp: [
+      string,
+      number,
+      string,
+      string,
+      number,
+      string,
+      string,
+      number,
+      number,
+      number
+    ][] = data.map((item) => [
+      item.accountNumber,
+      item.quantity,
+      item.stockCode,
+      item.stockName,
+      item.stockRank,
+      item.companyCode,
+      item.companyName,
+      item.stabilityLevel,
+      item.stockPrice,
+      item.limitPrice,
+    ]);
+    setPriStocks([...temp]);
+  };
 
   const threeStocks = stocks.slice(0, 3);
 
   useEffect(() => {
     // 배열을 첫 번째 열 기준으로 오름차순 정렬
-    const sortedArr = [...priStocks].sort((a, b) => a[0] - b[0]);
+    const sortedArr = [...priStocks].sort((a, b) => a[4] - b[4]);
     setPriStocks([...sortedArr]);
   }, []);
 
@@ -190,7 +212,7 @@ export default function ConfirmPage() {
   return (
     <PaddingDiv>
       <NormalTitle>
-        <span className="font-bold">고객님,</span> 결제 서비스 설정을
+        <span className="font-bold">{userInfo[0]}님,</span> 결제 서비스 설정을
         확인해주세요.
       </NormalTitle>
       <div>
@@ -220,7 +242,7 @@ export default function ConfirmPage() {
               <ul style={{ listStyleType: "disc", paddingLeft: "20px" }}>
                 {threeStocks.map((stock) => (
                   <li>
-                    [{stock[6]}] {stock[4]} {stock[2]}주
+                    [{stock[5]}] {stock[3]} {stock[1]}주
                   </li>
                 ))}
               </ul>
@@ -245,7 +267,7 @@ export default function ConfirmPage() {
             >
               {fivePriStocks.map((stock) => (
                 <li>
-                  {stock[0]}. [{stock[6]}] {stock[4]} {stock[2]}주
+                  {stock[4]}순위. [{stock[6]}] {stock[3]} {stock[1]}주
                 </li>
               ))}
             </ul>

@@ -97,4 +97,10 @@ export default class payServiceAPI extends BaseApi {
     const resp = await this.fetcher.put("/payment/users/repayment-date", data);
     return resp;
   }
+
+  //최종 컨펌 정보 가져오기
+  async getFinalInfo() {
+    const resp = await this.fetcher.get("/payment/users/information");
+    return resp;
+  }
 }

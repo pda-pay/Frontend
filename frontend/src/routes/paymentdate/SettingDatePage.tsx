@@ -77,14 +77,16 @@ export default function SettingDatePage() {
           <div></div>
         )}
       </div>
-      <ButtonBar
-        beforetext="이전"
-        beforeurl="/account"
-        nexttext="완료"
-        nexturl="/confirm"
-        nextdisabled={!isClicked}
-        nextOnClick={putPaymentDate}
-      />
+      <div className="mt-auto">
+        <ButtonBar
+          beforetext="이전"
+          beforeurl="/account"
+          nexttext="완료"
+          nexturl="/confirm"
+          nextdisabled={!isClicked}
+          nextOnClick={putPaymentDate}
+        />
+      </div>
     </PaddingDiv>
   );
 }
