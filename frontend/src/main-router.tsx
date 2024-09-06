@@ -16,6 +16,7 @@ import SettingAccountPage from "./routes/account/SettingAccountPage";
 import SettingDatePage from "./routes/paymentdate/SettingDatePage";
 import ConfirmPage from "./routes/confirm/ConfirmPage";
 import SimplePage from "./routes/simplepsw/SimplePage";
+import PaymentHistoryPage from "./routes/payment/PaymentHistoryPage";
 
 const routers = [
   {
@@ -110,6 +111,10 @@ const routers = [
   {
     path: "/simple",
     element: <SimplePage />,
+  },
+  {
+    path: "/paymenthistory",
+    element: <PaymentHistoryPage />,
   },
 ];
 

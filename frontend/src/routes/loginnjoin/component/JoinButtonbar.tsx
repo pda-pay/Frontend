@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import joinApi from "../../../api/joinAPI";
+import joinAPI from "../../../api/joinAPI";
 import BasicButton from "../../../components/button/BasicButton";
 import axios from "axios";
 
@@ -9,7 +9,7 @@ interface ButtonProps {
 }
 
 export default function JoinButtonbar({ unValid, userInfo }: ButtonProps) {
-  const service = new joinApi();
+  const service = new joinAPI();
   const navigate = useNavigate();
 
   const joinFinish = async () => {

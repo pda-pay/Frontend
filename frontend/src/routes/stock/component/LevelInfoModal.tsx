@@ -1,5 +1,6 @@
 import XButton from "../../../components/button/XButton";
 import BasicModal from "../../../components/modal/BasicModal";
+import BoldTitle from "../../../components/text/BoldTitle";
 
 interface ModalProps {
   isModalOpen: boolean;
@@ -17,9 +18,16 @@ export default function LevelInfoModal({
           <XButton />
         </span>
       </div>
-      <h1>주식 등급 안내</h1>
-      <p>AAA등급: 가장 안정성이 높은 종목</p>
-      <p>AA~A등급: 안정성이 높은 종목</p>
+      <div className="mb-5">
+        <BoldTitle>주식 등급 안내</BoldTitle>
+      </div>
+      <p>
+        <span className="font-bold">1등급:</span> 가장 안정성이 높은 종목, 한도
+        65%
+      </p>
+      <p>
+        <span className="font-bold">2등급:</span> 안정성이 높은 종목, 한도 60%
+      </p>
     </BasicModal>
   );
 }
