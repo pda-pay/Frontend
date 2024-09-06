@@ -5,17 +5,46 @@ import BoldTitle from "../../components/text/BoldTitle";
 import NormalTitle from "../../components/text/NormalTitle";
 import BackgroundFrame from "../../components/backgroundframe/BackgroundFrame";
 import ButtonBar from "../../components/button/ButtonBar";
+import payServiceAPI from "../../api/payServiceAPI";
+import axios from "axios";
 
 export default function SettingLimitPage() {
+  const payjoinservice = new payServiceAPI();
+
   //TODO: api GET요청으로 받아온 데이터
   //현재한도, 최대한도, 담보
   const data: [number, number, number] = [50000000, 50000000, 10000000000];
+  const [totalLimit, setTotalLimit] = useState<number>(0);
+  const [currentLimit, setCurrentLimit] = useState<number>(0);
 
   const [limit, setLimit] = useState<number>(data[0]);
   const [mortgageRate, setMortgageRate] = useState<number>(data[2] / limit);
   const [errLimit, setErrLimit] = useState<boolean>();
 
   const [inputValue, setInputValue] = useState<string>("");
+
+  const getLimit = async () => {
+    try {
+      const response = await payjoinservice.getLimit();
+
+      if (response.status === 200) {
+        const data = response.data;
+        setTotalLimit(data.totalLimit);
+        setCurrentLimit(data.currentLimit);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 400) {
+          console.log("한도 get 요청 에러 발생: " + error);
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    getLimit();
+    console.log(totalLimit + " " + currentLimit);
+  }, []);
 
   const validateLimit = () => {
     if (limit > data[1] || limit < 0 || mortgageRate < 140) {

@@ -16,7 +16,7 @@ export default function AllmenuPage() {
       const response = await userservice.checkMem();
 
       if (response.status === 200) {
-        setName(response.data.userName);
+        setName(response.data.userId);
         setMember(response.data.paymentServiceMember);
       }
     } catch (error) {
@@ -32,7 +32,14 @@ export default function AllmenuPage() {
 
   return (
     <PaddingDiv>
-      <div>전체메뉴 페이지 입니다.</div>
+      <div>
+        {" "}
+        {memeber ? (
+          <div>{name}님, 전체메뉴 페이지 입니다.</div>
+        ) : (
+          <div>전체메뉴 페이지임</div>
+        )}
+      </div>
     </PaddingDiv>
   );
 }
