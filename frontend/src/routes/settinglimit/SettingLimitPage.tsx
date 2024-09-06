@@ -43,11 +43,11 @@ export default function SettingLimitPage() {
 
   useEffect(() => {
     getLimit();
-    console.log(totalLimit + " " + currentLimit);
+    console.log(currentLimit);
   }, []);
 
   const validateLimit = () => {
-    if (limit > data[1] || limit < 0 || mortgageRate < 140) {
+    if (totalLimit > data[1] || totalLimit < 0 || mortgageRate < 140) {
       console.log("에러 발생 한도는 " + mortgageRate);
       setErrLimit(true);
     } else {
