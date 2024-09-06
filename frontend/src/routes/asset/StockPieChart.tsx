@@ -120,12 +120,7 @@ export default function StockPieChart() {
 
   return (
     <div className="flex flex-col justify-center bg-white rounded-lg my-5">
-      <ReactApexChart
-        options={options}
-        series={series}
-        type="pie"
-        width={350}
-      />
+      <ReactApexChart options={options} series={series} type="pie" />
       <div className="flex flex-row pt-5 pb-2 px-4 justify-start overflow-x-auto whitespace-nowrap">
         {companyList.map((value, index) => {
           return (

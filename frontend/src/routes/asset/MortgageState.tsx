@@ -1,0 +1,147 @@
+import { useEffect, useState } from "react";
+import BoldTitle from "../../components/text/BoldTitle";
+import PercentageBar from "./PercentageBar";
+import StockSeperator from "./StockSeperator";
+
+export interface StockInfo {
+  companyName: string;
+  name: string;
+  amount: number;
+  mortgaged: boolean;
+  stabilityLevel: number;
+  limitPrice: number;
+  stockPrice: number;
+}
+
+export interface MyStockData {
+  free: StockInfo[];
+  mortgaged: StockInfo[];
+}
+
+export default function MortgageState() {
+  const [freeAmount, setFreeAmount] = useState<number>(0);
+  const [mortgagedAmount, setMortgagedAmount] = useState<number>(0);
+  const [MyStockData, setMyStockData] = useState<MyStockData>({
+    free: [],
+    mortgaged: [],
+  });
+
+  useEffect(() => {
+    const result = {
+      stockMortgagedStocks: [
+        {
+          accountNumber: "123-4567-89012",
+          quantity: 100,
+          mortgagedQuantity: 0,
+          stockCode: "005930",
+          stockName: "삼성전자",
+          companyCode: "01",
+          companyName: "신한투자증권",
+          stabilityLevel: 2,
+          stockPrice: 74400,
+          limitPrice: 44640.0,
+        },
+        {
+          accountNumber: "234-5678-90123",
+          quantity: 150,
+          mortgagedQuantity: 100,
+          stockCode: "005930",
+          stockName: "삼성전자",
+          companyCode: "02",
+          companyName: "NH투자증권",
+          stabilityLevel: 2,
+          stockPrice: 74400,
+          limitPrice: 44640.0,
+        },
+        {
+          accountNumber: "345-6789-01234",
+          quantity: 200,
+          mortgagedQuantity: 0,
+          stockCode: "005930",
+          stockName: "삼성전자",
+          companyCode: "03",
+          companyName: "키움증권",
+          stabilityLevel: 2,
+          stockPrice: 74400,
+          limitPrice: 44640.0,
+        },
+        {
+          accountNumber: "456-7890-12345",
+          quantity: 250,
+          mortgagedQuantity: 0,
+          stockCode: "005930",
+          stockName: "삼성전자",
+          companyCode: "04",
+          companyName: "삼성증권",
+          stabilityLevel: 2,
+          stockPrice: 74400,
+          limitPrice: 44640.0,
+        },
+        {
+          accountNumber: "567-8901-23456",
+          quantity: 300,
+          mortgagedQuantity: 0,
+          stockCode: "005930",
+          stockName: "삼성전자",
+          companyCode: "05",
+          companyName: "한국투자증권",
+          stabilityLevel: 2,
+          stockPrice: 74400,
+          limitPrice: 44640.0,
+        },
+      ],
+      totalDebt: 2500,
+    };
+
+    const data: MyStockData = {
+      free: [],
+      mortgaged: [],
+    };
+
+    let f = 0;
+    let m = 0;
+
+    result.stockMortgagedStocks.forEach((value) => {
+      if (value.mortgagedQuantity > 0) {
+        m += value.mortgagedQuantity * value.stockPrice;
+        data.mortgaged.push({
+          companyName: value.companyName,
+          name: value.stockName,
+          amount: value.mortgagedQuantity,
+          mortgaged: true,
+          stabilityLevel: value.stabilityLevel,
+          limitPrice: value.limitPrice,
+          stockPrice: value.stockPrice,
+        });
+      }
+
+      f += (value.quantity - value.mortgagedQuantity) * value.stockPrice;
+      data.free.push({
+        companyName: value.companyName,
+        name: value.stockName,
+        amount: value.quantity - value.mortgagedQuantity,
+        mortgaged: false,
+        stabilityLevel: value.stabilityLevel,
+        limitPrice: value.limitPrice,
+        stockPrice: value.stockPrice,
+      });
+    });
+
+    setFreeAmount(f);
+    setMortgagedAmount(m);
+    setMyStockData(data);
+
+    console.log(data);
+  }, []);
+
+  return (
+    <div className="flex flex-col justify-center my-5">
+      <BoldTitle children={"담보 주식을 확인해보세요"} />
+      <PercentageBar free={freeAmount} mortgaged={mortgagedAmount} />
+      <StockSeperator
+        free={MyStockData.free}
+        mortgaged={MyStockData.mortgaged}
+      />
+    </div>
+  );
+}
