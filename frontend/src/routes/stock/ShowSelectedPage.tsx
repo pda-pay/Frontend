@@ -114,7 +114,7 @@ export default function ShowSelectedPage({
         </span>{" "}
         입니다.
         <div className="text-sm	text-gray-400">
-          각 종목을 클릭하면 선택할 주수 조절이 가능합니다.
+          각 종목을 클릭하면 담보로 할 주수 수정이 가능합니다.
         </div>
       </NormalTitle>
 
@@ -123,10 +123,12 @@ export default function ShowSelectedPage({
           <StockFrame stocks={temp} handleTemp={handleTemp} />
         </div>
       </div>
-      <SelectedStockButtonbar
-        handlePage={handlePage}
-        clickFinishButton={clickFinishButton}
-      />
+      <div className="mt-auto">
+        <SelectedStockButtonbar
+          handlePage={handlePage}
+          clickFinishButton={clickFinishButton}
+        />
+      </div>
     </PaddingDiv>
   );
 }

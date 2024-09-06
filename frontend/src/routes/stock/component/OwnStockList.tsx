@@ -54,23 +54,24 @@ export default function OwnStockList({
   };
 
   return (
-    <div className="flex flex-col gap-10">
-      <div>
+    <div className="flex flex-col">
+      <div className="flex flex-col gap-10">
         {Object.entries(stocks).map(([key, values]) => (
-          <div>
+          <div className="flex flex-col gap-5">
             <NormalTitle>{key}</NormalTitle>
-
-            <Wrapper>
-              <Slider {...settings}>
-                {values.map((stock) => (
-                  <SCard
-                    index={stock[0]}
-                    stockInfo={stock}
-                    handleSelectedStock={handleSelectedStock}
-                  />
-                ))}
-              </Slider>
-            </Wrapper>
+            <div>
+              <Wrapper>
+                <Slider {...settings}>
+                  {values.map((stock) => (
+                    <SCard
+                      index={stock[0]}
+                      stockInfo={stock}
+                      handleSelectedStock={handleSelectedStock}
+                    />
+                  ))}
+                </Slider>
+              </Wrapper>
+            </div>
           </div>
         ))}
       </div>

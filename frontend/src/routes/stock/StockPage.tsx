@@ -88,6 +88,29 @@ export default function StockPage() {
     }
   };
 
+  //담보 잡은 주식 보내기
+  const putMorgagedStocks = async (): Promise<boolean> => {
+    try {
+      const response = await payjoinservice.putMortgagedStock(
+        makeMortgagedReqData()
+      );
+      if (response.status === 200) {
+        const data = response.data;
+        console.log(data);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 400) {
+          console.log("담보 put 요청 에러 발생: " + error);
+        }
+      }
+      return false;
+    }
+  };
+
   const saveOwnStock = (data: ItemObject[]) => {
     const temp: [
       string,
@@ -336,6 +359,54 @@ export default function StockPage() {
   //   }
   // }, [location.state]);
 
+  const makeMortgagedReqData = () => {
+    return {
+      mortgagedStocks: selectedStock
+        .filter(
+          (
+            stock: [
+              string,
+              number,
+              number,
+              string,
+              string,
+              string,
+              string,
+              number,
+              number,
+              number
+            ]
+          ) => stock[2] !== 0
+        ) // stock[2] 값이 0이 아닌 항목만 필터링
+        .map(
+          (
+            stock: [
+              string,
+              number,
+              number,
+              string,
+              string,
+              string,
+              string,
+              number,
+              number,
+              number
+            ]
+          ) => ({
+            //0: 계좌번호, 1: 보유주수, 2: 담보주수, 3: 종목코드, 4: 종목명, 5: 증권사코드,  6: 증권사명, 7: 등급, 8: 전일종가, 9: 한도
+            accountNumber: stock[0],
+            quantity: stock[2],
+            stockCode: stock[3],
+            stockName: stock[4],
+            companyCode: stock[5],
+            companyName: stock[6],
+            stabilityLevel: stock[7],
+            limitPrice: stock[9],
+          })
+        ),
+    };
+  };
+
   return (
     <div>
       {page == 0 ? (
@@ -360,7 +431,7 @@ export default function StockPage() {
             handleSelectedStock={handleSelectedStock}
           />
 
-          <div>
+          <div className="mt-auto">
             <div className="mb-5">
               <div className="flex justify-between mb-5">
                 <BoldTitle>
@@ -377,17 +448,13 @@ export default function StockPage() {
                 원하는 한도에 맞게 주식을 자동으로 선택해주세요.
               </div> */}
             </div>
-          </div>
-          <div
-          //className="fixed bottom-0 w-screen"
-          // style={{ marginLeft: "-5px", marginRight: "-5px" }}
-          >
             <ButtonBar
               beforetext="이전"
               nexttext="다음"
               beforeurl="/serviceagree"
               nexturl="/priority"
               nextstate={{ selectedStock: selectedStock }}
+              nextOnClick={putMorgagedStocks}
             ></ButtonBar>
           </div>
         </PaddingDiv>
