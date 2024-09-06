@@ -212,7 +212,7 @@ export default function PriorityPage() {
 
     setUnPriority(newUnPri);
 
-    const newPriority = priority.filter((row, index) => rowIndex !== index);
+    const newPriority = priority.filter((_, index) => rowIndex !== index);
     setPriority(newPriority);
   };
 
