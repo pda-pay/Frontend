@@ -28,4 +28,10 @@ export default class payServiceAPI extends BaseApi {
     );
     return resp;
   }
+
+  //우선순위와 담보주식 가져오기
+  async getPriorityStock() {
+    const resp = await this.fetcher.get("/payment/users/stock-priorities");
+    return resp;
+  }
 }

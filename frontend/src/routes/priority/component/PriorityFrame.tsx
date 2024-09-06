@@ -2,31 +2,47 @@ import BackgroundFrame from "../../../components/backgroundframe/BackgroundFrame
 import BoldTitle from "../../../components/text/BoldTitle";
 
 interface PriProps {
+  //0: 계좌번호, 1: 담보잡은주수, 2: 종목코드, 3: 종목명, 4: 우선순위,
+  //5: 증권사코드, 6: 증권사명, 7: 위험도, 8: 전일종가, 9: 한도
   priority: [
-    number, //0: id
-    string, //1: 증권사 코드
-    string, //2: 증권사명
-    string, //3: 종목명
-    string, //4: 등급
-    number, //5: 전일종가
-    number, //6: 우선순위로 고른 주수
-    number, //7: 담보로 잡은 전체 주수
-    number, //8: 한도
-    string //9: 계좌 번호
+    string,
+    number,
+    string,
+    string,
+    number,
+    string,
+    string,
+    number,
+    number,
+    number
   ][];
   unPriority: [
-    number, //0: id
-    string, //1: 증권사 코드
-    string, //2: 증권사명
-    string, //3: 종목명
-    string, //4: 등급
-    number, //5: 전일종가
-    number, //6: 우선순위로 남은 주수
-    number, //7: 담보로 잡은 전체 주수
-    number, //8: 한도
-    string //9: 계좌 번호
+    string,
+    number,
+    string,
+    string,
+    number,
+    string,
+    string,
+    number,
+    number,
+    number
   ][];
-  deletePriority: (rowIndex: number) => void;
+  deletePriority: (
+    rowIndex: number,
+    clickedRow: [
+      string,
+      number,
+      string,
+      string,
+      number,
+      string,
+      string,
+      number,
+      number,
+      number
+    ]
+  ) => void;
 }
 
 export default function PriorityFrame({
@@ -54,7 +70,7 @@ export default function PriorityFrame({
                 <tr>
                   <th>증권사명</th>
                   <th>종목명</th>
-                  <th>남은 주수</th>
+                  <th>선택 주수</th>
                   <th>전일 종가</th>
                   <th>등급</th>
                   <th>가능 한도</th>
@@ -64,13 +80,13 @@ export default function PriorityFrame({
               <tbody>
                 {priority.map((stock, rowIndex) => (
                   <tr>
-                    <td>{stock[2]}</td>
-                    <td>{stock[3]}</td>
                     <td>{stock[6]}</td>
-                    <td>{stock[5]}</td>
-                    <td>{stock[4]}</td>
-                    <td>{stock[8]}</td>
-                    <td onClick={() => deletePriority(rowIndex)}>-</td>
+                    <td>{stock[3]}</td>
+                    <td>{stock[1]}</td>
+                    <td>{stock[8].toLocaleString()}</td>
+                    <td>{stock[7]}</td>
+                    <td>{stock[9]}</td>
+                    <td onClick={() => deletePriority(rowIndex, stock)}>-</td>
                   </tr>
                 ))}
               </tbody>
@@ -108,12 +124,12 @@ export default function PriorityFrame({
               <tbody>
                 {unPriority.map((stock) => (
                   <tr>
-                    <td>{stock[2]}</td>
-                    <td>{stock[3]}</td>
                     <td>{stock[6]}</td>
-                    <td>{stock[5]}</td>
-                    <td>{stock[4]}</td>
-                    <td>{stock[8]}</td>
+                    <td>{stock[3]}</td>
+                    <td>{stock[1]}</td>
+                    <td>{stock[8].toLocaleString()}</td>
+                    <td>{stock[7]}</td>
+                    <td>{stock[9]}</td>
                   </tr>
                 ))}
               </tbody>
