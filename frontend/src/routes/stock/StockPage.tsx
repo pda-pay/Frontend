@@ -9,6 +9,7 @@ import MoveButton from "../../components/button/MoveButton";
 import ButtonBar from "../../components/button/ButtonBar";
 import payServiceAPI from "../../api/payServiceAPI";
 import axios from "axios";
+import userAPI from "../../api/userAPI";
 //import { useNavigate } from "react-router-dom";
 
 type ItemObject = {
@@ -26,7 +27,10 @@ type ItemObject = {
 
 export default function StockPage() {
   //const navigate = useNavigate();
+  const userservice = new userAPI();
   const payjoinservice = new payServiceAPI();
+
+  const [mem, setMem] = useState<boolean>(false);
 
   //보유 주식 목록: length = 10
   //ownStock은 변하는 일이 없어야 함.
@@ -69,6 +73,22 @@ export default function StockPage() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   //0이면 증권조회 컴포넌트 출력, 1이면 선택한 주식 컴포넌트 출력
   const [page, setPage] = useState<number>(0);
+
+  const getMem = async () => {
+    try {
+      const response = await userservice.checkMem();
+
+      if (response.status === 200) {
+        setMem(response.data.paymentServiceMember);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getMem();
+  }, []);
 
   //api 호출 후 보유 주식 저장
   const getStocks = async () => {
@@ -447,14 +467,27 @@ export default function StockPage() {
                 원하는 한도에 맞게 주식을 자동으로 선택해주세요.
               </div> */}
             </div>
-            <ButtonBar
-              beforetext="이전"
-              nexttext="다음"
-              beforeurl="/serviceagree"
-              nexturl="/priority"
-              //nextstate={{ selectedStock: selectedStock }}
-              nextOnClick={putMorgagedStocks}
-            ></ButtonBar>
+
+            <div className="mt-auto">
+              {mem ? (
+                <ButtonBar
+                  beforetext="취소"
+                  nexttext="수정 완료"
+                  beforeurl="/allmenu"
+                  nexturl="/allmenu"
+                  nextOnClick={putMorgagedStocks}
+                />
+              ) : (
+                <ButtonBar
+                  beforetext="이전"
+                  nexttext="다음"
+                  beforeurl="/serviceagree"
+                  nexturl="/priority"
+                  //nextstate={{ selectedStock: selectedStock }}
+                  nextOnClick={putMorgagedStocks}
+                ></ButtonBar>
+              )}
+            </div>
           </div>
         </PaddingDiv>
       ) : (

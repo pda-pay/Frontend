@@ -56,7 +56,6 @@ export default function ConfirmPage() {
     [string, number, string, string, string, string, number, number, number][]
   >([]);
   //TODO: api GET 요청으로 받아온 우선순위 적용된 배열
-  //[우선순위, 계좌번호, 담보주수, 종목코드, 종목명, 증권사코드, 증권사명, 위험도, 전일종가, 한도]
   const [priStocks, setPriStocks] = useState<
     [
       string,
@@ -230,7 +229,7 @@ export default function ConfirmPage() {
       <div className="flex flex-col gap-5">
         <BackgroundFrame color="blue">
           <div className="flex flex-col gap-3 my-3">
-            <BoldTitle>설정한 한도: {limit}원</BoldTitle>
+            <BoldTitle>설정한 한도: {limit.toLocaleString()}원</BoldTitle>
             <div>
               <div className="flex justify-between mb-3">
                 <BoldTitle>선택한 종목</BoldTitle>
@@ -289,12 +288,15 @@ export default function ConfirmPage() {
             handleCloseModal={handleCloseModal}
           />
         ))}
-      <ButtonBar
-        beforetext="이전"
-        nexttext="다음"
-        beforeurl="/paymentdate"
-        nexturl="/simple"
-      ></ButtonBar>
+
+      <div className="mt-auto">
+        <ButtonBar
+          beforetext="이전"
+          nexttext="다음"
+          beforeurl="/paymentdate"
+          nexturl="/simple"
+        ></ButtonBar>
+      </div>
     </PaddingDiv>
   );
 }

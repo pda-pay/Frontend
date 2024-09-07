@@ -41,6 +41,10 @@ export interface PutPaymentDateReqData {
   repaymentDate: number;
 }
 
+export interface PostSimplePasswordReqData {
+  paymentPassword: string | undefined;
+}
+
 export default class payServiceAPI extends BaseApi {
   //보유 주식 가져오기
   async getAllStock() {
@@ -101,6 +105,12 @@ export default class payServiceAPI extends BaseApi {
   //최종 컨펌 정보 가져오기
   async getFinalInfo() {
     const resp = await this.fetcher.get("/payment/users/information");
+    return resp;
+  }
+
+  //간편비번 보내기
+  async postSimplePassword(data: PostSimplePasswordReqData) {
+    const resp = await this.fetcher.post("/payment/users/join", data);
     return resp;
   }
 }

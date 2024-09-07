@@ -5,6 +5,7 @@ import BackgroundFrame from "../../components/backgroundframe/BackgroundFrame";
 import ButtonBar from "../../components/button/ButtonBar";
 import payServiceAPI from "../../api/payServiceAPI";
 import axios from "axios";
+import userAPI from "../../api/userAPI";
 
 type AccountObject = {
   accountNumber: string;
@@ -14,12 +15,31 @@ type AccountObject = {
 };
 
 export default function SettingAccountPage() {
+  const userservice = new userAPI();
   const payjoinservice = new payServiceAPI();
+
+  const [mem, setMem] = useState<boolean>(false);
 
   //계좌번호, 은행코드, 은행명, 카테고리
   const [accountList, setAccountList] = useState<string[][]>([]);
   const [account, setAccount] = useState<string[]>([]);
   const [check, setCheck] = useState<boolean>(false);
+
+  const getMem = async () => {
+    try {
+      const response = await userservice.checkMem();
+
+      if (response.status === 200) {
+        setMem(response.data.paymentServiceMember);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getMem();
+  }, []);
 
   const getBankAccount = async () => {
     try {
@@ -113,14 +133,25 @@ export default function SettingAccountPage() {
       </div>
 
       <div className="mt-auto">
-        <ButtonBar
-          beforetext="이전"
-          beforeurl="/limit"
-          nexttext="완료"
-          nextdisabled={!check}
-          nexturl="/paymentdate"
-          nextOnClick={putBankAccount}
-        />
+        {mem ? (
+          <ButtonBar
+            beforetext="취소"
+            nexttext="수정 완료"
+            beforeurl="/allmenu"
+            nextdisabled={!check}
+            nexturl="/allmenu"
+            nextOnClick={putBankAccount}
+          />
+        ) : (
+          <ButtonBar
+            beforetext="이전"
+            beforeurl="/limit"
+            nexttext="완료"
+            nextdisabled={!check}
+            nexturl="/paymentdate"
+            nextOnClick={putBankAccount}
+          />
+        )}
       </div>
     </PaddingDiv>
   );

@@ -7,9 +7,13 @@ import BackgroundFrame from "../../components/backgroundframe/BackgroundFrame";
 import ButtonBar from "../../components/button/ButtonBar";
 import payServiceAPI from "../../api/payServiceAPI";
 import axios from "axios";
+import userAPI from "../../api/userAPI";
 
 export default function SettingLimitPage() {
+  const userservice = new userAPI();
   const payjoinservice = new payServiceAPI();
+
+  const [mem, setMem] = useState<boolean>(false);
 
   //TODO: api GET요청으로 받아온 데이터
   //현재한도, 최대한도, 담보
@@ -22,6 +26,22 @@ export default function SettingLimitPage() {
   const [errLimit, setErrLimit] = useState<boolean>();
 
   const [inputValue, setInputValue] = useState<string>("");
+
+  const getMem = async () => {
+    try {
+      const response = await userservice.checkMem();
+
+      if (response.status === 200) {
+        setMem(response.data.paymentServiceMember);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getMem();
+  }, []);
 
   const getLimit = async () => {
     try {
@@ -119,13 +139,28 @@ export default function SettingLimitPage() {
           </div>
         </BackgroundFrame>
       </div>
-      <ButtonBar
-        beforetext="이전"
-        beforeurl="/priority"
-        nexttext="완료"
-        nextdisabled={errLimit}
-        nexturl="/account"
-      />
+
+      <div className="mt-auto">
+        {mem ? (
+          <ButtonBar
+            beforetext="취소"
+            nexttext="수정 완료"
+            beforeurl="/allmenu"
+            nextdisabled={errLimit}
+            nexturl="/allmenu"
+            //nextOnClick={putMorgagedStocks}
+          />
+        ) : (
+          <ButtonBar
+            beforetext="이전"
+            beforeurl="/priority"
+            nexttext="완료"
+            nextdisabled={errLimit}
+            nexturl="/account"
+            //nextOnClick={putMorgagedStocks}
+          />
+        )}
+      </div>
     </PaddingDiv>
   );
 }
