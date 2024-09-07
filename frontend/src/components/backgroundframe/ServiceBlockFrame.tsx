@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import BoldTitle from "../text/BoldTitle";
 
+interface BlockProps {
+  children: React.ReactNode;
+}
+
 const StyledDiv = styled.div`
   border-radius: 20px;
   width: 100%;
@@ -9,11 +13,11 @@ const StyledDiv = styled.div`
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
 `;
 
-export default function ServiceBlockFrame() {
+export default function ServiceBlockFrame({ children }: BlockProps) {
   return (
     <StyledDiv>
-      <div className="p-5">
-        <BoldTitle>결제 서비스에 가입해서 바로 확인해보세요.</BoldTitle>
+      <div className="p-5 flex justify-center">
+        <BoldTitle>{children}</BoldTitle>
       </div>
     </StyledDiv>
   );

@@ -21,7 +21,7 @@ export default function PaymentPage() {
       const response = await userservice.checkMem();
 
       if (response.status === 200) {
-        setName(response.data.userName);
+        setName(response.data.userId);
         setMember(response.data.paymentServiceMember);
       }
     } catch (error) {
@@ -56,20 +56,34 @@ export default function PaymentPage() {
           )}
         </div>
         <div>
-          <NormalTitle>
-            <span className="font-bold">{name}님,</span> 이번 달 결제 예정
-            금액을 한눈에 확인해보세요.
-          </NormalTitle>
-          <PayInfo />
+          {memeber ? (
+            <NormalTitle>
+              <span className="font-bold">{name}님,</span> 이번 달 결제 예정
+              금액을 한눈에 확인해보세요.
+            </NormalTitle>
+          ) : (
+            <NormalTitle>
+              <span className="font-bold">{name}님,</span> 가입해서 결제
+              서비스를 이용해보세요.
+            </NormalTitle>
+          )}
+
+          <PayInfo member={memeber} />
         </div>
-        <div className="h-100 grid grid-cols-2 gap-5">
-          <MoveButton onClick={() => navigate("/")}>선결제</MoveButton>
-          <MoveButton onClick={() => navigate("/limit")}>한도 변경</MoveButton>
-          <MoveButton onClick={() => navigate("/stock")}>담보 변경</MoveButton>
-          <MoveButton onClick={() => navigate("/account")}>
-            결제 계좌 변경
-          </MoveButton>
-        </div>
+        {memeber && (
+          <div className="h-100 grid grid-cols-2 gap-5">
+            <MoveButton onClick={() => navigate("/")}>선결제</MoveButton>
+            <MoveButton onClick={() => navigate("/limit")}>
+              한도 변경
+            </MoveButton>
+            <MoveButton onClick={() => navigate("/stock")}>
+              담보 변경
+            </MoveButton>
+            <MoveButton onClick={() => navigate("/account")}>
+              결제 계좌 변경
+            </MoveButton>
+          </div>
+        )}
       </PaddingDiv>
     </div>
   );
