@@ -35,6 +35,11 @@ export default function PaymentHistoryPage() {
     }
   };
 
+  //밑줄 지우기 위함. 없애기.
+  useEffect(() => {
+    setYear(0);
+    setMonth(0);
+  }, []);
   useEffect(() => {
     getHistory();
   }, [month]);

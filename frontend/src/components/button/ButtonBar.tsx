@@ -8,8 +8,8 @@ interface ButtonProps {
   beforeurl: string;
   nextdisabled?: boolean;
   beforedisabled?: boolean;
-  beforestate?: any;
-  nextstate?: any;
+  // beforestate?: any;
+  // nextstate?: any;
   beforeOnClick?: () => Promise<boolean>;
   nextOnClick?: () => Promise<boolean>;
 }
@@ -21,8 +21,8 @@ export default function ButtonBar({
   beforeurl,
   nextdisabled,
   beforedisabled,
-  beforestate,
-  nextstate,
+  // beforestate,
+  // nextstate,
   beforeOnClick,
   nextOnClick,
 }: ButtonProps) {
@@ -64,8 +64,7 @@ export default function ButtonBar({
     if (nextOnClick !== undefined) {
       //nextOnClick();
       handleNextClick();
-    }
-    navigate(nexturl);
+    } else navigate(nexturl);
   };
 
   // 결과에 따라 메소드를 실행하는 async 함수

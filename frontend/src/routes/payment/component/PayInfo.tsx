@@ -40,6 +40,7 @@ export default function PayInfo() {
         if (error.response?.status === 404) {
           if (error.response.data.message)
             setErrMsg(error.response.data.message);
+          console.log(errMsg);
         }
         console.log("결제 페이지 에러 발생: " + error);
       }

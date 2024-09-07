@@ -17,7 +17,7 @@ export default function AssetPage() {
       const response = await userservice.checkMem();
 
       if (response.status === 200) {
-        setName(response.data.userName);
+        setName(response.data.userId);
         setMember(response.data.paymentServiceMember);
       }
     } catch (error) {
@@ -33,7 +33,11 @@ export default function AssetPage() {
 
   return (
     <PaddingDiv>
-      <div>자산 페이지 입니다.</div>
+      {memeber ? (
+        <div>{name}님, 자산 페이지임.</div>
+      ) : (
+        <div>자산 페이지임.</div>
+      )}
     </PaddingDiv>
   );
 }
