@@ -5,25 +5,31 @@ import paymentAPI from "../../api/paymentAPI";
 import axios from "axios";
 import BoldTitle from "../../components/text/BoldTitle";
 
+type HistoryObject = {
+  id: number;
+  paymentAmount: number;
+  createdAt: string;
+  franchiseName: string;
+};
+
 export default function PaymentHistoryPage() {
   const paymentservice = new paymentAPI();
+
+  const today = new Date();
+  const [year, setYear] = useState<number>(today.getFullYear());
+  const [month, setMonth] = useState<number>(today.getMonth());
+
   //결제 아이디, 결제 금액, 결제일, 가게명
   const [paymentHistory, setPaymentHistory] = useState<
     [number, number, string, string][]
-  >([
-    [3, 1000000, "2024-08-30T00:00:00", "테슬라"],
-    [4, 2000, "2024-08-30T00:00:00", "테슬라"],
-    [5, 10000000, "2024-08-30T00:00:00", "테슬라"],
-  ]);
-  const [year, setYear] = useState<number>(0);
-  const [month, setMonth] = useState<number>(0);
-  //api 요청을 통해 결제 내역 받아오기
+  >([]);
+
   const getHistory = async () => {
     try {
-      const response = await paymentservice.getPaymentHistory(month);
+      const response = await paymentservice.getPaymentHistory(year, month);
       if (response.status === 200 || response.status === 204) {
-        const data = response.data.paymentHistories;
-        setPaymentHistory([...data]);
+        const data = response.data;
+        saveHistory(data.paymentHistories);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -35,18 +41,23 @@ export default function PaymentHistoryPage() {
     }
   };
 
-  //밑줄 지우기 위함. 없애기.
-  useEffect(() => {
-    setYear(0);
-    setMonth(0);
-  }, []);
+  const saveHistory = (data: HistoryObject[]) => {
+    const temp: [number, number, string, string][] = data.map((item) => [
+      item.id,
+      item.paymentAmount,
+      item.createdAt,
+      item.franchiseName,
+    ]);
+    setPaymentHistory([...temp]);
+  };
+
   useEffect(() => {
     getHistory();
   }, [month]);
 
   return (
     <PaddingDiv>
-      <div className="place-items-center">
+      <div>
         <NormalTitle>결제 내역</NormalTitle>
       </div>
       <div>

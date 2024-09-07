@@ -17,6 +17,7 @@ import SettingDatePage from "./routes/paymentdate/SettingDatePage";
 import ConfirmPage from "./routes/confirm/ConfirmPage";
 import SimplePage from "./routes/simplepsw/SimplePage";
 import PaymentHistoryPage from "./routes/payment/PaymentHistoryPage";
+import CashRepayPage from "./routes/repay/CashRePayPage";
 
 const routers = [
   {
@@ -115,6 +116,10 @@ const routers = [
   {
     path: "/paymenthistory",
     element: <PaymentHistoryPage />,
+  },
+  {
+    path: "/cashrepay",
+    element: <CashRepayPage />,
   },
 ];
 

@@ -107,7 +107,7 @@ export default function AllmenuPage() {
         <div className="ml-3 mt-3 flex flex-col gap-2">
           <div
             onClick={() => {
-              if (member) navigate("/");
+              if (member) navigate("/cashrepay");
             }}
           >
             <BoldTitle>선결제하기</BoldTitle>

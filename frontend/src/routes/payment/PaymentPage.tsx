@@ -72,7 +72,9 @@ export default function PaymentPage() {
         </div>
         {memeber && (
           <div className="h-100 grid grid-cols-2 gap-5">
-            <MoveButton onClick={() => navigate("/")}>선결제</MoveButton>
+            <MoveButton onClick={() => navigate("/cashrepay")}>
+              선결제
+            </MoveButton>
             <MoveButton onClick={() => navigate("/limit")}>
               한도 변경
             </MoveButton>
