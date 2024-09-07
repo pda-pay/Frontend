@@ -40,10 +40,6 @@ export default function SettingLimitPage() {
   };
 
   useEffect(() => {
-    console.log(currentLimit);
-  }, []);
-
-  useEffect(() => {
     getMem();
   }, []);
 

@@ -23,7 +23,7 @@ export default function MainPage() {
       const response = await userservice.checkMem();
 
       if (response.status === 200) {
-        setName(response.data.userName);
+        setName(response.data.userId);
         setMember(response.data.paymentServiceMember);
       }
     } catch (error) {
@@ -35,19 +35,18 @@ export default function MainPage() {
 
   const requestFCMToken = async () => {
     const permission = await Notification.requestPermission();
-  
+
     if (permission === "granted") {
       try {
         const token = await getToken(messaging, {
           vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
         });
-  
+
         console.log(token);
 
         fcmservice.postUserInfo({
-          token: token
-        })
-        
+          token: token,
+        });
       } catch (error) {
         console.error("FCM Token error: ", error);
       }
@@ -59,15 +58,14 @@ export default function MainPage() {
   const onMessageListener = () => {
     onMessage(messaging, (payload) => {
       console.log("Message received. Payload:", payload);
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     // 로그인 정보 가져오기
     getUserInfo();
     requestFCMToken();
     onMessageListener();
-
   }, []);
 
   return (
