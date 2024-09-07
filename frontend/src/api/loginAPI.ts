@@ -10,4 +10,9 @@ export default class loginApi extends BaseApi {
     const resp = await this.fetcher.post("/users/login", data);
     return resp;
   }
+
+  async logOut() {
+    const resp = await this.fetcher.delete("/users/logout");
+    return resp;
+  }
 }
