@@ -38,24 +38,18 @@ export default function ConfirmPage() {
   const payjoinservice = new payServiceAPI();
   const userinfosevice = new userAPI();
 
-  //TODO: useLocation으로 가져온 userInfo
   const [userInfo, setUserInfo] = useState<[string, boolean, boolean]>([
     "이름",
     false,
     false,
   ]);
 
-  //TODO: api GET 요청으로 받아온 계좌정보
   const [account, setAccount] = useState<string[]>([]);
-  //TODO: api GET 요청으로 받아온 결제일 정보
   const [payDate, setPayDate] = useState<number>(0);
-  //TODO: api GET 요청으로 받아온 설정 한도
   const [limit, setLimit] = useState<number>(0);
-  //TODO: 담보로 잡은 주식
   const [stocks, setStocks] = useState<
     [string, number, string, string, string, string, number, number, number][]
   >([]);
-  //TODO: api GET 요청으로 받아온 우선순위 적용된 배열
   const [priStocks, setPriStocks] = useState<
     [
       string,

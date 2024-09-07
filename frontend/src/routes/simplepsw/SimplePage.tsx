@@ -37,7 +37,6 @@ export default function SimplePage() {
   };
 
   const validatePsw = () => {
-    console.log("비번 " + password);
     if (password !== undefined && password.length !== 6) {
       setErrPsw(true);
     } else {
@@ -62,7 +61,6 @@ export default function SimplePage() {
   }, [password, checkPsw]);
 
   const validateChkPsw = () => {
-    console.log("chk비번 " + checkPsw);
     if (password !== checkPsw) {
       setErrChkPsw(true);
     } else {

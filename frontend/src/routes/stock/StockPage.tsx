@@ -10,7 +10,6 @@ import ButtonBar from "../../components/button/ButtonBar";
 import payServiceAPI from "../../api/payServiceAPI";
 import axios from "axios";
 import userAPI from "../../api/userAPI";
-//import { useNavigate } from "react-router-dom";
 
 type ItemObject = {
   accountNumber: string;
@@ -114,8 +113,6 @@ export default function StockPage() {
       const temp = makeMortgagedReqData();
       const response = await payjoinservice.putMortgagedStock(temp);
       if (response.status === 200) {
-        const data = response.data;
-        console.log(data);
         return true;
       } else {
         return false;
@@ -163,37 +160,8 @@ export default function StockPage() {
 
   //선택한 주식 초기화
   useEffect(() => {
-    console.log(ownStock);
     setSelectedStock([...ownStock]);
   }, [ownStock]);
-
-  // useEffect(() => {
-  //   const temp: [
-  //     string,
-  //     string,
-  //     string,
-  //     string,
-  //     number,
-  //     number,
-  //     number,
-  //     number,
-  //     string
-  //   ][] = ownStock.map((row) => {
-  //     const newRow: [
-  //       string,
-  //       string,
-  //       string,
-  //       string,
-  //       number,
-  //       number,
-  //       number,
-  //       number,
-  //       string
-  //     ] = [row[0], row[1], row[2], row[3], row[4], 0, row[5], row[6], row[7]];
-  //     return newRow;
-  //   });
-  //   setSelectedStock(temp);
-  // }, [ownStock]);
 
   //증권별로 구분 후, 보유주식에서 몇번째였는지 0번째에 저장
   const [category, setCategory] = useState<{
@@ -326,11 +294,6 @@ export default function StockPage() {
     });
   };
 
-  useEffect(() => {
-    console.log("바뀜!");
-    console.log(selectedStock);
-  }, [selectedStock]);
-
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   const calculateLimit = () => {
@@ -355,28 +318,6 @@ export default function StockPage() {
   useEffect(() => {
     setLimit(calculateLimit);
   }, [selectedStock]);
-
-  //다음 페이지에서 주식을 다시 받아옴
-  //const location = useLocation();
-
-  // useEffect(() => {
-  //   if (location.state) {
-  //     const { priorityToStock } = location.state as {
-  //       priorityToStock: [
-  //         string,
-  //         string,
-  //         string,
-  //         string,
-  //         number,
-  //         number,
-  //         number,
-  //         number,
-  //         string
-  //       ][];
-  //     };
-  //     setSelectedStock(priorityToStock);
-  //   }
-  // }, [location.state]);
 
   const makeMortgagedReqData = () => {
     return {

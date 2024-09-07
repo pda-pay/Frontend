@@ -35,7 +35,6 @@ type priorityObject = {
 };
 
 export default function PriorityPage() {
-  //const location = useLocation();
   const payjoinservice = new payServiceAPI();
   const userservice = new userAPI();
 
@@ -103,15 +102,10 @@ export default function PriorityPage() {
 
       if (response.status === 200) {
         const mStock = response.data.mortgagedStocks;
-        console.log("mStock is ");
-        console.log(mStock);
+
         const pStock = response.data.stockPriorities;
-        console.log("pStock is " + pStock);
-        //setSelectedStock([...saveMortgagedStock(mStock)]);
-        //setPriority([...savePriorityStock(pStock)]);
-        //setUnPriority([...settingUnPriority()]);
+
         beginningSetting(mStock, pStock);
-        //settingUnPriority();
       } else {
         console.log("우선순위 페이지 get 요청 실패");
       }
@@ -155,7 +149,6 @@ export default function PriorityPage() {
       item.limitPrice,
     ]);
 
-    //return temp;
     setSelectedStock([...temp]);
   };
 
@@ -183,14 +176,11 @@ export default function PriorityPage() {
       item.stockPrice,
       item.limitPrice,
     ]);
-    //return temp;
+
     setPriority([...temp]);
   };
 
   const settingUnPriority = () => {
-    console.log("우선순위 없는 주식 세팅 중...");
-    console.log(priority);
-
     const temp: [
       string,
       number,
@@ -250,9 +240,6 @@ export default function PriorityPage() {
       }
     });
 
-    console.log("temp is?");
-    console.log(temp);
-    //return temp;
     setUnPriority([...temp]);
   };
 
@@ -283,16 +270,6 @@ export default function PriorityPage() {
   useEffect(() => {
     settingUnPriority();
   }, [priority]);
-
-  useEffect(() => {
-    console.log("우선순위 주식");
-    console.log(priority);
-  }, [priority]);
-
-  useEffect(() => {
-    console.log("우선순위 X 주식");
-    console.log(unPriority);
-  }, [unPriority]);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -352,7 +329,6 @@ export default function PriorityPage() {
 
       // unpriority 업데이트
       setUnPriority(changedArr.filter((row) => row[1] !== 0));
-      //setUnPriority(changedArr);
 
       //priority에 추가
       const addRow: [
@@ -411,7 +387,7 @@ export default function PriorityPage() {
       number,
       number
     ] = clickedRow;
-    console.log("지울 항목 " + tempRow);
+
     const newUnPri: [
       string,
       number,
@@ -517,10 +493,8 @@ export default function PriorityPage() {
             beforetext="이전"
             nexttext="완료"
             beforeurl="/stock"
-            //beforestate={{ priorityToStock: selectedStock }}
             nexturl="/limit"
             nextOnClick={putPriority}
-            //nextstate={{ stock: selectedStock, priorityStock: priorityStock }}
           />
         )}
       </div>

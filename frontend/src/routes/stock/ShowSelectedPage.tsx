@@ -81,13 +81,8 @@ export default function ShowSelectedPage({
     setTemp(t);
   };
 
-  useEffect(() => {
-    console.log("temp is " + temp);
-  }, [temp]);
-
   const clickFinishButton = () => {
     for (let i = 0; i < temp.length; i++) {
-      console.log("click finish button: " + i + "is " + temp[i][2]);
       handleSelectedStock(i, temp[i][2]);
     }
   };

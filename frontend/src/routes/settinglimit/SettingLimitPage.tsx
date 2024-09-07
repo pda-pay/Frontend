@@ -63,15 +63,12 @@ export default function SettingLimitPage() {
 
   useEffect(() => {
     getLimit();
-    console.log(currentLimit);
   }, []);
 
   const validateLimit = () => {
     if (totalLimit > data[1] || totalLimit < 0 || mortgageRate < 140) {
-      console.log("에러 발생 한도는 " + mortgageRate);
       setErrLimit(true);
     } else {
-      console.log("에러 해제 ");
       setErrLimit(false);
     }
   };
@@ -79,8 +76,6 @@ export default function SettingLimitPage() {
   const updateLimit = (event: React.ChangeEvent<HTMLInputElement>) => {
     const v = event.target.value;
     const vToNum = Number(v);
-
-    console.log("값 들어옴 " + vToNum);
 
     if (!isNaN(vToNum) && v !== " ") {
       setInputValue(v);

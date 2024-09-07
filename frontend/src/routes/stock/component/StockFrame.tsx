@@ -104,11 +104,6 @@ export default function StockFrame({ stocks, handleTemp }: StockProps) {
     setCategory(handleCategory(stocks));
   }, [stocks]);
 
-  useEffect(() => {
-    console.log("잘 필터링되는지 확인");
-    console.log(category);
-  }, [category]);
-
   const handleOpenModal = (index: number, value: number, max: number) => {
     setClickedValue(value);
     setMaxValue(max);
