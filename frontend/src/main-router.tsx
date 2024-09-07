@@ -23,6 +23,7 @@ import PaymentPasswordPage from "./routes/scanner/PaymentPasswordPage";
 import FranchiseQrCreatePage from "./routes/franchise/FranchiseQrCreatePage";
 import QRPage from "./routes/franchise/QRPage";
 import FranchiseLoginPage from "./routes/franchise/FranchiseLoginPage";
+import PaymentHistoryPage from "./routes/payment/PaymentHistoryPage";
 
 const routers = [
   {
@@ -145,6 +146,10 @@ const routers = [
   {
     path: "/simple",
     element: <SimplePage />,
+  },
+  {
+    path: "/paymenthistory",
+    element: <PaymentHistoryPage />,
   },
 ];
 
