@@ -21,6 +21,11 @@ export default function SettingLimitPage() {
   const [totalLimit, setTotalLimit] = useState<number>(0);
   const [currentLimit, setCurrentLimit] = useState<number>(0);
 
+  //currentlimit 사용 안해서 빌드에러나서 콘솔로그찍음
+  useEffect(() => {
+    console.log(currentLimit);
+  }, []);
+
   const [limit, setLimit] = useState<number>(data[0]);
   const [mortgageRate, setMortgageRate] = useState<number>(data[2] / limit);
   const [errLimit, setErrLimit] = useState<boolean>();
