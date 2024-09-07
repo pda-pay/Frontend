@@ -1,4 +1,3 @@
-import BasicButton from "../../components/button/BasicButton";
 import { StockInfo } from "./MortgageState";
 
 interface StockDetailModalProps {

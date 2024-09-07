@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import BoldTitle from "../../components/text/BoldTitle";
 import PercentageBar from "./PercentageBar";
 import StockSeperator from "./StockSeperator";
+import payServiceAPI from "../../api/payServiceAPI";
 
 export interface StockInfo {
   companyName: string;
@@ -25,73 +26,10 @@ export default function MortgageState() {
     free: [],
     mortgaged: [],
   });
+  const service = new payServiceAPI();
 
-  useEffect(() => {
-    const result = {
-      stockMortgagedStocks: [
-        {
-          accountNumber: "123-4567-89012",
-          quantity: 100,
-          mortgagedQuantity: 0,
-          stockCode: "005930",
-          stockName: "삼성전자",
-          companyCode: "01",
-          companyName: "신한투자증권",
-          stabilityLevel: 2,
-          stockPrice: 74400,
-          limitPrice: 44640.0,
-        },
-        {
-          accountNumber: "234-5678-90123",
-          quantity: 150,
-          mortgagedQuantity: 100,
-          stockCode: "005930",
-          stockName: "삼성전자",
-          companyCode: "02",
-          companyName: "NH투자증권",
-          stabilityLevel: 2,
-          stockPrice: 74400,
-          limitPrice: 44640.0,
-        },
-        {
-          accountNumber: "345-6789-01234",
-          quantity: 200,
-          mortgagedQuantity: 0,
-          stockCode: "005930",
-          stockName: "삼성전자",
-          companyCode: "03",
-          companyName: "키움증권",
-          stabilityLevel: 2,
-          stockPrice: 74400,
-          limitPrice: 44640.0,
-        },
-        {
-          accountNumber: "456-7890-12345",
-          quantity: 250,
-          mortgagedQuantity: 0,
-          stockCode: "005930",
-          stockName: "삼성전자",
-          companyCode: "04",
-          companyName: "삼성증권",
-          stabilityLevel: 2,
-          stockPrice: 74400,
-          limitPrice: 44640.0,
-        },
-        {
-          accountNumber: "567-8901-23456",
-          quantity: 300,
-          mortgagedQuantity: 0,
-          stockCode: "005930",
-          stockName: "삼성전자",
-          companyCode: "05",
-          companyName: "한국투자증권",
-          stabilityLevel: 2,
-          stockPrice: 74400,
-          limitPrice: 44640.0,
-        },
-      ],
-      totalDebt: 2500,
-    };
+  const fetchData = async () => {
+    const result = (await service.getAllStock()).data;
 
     const data: MyStockData = {
       free: [],
@@ -130,8 +68,10 @@ export default function MortgageState() {
     setFreeAmount(f);
     setMortgagedAmount(m);
     setMyStockData(data);
+  };
 
-    console.log(data);
+  useEffect(() => {
+    fetchData();
   }, []);
 
   return (

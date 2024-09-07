@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 export interface PercentageBarProps {

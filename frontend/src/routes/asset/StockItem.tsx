@@ -24,8 +24,8 @@ export default function StockItem(props: StockItemProps) {
         />
         <p className="text-base">{props.companyName}</p>
       </div>
-      <div className="flex flex-row justify-between text-sm w-full">
-        <p>{props.name}</p>
+      <div className="flex flex-row justify-between text-sm w-full max-w-[120px] truncate">
+        <p className="truncate">{props.name}</p>
         <p>{props.amount}주</p>
       </div>
     </div>
