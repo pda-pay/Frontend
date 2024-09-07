@@ -48,9 +48,7 @@ export default function StockSelectBar({
     range.push({ value: i, label: i });
   }
 
-  console.log("선택한 주식량" + amount);
   const onChangeSelected = (selected: any) => {
-    console.log("onChangeSelected");
     if (
       selected &&
       selected.value !== null &&

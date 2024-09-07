@@ -3,7 +3,18 @@ import XButton from "../../../components/button/XButton";
 
 interface ModalProps {
   priority?: [
+    string,
     number,
+    string,
+    string,
+    number,
+    string,
+    string,
+    number,
+    number,
+    number
+  ][];
+  mortgage?: [
     string,
     number,
     string,
@@ -13,18 +24,6 @@ interface ModalProps {
     number,
     number,
     number
-  ][];
-  mortgage?: [
-    string, // "accountNumber": "456-7890-12345",
-    number, //         "quantity": 250,
-    number, //         "mortgagedQuantity": 0,
-    string, //         "stockCode": "005930",
-    string, //         "stockName": "삼성전자",
-    string, //         "companyCode": "04",
-    string, //         "companyName": "삼성증권",
-    number, //         "stabilityLevel": 1,
-    number, //         "stockPrice": 74300,
-    number //         "limitPrice": 48295.0
   ][];
   isModalOpen: boolean;
   handleCloseModal: () => void;
@@ -66,12 +65,12 @@ export default function ConfirmModal({
               {mortgage.map((stock) => (
                 <tbody>
                   <tr>
+                    <td>{stock[5]}</td>
+                    <td>{stock[3]}</td>
+                    <td>{stock[1]}</td>
+                    <td>{stock[7].toLocaleString()}</td>
                     <td>{stock[6]}</td>
-                    <td>{stock[4]}</td>
-                    <td>{stock[2]}</td>
-                    <td>{stock[8]}</td>
-                    <td>{stock[7]}</td>
-                    <td>{stock[9] * stock[2]}</td>
+                    <td>{(stock[8] * stock[1]).toLocaleString()}</td>
                   </tr>
                 </tbody>
               ))}
@@ -101,11 +100,11 @@ export default function ConfirmModal({
                   <tbody>
                     <tr>
                       <td>{stock[6]}</td>
-                      <td>{stock[4]}</td>
-                      <td>{stock[2]}</td>
-                      <td>{stock[8]}</td>
+                      <td>{stock[3]}</td>
+                      <td>{stock[1]}</td>
+                      <td>{stock[8].toLocaleString()}</td>
                       <td>{stock[7]}</td>
-                      <td>{stock[9] * stock[2]}</td>
+                      <td>{(stock[9] * stock[1]).toLocaleString()}</td>
                     </tr>
                   </tbody>
                 ))

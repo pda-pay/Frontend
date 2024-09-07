@@ -15,7 +15,6 @@ export default function MainPage() {
   const fcmservice = new fcmApi();
   const navigate = useNavigate();
 
-  //TODO: 여기서 백엔드에게 이름과 가입 여부 가져오기
   const [name, setName] = useState<string>("익명");
   const [member, setMember] = useState<boolean>(false);
 

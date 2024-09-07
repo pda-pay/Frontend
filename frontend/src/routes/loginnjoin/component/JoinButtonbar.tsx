@@ -44,7 +44,6 @@ export default function JoinButtonbar({ unValid, userInfo }: ButtonProps) {
       disabled={unValid}
       onClick={() => {
         joinFinish();
-        //if (btnValid) moveNext();
       }}
     >
       다음
