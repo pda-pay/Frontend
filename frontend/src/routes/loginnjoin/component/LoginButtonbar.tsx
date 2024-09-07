@@ -12,7 +12,6 @@ interface LoginProps {
 export default function LoginButtonbar({ loginId, password }: LoginProps) {
   const service = new loginApi();
   const navigate = useNavigate();
-  //const [name, setName] = useState<string>();
 
   const [errMsg, setErrMsg] = useState<string>();
 
@@ -37,7 +36,6 @@ export default function LoginButtonbar({ loginId, password }: LoginProps) {
   };
 
   const clickBtn = () => {
-    console.log("버튼 클릭");
     postLoginInfo();
   };
 

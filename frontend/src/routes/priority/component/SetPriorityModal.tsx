@@ -42,8 +42,6 @@ export default function SetPriorityModal({
   handleCloseModal,
   addPriority,
 }: ModalProps) {
-  //여기 고객이 선택한 종목의 row 인덱스와 쪼갠 주수 저장
-  //const [tempSelected, setTempSelected] = useState<[number, number]>();
   const [tempSelected, setTempSelected] =
     useState<
       [
@@ -79,7 +77,6 @@ export default function SetPriorityModal({
   };
 
   const clickedStock = (index: number) => {
-    //입력창을 열고
     openInput();
     //어떤 주식이 선택됐는지 unPriority 배열의 row 인덱스
     setClickedRowIdx(index);
@@ -101,10 +98,9 @@ export default function SetPriorityModal({
   };
 
   const handleTempSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value; // 입력값을 문자열로 처리
+    const value = event.target.value;
     const valueToNum = Number(value);
 
-    // 숫자 또는 빈 문자열일 때만 상태 업데이트
     if (value === "" || !isNaN(Number(value))) {
       setInputValue(value);
       validateInput(valueToNum);
@@ -112,7 +108,6 @@ export default function SetPriorityModal({
     }
   };
 
-  //input 창 스크롤 방지
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -123,10 +118,8 @@ export default function SetPriorityModal({
       }
     };
 
-    // 이벤트 리스너 등록
     window.addEventListener("wheel", handleWheel, { passive: false });
 
-    // 이벤트 리스너 해제
     return () => {
       window.removeEventListener("wheel", handleWheel);
     };
