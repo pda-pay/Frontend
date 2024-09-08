@@ -108,43 +108,50 @@ export default function CashRepayPage() {
         <div>
           {companyName} {accountNumber}
         </div>
+        <div>계좌 잔고: {accountMoney.toLocaleString()}원</div>
       </BackgroundFrame>
-      <NormalTitle>결제 예정 금액</NormalTitle>
-      <BackgroundFrame color="blue">
-        <div>{totalDebt.toLocaleString()}원</div>
-        <div>
-          {previousMonth === 12 ? (
-            <span>{today.getFullYear() - 1}</span>
-          ) : (
-            <span>{today.getFullYear()}</span>
-          )}
-          년 {previousMonth}월 결제 {previousMonthDebt.toLocaleString()}원
-        </div>
-        <div>
-          {today.getFullYear()}년 {currentMonth}월 결제{" "}
-          {currentMonthDebt.toLocaleString()}원
-        </div>
-      </BackgroundFrame>
-      <NormalTitle>결제할 금액 입력</NormalTitle>
-      <BackgroundFrame color="blue">
-        <label className="block">
-          <span className="text-sm text-gray-400">
+      <div>
+        <NormalTitle>결제 예정 금액</NormalTitle>
+        <BackgroundFrame color="blue">
+          <div>{totalDebt.toLocaleString()}원</div>
+          <div>
+            {previousMonth === 12 ? (
+              <span>{today.getFullYear() - 1}</span>
+            ) : (
+              <span>{today.getFullYear()}</span>
+            )}
+            년 {previousMonth}월 결제 {previousMonthDebt.toLocaleString()}원
+          </div>
+          <div>
+            {today.getFullYear()}년 {currentMonth}월 결제{" "}
+            {currentMonthDebt.toLocaleString()}원
+          </div>
+        </BackgroundFrame>
+      </div>
+
+      <div>
+        <NormalTitle>결제할 금액 입력</NormalTitle>
+        <BackgroundFrame color="blue">
+          <label className="block">
+            {/* <span className="text-sm text-gray-400">
             최대 {accountMoney.toLocaleString()}원 입력 가능합니다.
-          </span>
-          <input
-            type="number"
-            name="repay"
-            value={inputValue}
-            onChange={handleTempSelected}
-            className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-          />
-          {errInput && inputValue.length > 0 && (
-            <p className="mt-2 text-sm text-red-600">
-              {"계좌 잔액 이하의 금액을 입력해주세요."}
-            </p>
-          )}
-        </label>
-      </BackgroundFrame>
+          </span> */}
+            <input
+              type="number"
+              name="repay"
+              value={inputValue}
+              onChange={handleTempSelected}
+              className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+            />
+            {errInput && inputValue.length > 0 && (
+              <p className="mt-2 text-sm text-red-600">
+                {"계좌 잔액 이하의 금액을 입력해주세요."}
+              </p>
+            )}
+          </label>
+        </BackgroundFrame>
+      </div>
+
       <div className="mt-auto">
         <ButtonBar
           beforetext="취소"

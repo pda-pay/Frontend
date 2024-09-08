@@ -34,4 +34,10 @@ export default class paymentAPI extends BaseApi {
     const resp = await this.fetcher.post("/payment/cash", data);
     return resp;
   }
+
+  //담보 주식 가져오기
+  async getMortgagedStock() {
+    const resp = await this.fetcher.get("/payment/pawn-info");
+    return resp;
+  }
 }

@@ -6,11 +6,16 @@ import BoldTitle from "../../components/text/BoldTitle";
 import NormalTitle from "../../components/text/NormalTitle";
 import loginApi from "../../api/loginAPI";
 import { useNavigate } from "react-router-dom";
+import CashMortgagedModal from "../repay/component/CashMortgagedModal";
 
 export default function AllmenuPage() {
   const navigate = useNavigate();
   const logservice = new loginApi();
   const userservice = new userAPI();
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const [name, setName] = useState<string>("익명");
   const [member, setMember] = useState<boolean>(false);
@@ -103,11 +108,11 @@ export default function AllmenuPage() {
         <NormalTitle>
           <span className="text-gray-400">한도 및 상환</span>
         </NormalTitle>
-        {/*TODO: 선결제로 이동*/}
+
         <div className="ml-3 mt-3 flex flex-col gap-2">
           <div
             onClick={() => {
-              if (member) navigate("/cashrepay");
+              if (member) openModal();
             }}
           >
             <BoldTitle>선결제하기</BoldTitle>
@@ -164,6 +169,12 @@ export default function AllmenuPage() {
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <CashMortgagedModal
+          isModalOpen={isModalOpen}
+          handleCloseModal={closeModal}
+        />
+      )}
     </PaddingDiv>
   );
 }

@@ -7,10 +7,15 @@ import NormalTitle from "../../components/text/NormalTitle";
 import MoveButton from "../../components/button/MoveButton";
 import userAPI from "../../api/userAPI";
 import axios from "axios";
+import CashMortgagedModal from "../repay/component/CashMortgagedModal";
 
 export default function PaymentPage() {
   const userservice = new userAPI();
   const navigate = useNavigate();
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   //TODO: 여기서 백엔드에게 이름과 가입 여부 가져오기
   const [name, setName] = useState<string>("익명");
@@ -72,9 +77,7 @@ export default function PaymentPage() {
         </div>
         {memeber && (
           <div className="h-100 grid grid-cols-2 gap-5">
-            <MoveButton onClick={() => navigate("/cashrepay")}>
-              선결제
-            </MoveButton>
+            <MoveButton onClick={openModal}>선결제</MoveButton>
             <MoveButton onClick={() => navigate("/limit")}>
               한도 변경
             </MoveButton>
@@ -87,6 +90,12 @@ export default function PaymentPage() {
           </div>
         )}
       </PaddingDiv>
+      {isModalOpen && (
+        <CashMortgagedModal
+          isModalOpen={isModalOpen}
+          handleCloseModal={closeModal}
+        />
+      )}
     </div>
   );
 }

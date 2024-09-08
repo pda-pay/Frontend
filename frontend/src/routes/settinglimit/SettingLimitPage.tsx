@@ -145,9 +145,9 @@ export default function SettingLimitPage() {
           <ButtonBar
             beforetext="취소"
             nexttext="수정 완료"
-            beforeurl="/allmenu"
+            beforeurl="/payment"
             nextdisabled={errLimit}
-            nexturl="/allmenu"
+            nexturl="/payment"
             //nextOnClick={putMorgagedStocks}
           />
         ) : (

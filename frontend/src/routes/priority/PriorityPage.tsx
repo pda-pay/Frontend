@@ -482,10 +482,10 @@ export default function PriorityPage() {
       <div className="mt-auto">
         {mem ? (
           <ButtonBar
-            beforetext="취소"
-            nexttext="수정 완료"
+            beforetext="이전"
+            nexttext="다음"
             beforeurl="/allmenu"
-            nexturl="/allmenu"
+            nexturl="/limit"
             nextOnClick={putPriority}
           />
         ) : (
