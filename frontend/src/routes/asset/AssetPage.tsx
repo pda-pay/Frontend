@@ -1,3 +1,4 @@
+import CollateralRatioGraph from "./CollateralRatioGraph";
 import MortgageState from "./MortgageState";
 import StockPieChart from "./StockPieChart";
 
@@ -11,6 +12,8 @@ export default function AssetPage() {
         <strong className="font-bold">정윤현님,</strong>자산 현황을 확인해보세요
       </p>
       <StockPieChart />
+
+      <CollateralRatioGraph />
 
       <MortgageState />
     </div>
