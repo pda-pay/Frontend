@@ -38,8 +38,9 @@ export default function CashRepayPage() {
       const response = await repayservice.getRepayAccount();
 
       if (response.status === 200) {
-        //setCompanyName(response.data.companyName);
+        setCompanyName(response.data.accountName);
         setAccountNumber(response.data.accountNumber);
+        setAccountMoney(response.data.accountDeposit);
       }
     } catch (error) {
       console.log(error);
