@@ -19,6 +19,7 @@ import SimplePage from "./routes/simplepsw/SimplePage";
 import PaymentHistoryPage from "./routes/payment/PaymentHistoryPage";
 import CashRepayPage from "./routes/repay/CashRepayPage";
 import MortgagedRepayPage from "./routes/repay/MortgagedRepayPage";
+import NotificationBox from "./routes/notificationBox/NotificationBox";
 
 const routers = [
   {
@@ -125,6 +126,10 @@ const routers = [
   {
     path: "/mortgagedrepay",
     element: <MortgagedRepayPage />,
+  },
+  {
+    path: "/notificationBox",
+    element: <NotificationBox />,
   },
 ];
 
