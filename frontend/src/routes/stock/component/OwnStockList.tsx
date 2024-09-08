@@ -75,21 +75,6 @@ export default function OwnStockList({
           </div>
         ))}
       </div>
-
-      {/* <div>
-        <NormalTitle>신한투자증권</NormalTitle>
-        <Wrapper>
-          <Slider {...settings}>
-            {stocks.map((stock, index) => (
-              <SCard
-                index={index}
-                stockInfo={stock}
-                handleSelectedStock={handleSelectedStock}
-              />
-            ))}
-          </Slider>
-        </Wrapper>
-      </div> */}
     </div>
   );
 }

@@ -30,7 +30,6 @@ export default function MainPage() {
   const fcmservice = new fcmApi();
   const navigate = useNavigate();
 
-  //TODO: 여기서 백엔드에게 이름과 가입 여부 가져오기
   const [name, setName] = useState<string>("익명");
   const [member, setMember] = useState<boolean>(false);
 
@@ -39,7 +38,7 @@ export default function MainPage() {
       const response = await userservice.checkMem();
 
       if (response.status === 200) {
-        setName(response.data.userName);
+        setName(response.data.userId);
         setMember(response.data.paymentServiceMember);
       }
     } catch (error) {
@@ -51,19 +50,18 @@ export default function MainPage() {
 
   const requestFCMToken = async () => {
     const permission = await Notification.requestPermission();
-  
+
     if (permission === "granted") {
       try {
         const token = await getToken(messaging, {
           vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
         });
-  
+
         console.log(token);
 
         fcmservice.postUserInfo({
-          token: token
-        })
-        
+          token: token,
+        });
       } catch (error) {
         console.error("FCM Token error: ", error);
       }
@@ -75,15 +73,14 @@ export default function MainPage() {
   const onMessageListener = () => {
     onMessage(messaging, (payload) => {
       console.log("Message received. Payload:", payload);
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     // 로그인 정보 가져오기
     getUserInfo();
     requestFCMToken();
     onMessageListener();
-
   }, []);
 
   return (

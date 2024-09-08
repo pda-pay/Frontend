@@ -7,9 +7,18 @@ import BackgroundFrame from "../../components/backgroundframe/BackgroundFrame";
 import ButtonBar from "../../components/button/ButtonBar";
 import payServiceAPI from "../../api/payServiceAPI";
 import axios from "axios";
+import userAPI from "../../api/userAPI";
+import { useLocation } from "react-router-dom";
 
 export default function SettingLimitPage() {
+  const userservice = new userAPI();
   const payjoinservice = new payServiceAPI();
+
+  const location = useLocation();
+  // 전달된 state를 받아옵니다. (default 값을 false로 설정)
+  const { menu } = location.state || { menu: false };
+
+  const [mem, setMem] = useState<boolean>(false);
 
   //TODO: api GET요청으로 받아온 데이터
   //현재한도, 최대한도, 담보
@@ -17,11 +26,32 @@ export default function SettingLimitPage() {
   const [totalLimit, setTotalLimit] = useState<number>(0);
   const [currentLimit, setCurrentLimit] = useState<number>(0);
 
+  //currentlimit 사용 안해서 빌드에러나서 콘솔로그찍음
+  useEffect(() => {
+    console.log(currentLimit);
+  }, []);
+
   const [limit, setLimit] = useState<number>(data[0]);
   const [mortgageRate, setMortgageRate] = useState<number>(data[2] / limit);
   const [errLimit, setErrLimit] = useState<boolean>();
 
   const [inputValue, setInputValue] = useState<string>("");
+
+  const getMem = async () => {
+    try {
+      const response = await userservice.checkMem();
+
+      if (response.status === 200) {
+        setMem(response.data.paymentServiceMember);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getMem();
+  }, []);
 
   const getLimit = async () => {
     try {
@@ -43,15 +73,12 @@ export default function SettingLimitPage() {
 
   useEffect(() => {
     getLimit();
-    console.log(currentLimit);
   }, []);
 
   const validateLimit = () => {
     if (totalLimit > data[1] || totalLimit < 0 || mortgageRate < 140) {
-      console.log("에러 발생 한도는 " + mortgageRate);
       setErrLimit(true);
     } else {
-      console.log("에러 해제 ");
       setErrLimit(false);
     }
   };
@@ -59,8 +86,6 @@ export default function SettingLimitPage() {
   const updateLimit = (event: React.ChangeEvent<HTMLInputElement>) => {
     const v = event.target.value;
     const vToNum = Number(v);
-
-    console.log("값 들어옴 " + vToNum);
 
     if (!isNaN(vToNum) && v !== " ") {
       setInputValue(v);
@@ -119,13 +144,40 @@ export default function SettingLimitPage() {
           </div>
         </BackgroundFrame>
       </div>
-      <ButtonBar
-        beforetext="이전"
-        beforeurl="/priority"
-        nexttext="완료"
-        nextdisabled={errLimit}
-        nexturl="/account"
-      />
+
+      <div className="mt-auto">
+        {mem ? (
+          <div>
+            {menu ? (
+              <ButtonBar
+                beforetext="취소"
+                nexttext="수정 완료"
+                beforeurl="/payment"
+                nexturl="/payment"
+                //nextOnClick={putMorgagedStocks}
+              />
+            ) : (
+              <ButtonBar
+                beforetext="이전"
+                nexttext="수정 완료"
+                beforeurl="/priority"
+                nextdisabled={errLimit}
+                nexturl="/payment"
+                //nextOnClick={putMorgagedStocks}
+              />
+            )}
+          </div>
+        ) : (
+          <ButtonBar
+            beforetext="이전"
+            beforeurl="/priority"
+            nexttext="완료"
+            nextdisabled={errLimit}
+            nexturl="/account"
+            //nextOnClick={putMorgagedStocks}
+          />
+        )}
+      </div>
     </PaddingDiv>
   );
 }

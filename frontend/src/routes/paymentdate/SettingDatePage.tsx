@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import BoldTitle from "../../components/text/BoldTitle";
 import NormalTitle from "../../components/text/NormalTitle";
 import ButtonBar from "../../components/button/ButtonBar";
 import payServiceAPI from "../../api/payServiceAPI";
 import axios from "axios";
+import userAPI from "../../api/userAPI";
 
 export default function SettingDatePage() {
+  const userservice = new userAPI();
   const payjoinservice = new payServiceAPI();
+
+  const [mem, setMem] = useState<boolean>(false);
 
   const date: number[] = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
@@ -16,6 +20,22 @@ export default function SettingDatePage() {
   const [paymentDate, setPaymentDate] = useState<number>(0);
 
   const [isClicked, setIsClicked] = useState<boolean>(false);
+
+  const getMem = async () => {
+    try {
+      const response = await userservice.checkMem();
+
+      if (response.status === 200) {
+        setMem(response.data.paymentServiceMember);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getMem();
+  }, []);
 
   const putPaymentDate = async (): Promise<boolean> => {
     try {
@@ -77,14 +97,28 @@ export default function SettingDatePage() {
           <div></div>
         )}
       </div>
-      <ButtonBar
-        beforetext="이전"
-        beforeurl="/account"
-        nexttext="완료"
-        nexturl="/confirm"
-        nextdisabled={!isClicked}
-        nextOnClick={putPaymentDate}
-      />
+
+      <div className="mt-auto">
+        {mem ? (
+          <ButtonBar
+            beforetext="취소"
+            nexttext="수정 완료"
+            beforeurl="/allmenu"
+            nexturl="/allmenu"
+            nextdisabled={!isClicked}
+            nextOnClick={putPaymentDate}
+          />
+        ) : (
+          <ButtonBar
+            beforetext="이전"
+            beforeurl="/account"
+            nexttext="완료"
+            nexturl="/confirm"
+            nextdisabled={!isClicked}
+            nextOnClick={putPaymentDate}
+          />
+        )}
+      </div>
     </PaddingDiv>
   );
 }

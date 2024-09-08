@@ -69,8 +69,8 @@ export default function PriorityFrame({
                     <th>증권사명</th>
                     <th>종목명</th>
                     <th>선택 주수</th>
-                    <th>전일 종가</th>
-                    <th>등급</th>
+                    {/* <th>전일 종가</th> */}
+                    {/* <th>등급</th> */}
                     <th>가능 한도</th>
                     <th>삭제</th>
                   </tr>
@@ -81,8 +81,8 @@ export default function PriorityFrame({
                       <td>{stock[6]}</td>
                       <td>{stock[3]}</td>
                       <td>{stock[1]}</td>
-                      <td>{stock[8].toLocaleString()}</td>
-                      <td>{stock[7]}</td>
+                      {/* <td>{stock[8].toLocaleString()}</td> */}
+                      {/* <td>{stock[7]}</td> */}
                       <td>{stock[9]}</td>
                       <td onClick={() => deletePriority(rowIndex, stock)}>-</td>
                     </tr>
@@ -120,7 +120,7 @@ export default function PriorityFrame({
                     <th>종목명</th>
                     <th>남은 주수</th>
                     <th>전일 종가</th>
-                    <th>등급</th>
+                    {/* <th>등급</th> */}
                     <th>가능 한도</th>
                   </tr>
                 </thead>
@@ -131,8 +131,8 @@ export default function PriorityFrame({
                       <td>{stock[3]}</td>
                       <td>{stock[1]}</td>
                       <td>{stock[8].toLocaleString()}</td>
-                      <td>{stock[7]}</td>
-                      <td>{stock[9]}</td>
+                      {/* <td>{stock[7]}</td> */}
+                      <td>{stock[9].toLocaleString()}</td>
                     </tr>
                   ))}
                 </tbody>
