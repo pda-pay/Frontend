@@ -12,22 +12,19 @@ interface LogMessage {
 
 export default function PaymentLogCompo() {
   const [messages, setMessages] = useState<LogMessage[]>([]);
-  const socketRef = useRef<WebSocket | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    socketRef.current = new WebSocket("ws");
+    const eventSource = new EventSource("ws");
 
-    socketRef.current.onmessage = (event) => {
+    eventSource.onmessage = (event) => {
       const log: LogMessage = JSON.parse(event.data);
 
       setMessages((prevMessages) => [...prevMessages, log]);
     };
 
     return () => {
-      if (socketRef.current) {
-        socketRef.current.close();
-      }
+      eventSource.close();
     };
   }, []);
 
@@ -42,7 +39,7 @@ export default function PaymentLogCompo() {
   return (
     <div>
       <p className="w-full text-center font-bold text-2xl">실시간 결제로그</p>
-      <div className="border border-solid max-h-[40vh]">
+      <div className="border border-solid max-h-[40vh] overflow-hidden">
         <div className="grid grid-cols-6 gap-3 text-center">
           <p>id</p>
           <p>고객id</p>
