@@ -5,6 +5,8 @@ import paymentAPI from "../../api/paymentAPI";
 import NormalTitle from "../../components/text/NormalTitle";
 import BackgroundFrame from "../../components/backgroundframe/BackgroundFrame";
 import ButtonBar from "../../components/button/ButtonBar";
+import SellStockModal from "./component/SellStockModal";
+import AlertRepayModal from "./component/AlertRepayModal";
 
 type MortgagedObject = {
   stockRank: number;
@@ -25,6 +27,44 @@ export default function MortgagedRepayPage() {
 
   const today = new Date();
 
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [clickedRow, setClickedRow] = useState<
+    [
+      number,
+      string,
+      number,
+      string,
+      string,
+      string,
+      string,
+      number,
+      number,
+      number,
+      number
+    ]
+  >([0, "", 0, "", "", "", "", 0, 0, 0, 0]);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
+  const openAlert = () => setIsAlertOpen(true);
+  const closeAlert = () => setIsAlertOpen(false);
+
+  const [repayResult, setRepayResult] = useState<{
+    repaymentAmount: number;
+    totalSellAmount: number;
+    realRepaymentAmount: number;
+    amountToAccount: number;
+    message: string;
+  }>({
+    repaymentAmount: 0,
+    totalSellAmount: 0,
+    realRepaymentAmount: 0,
+    amountToAccount: 0,
+    message: "string",
+  });
+
   const [inputValue, setInputValue] = useState<string>("");
   const [errInput, setErrInput] = useState<boolean>(true);
   const [repayAmount, setRepayAmount] = useState<number>(0);
@@ -32,7 +72,9 @@ export default function MortgagedRepayPage() {
   const [repaymentDate, setRepaymentDate] = useState<number>(1);
   const [previousMonthDebt, setPreviousMonthDebt] = useState<number>(0);
   const [currentMonthDebt, setCurrentMonthDebt] = useState<number>(0);
-  const [currentMonth, setCurrentMonth] = useState<number>(today.getMonth());
+  const [currentMonth, setCurrentMonth] = useState<number>(
+    (today.getMonth() + 1) % 12
+  );
   const [previousMonth, setPreviousMonth] = useState<number>(0);
   const [totalDebt, setTotalDebt] = useState<number>(0);
 
@@ -73,7 +115,7 @@ export default function MortgagedRepayPage() {
   const [sellStockPrice, setSellStockPrice] = useState<number>(0);
 
   useEffect(() => {
-    if (today.getMonth() !== 1) {
+    if (currentMonth !== 1) {
       setPreviousMonth(currentMonth - 1);
     } else setPreviousMonth(12);
   }, []);
@@ -105,6 +147,35 @@ export default function MortgagedRepayPage() {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const postMortgagedRepay = async (): Promise<boolean> => {
+    const temp = {
+      repaymentAmount: repayAmount,
+      selectedStocks: sellStock.map((stock) => ({
+        stockRank: stock[0],
+        quantity: stock[2],
+        accountNumber: stock[1],
+        stockCode: stock[3],
+      })),
+    };
+
+    try {
+      const response = await repayservice.postMortgagedRepay(temp);
+
+      if (response.status === 200) {
+        console.log(response.data);
+        setRepayResult(response.data);
+
+        openAlert();
+        //알람창을 확인해야 페이지가 넘어가도록 페이지 이동 막음
+        return false;
+      }
+      return false;
+    } catch (error) {
+      console.log(error);
+      return false;
     }
   };
 
@@ -155,17 +226,62 @@ export default function MortgagedRepayPage() {
       number,
       number,
       number
-    ]
+    ],
+    value: number
   ) => {
-    mortgagedStock.forEach((rowA) => {
-      // 우선 배열에 일치하는 행이 있는지 검사
-      const isMatch = sellStock.some(
-        (rowB) =>
-          rowA[1] === rowB[1] && rowA[2] === rowB[2] && rowA[3] === rowB[3]
-      );
+    const isMatch = sellStock.some(
+      (rowB) => row[1] === rowB[1] && row[3] === rowB[3] && row[5] === rowB[5]
+    );
 
-      if (!isMatch) setSellStock((prevState) => [...prevState, row]);
-    });
+    if (!isMatch)
+      setSellStock((prevState) => [
+        ...prevState,
+        [
+          row[0],
+          row[1],
+          value,
+          row[3],
+          row[4],
+          row[5],
+          row[6],
+          row[7],
+          row[8],
+          row[9],
+          row[10],
+        ],
+      ]);
+    else {
+      const updatedSellStock: [
+        number,
+        string,
+        number,
+        string,
+        string,
+        string,
+        string,
+        number,
+        number,
+        number,
+        number
+      ][] = sellStock.map((rowB) =>
+        row[1] === rowB[1] && row[5] === rowB[5] && row[3] === rowB[3]
+          ? [
+              row[0],
+              row[1],
+              value,
+              row[3],
+              row[4],
+              row[5],
+              row[6],
+              row[7],
+              row[8],
+              row[9],
+              row[10],
+            ]
+          : rowB
+      );
+      setSellStock(updatedSellStock);
+    }
   };
 
   const deleteSellStock = (rowIndex: number) => {
@@ -188,7 +304,7 @@ export default function MortgagedRepayPage() {
   }, [sellStock]);
 
   const validateInput = (ip: number) => {
-    if (ip > sellStockPrice /* || ip > totalDebt */ || ip <= 0) {
+    if (ip > sellStockPrice || ip > totalDebt || ip <= 0) {
       setErrInput(true);
     } else {
       setRepayAmount(ip);
@@ -232,7 +348,12 @@ export default function MortgagedRepayPage() {
               </thead>
               <tbody>
                 {mortgagedStock.map((stock) => (
-                  <tr onClick={() => selectSellStock(stock)}>
+                  <tr
+                    onClick={() => {
+                      setClickedRow([...stock]);
+                      openModal(); /*selectSellStock(stock)*/
+                    }}
+                  >
                     <td>{stock[6]}</td>
                     <td>{stock[4]}</td>
                     <td>{stock[2]}</td>
@@ -287,9 +408,9 @@ export default function MortgagedRepayPage() {
         </BackgroundFrame>
       </div>
       <div>
-        <NormalTitle>결제 예정 금액</NormalTitle>
         <BackgroundFrame color="blue">
-          <div>{totalDebt.toLocaleString()}원</div>
+          <div>결제 예정 금액: {totalDebt.toLocaleString()}원</div>
+          <div>결제 예정일: 매월 {repaymentDate}일</div>
           <div>
             {previousMonth === 12 ? (
               <span>{today.getFullYear() - 1}</span>
@@ -304,14 +425,15 @@ export default function MortgagedRepayPage() {
           </div>
         </BackgroundFrame>
       </div>
+      <NormalTitle>
+        <div className="flex">
+          <div>결제 가능 금액:</div>
+          <span className="ml-auto">{sellStockPrice.toLocaleString()}원</span>
+        </div>
+      </NormalTitle>
       <div>
-        <NormalTitle>
-          결제 가능 금액: {sellStockPrice.toLocaleString()}원
-        </NormalTitle>
         <label className="block">
-          {/* <span className="text-sm text-gray-400">
-            최대 {accountMoney.toLocaleString()}원 입력 가능합니다.
-          </span> */}
+          <NormalTitle>결제할 금액을 입력하세요.</NormalTitle>
           <input
             type="number"
             name="repay"
@@ -321,7 +443,7 @@ export default function MortgagedRepayPage() {
           />
           {errInput && inputValue.length > 0 && (
             <p className="mt-2 text-sm text-red-600">
-              {"계좌 잔액 이하의 금액을 입력해주세요."}
+              {"결제 예정액, 결제 가능액 이하의 금액을 입력해주세요."}
             </p>
           )}
         </label>
@@ -334,9 +456,24 @@ export default function MortgagedRepayPage() {
           nexttext="상환하기"
           nexturl="/payment"
           nextdisabled={errInput}
-          //nextOnClick={postCashRepayAmount}
+          nextOnClick={postMortgagedRepay}
         />
       </div>
+      {isAlertOpen && (
+        <AlertRepayModal
+          isAlertOpen={isAlertOpen}
+          handleCloseAlert={closeAlert}
+          result={repayResult}
+        />
+      )}
+      {isModalOpen && (
+        <SellStockModal
+          isModalOpen={isModalOpen}
+          handleCloseModal={closeModal}
+          clickedRow={clickedRow}
+          selectSellStock={selectSellStock}
+        />
+      )}
     </PaddingDiv>
   );
 }

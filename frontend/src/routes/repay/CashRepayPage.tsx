@@ -17,7 +17,9 @@ export default function CashRepayPage() {
   const [repaymentDate, setRepaymentDate] = useState<number>(1);
   const [previousMonthDebt, setPreviousMonthDebt] = useState<number>(0);
   const [currentMonthDebt, setCurrentMonthDebt] = useState<number>(0);
-  const [currentMonth, setCurrentMonth] = useState<number>(today.getMonth());
+  const [currentMonth, setCurrentMonth] = useState<number>(
+    (today.getMonth() + 1) % 12
+  );
   const [previousMonth, setPreviousMonth] = useState<number>(0);
   const [totalDebt, setTotalDebt] = useState<number>(0);
 
@@ -26,7 +28,7 @@ export default function CashRepayPage() {
   const [repayAmount, setRepayAmount] = useState<number>(0);
 
   useEffect(() => {
-    if (today.getMonth() !== 1) {
+    if (currentMonth !== 1) {
       setPreviousMonth(currentMonth - 1);
     } else setPreviousMonth(12);
   }, []);

@@ -4,6 +4,16 @@ export interface CashRepayReqData {
   amount: number;
 }
 
+export interface MortgagedRepayReqData {
+  repaymentAmount: number;
+  selectedStocks: {
+    stockRank: number;
+    quantity: number;
+    accountNumber: string;
+    stockCode: string;
+  }[];
+}
+
 export default class paymentAPI extends BaseApi {
   async getPaymentInfo(/*data: HistoryReqData*/) {
     const resp = await this.fetcher.get("/payment/cash-info");
@@ -38,6 +48,12 @@ export default class paymentAPI extends BaseApi {
   //담보 주식 가져오기
   async getMortgagedStock() {
     const resp = await this.fetcher.get("/payment/pawn-info");
+    return resp;
+  }
+
+  //담보로 상환하기
+  async postMortgagedRepay(data: MortgagedRepayReqData) {
+    const resp = await this.fetcher.post("/payment/pawn", data);
     return resp;
   }
 }
