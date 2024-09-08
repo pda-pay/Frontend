@@ -34,8 +34,8 @@ export default function LoginInput({ handleLoginId, handlePWD }: LoginProps) {
         <input
           type="text"
           name="userId"
-          value={userId} // state에 저장된 이름을 input의 value로 설정
-          onChange={handleUserId} // 입력이 변경될 때 state를 업데이트
+          value={userId}
+          onChange={handleUserId}
           className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
           placeholder="shinhan"
         />
@@ -49,8 +49,8 @@ export default function LoginInput({ handleLoginId, handlePWD }: LoginProps) {
           type="password"
           // inputmode="numeric"
           name="password"
-          value={password} // state에 저장된 이름을 input의 value로 설정
-          onChange={handlePassword} // 입력이 변경될 때 state를 업데이트
+          value={password}
+          onChange={handlePassword}
           className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
         />
       </label>

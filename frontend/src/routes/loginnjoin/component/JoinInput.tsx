@@ -94,9 +94,6 @@ export default function JoinInput({
       if (axios.isAxiosError(error)) {
         console.log("에러 발생: " + error);
       }
-      // if (error.response) {
-      //   console.log("에러 발생: " + error);
-      // }
     }
   };
 
@@ -107,35 +104,24 @@ export default function JoinInput({
       });
 
       if (response.status === 202) {
-        //여기서 버튼 비활성화 state 관리
-        //setErrorCerti(false);
         openModal();
         setCertiCheck(true);
       } else if (response.status === 400 || response.status === 500) {
         console.log((await response).data.message);
-        //여기서 에러 메시지 출력하고 state 버튼 비호라성황
-        //setErrorCerti(true);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("에러 발생: " + error);
       }
-      // if (error.response) {
-      //   console.log("에러 발생: " + error);
-      // }
     }
   };
 
-  //TODO: 전화번호 인증 로직 추가
   const handleCertiPhone = () => {
-    //여기서 api 요청
     if (!errorPhoneNumber) certificatePhone();
-    //if (!errorCerti) openModal();
   };
 
   //TODO: 아이디 중복 검사 후 idDup 변경 여부 결정 & 에러 메시지 출력
   const handleDupId = () => {
-    //여기서 api 요청
     checkIdDuplicate();
     setDupCheck(true);
   };
@@ -212,13 +198,6 @@ export default function JoinInput({
     onValidChange(valid);
   }, [valid]);
 
-  useEffect(() => {
-    console.log("전화번호 인증 여부: " + certiCheck);
-  }, [certiCheck]);
-  useEffect(() => {
-    console.log("전화번호 인증 성공: " + !errorCerti);
-  }, [errorCerti]);
-
   return (
     <div className="flex flex-col gap-10">
       <label className="block">
@@ -228,8 +207,8 @@ export default function JoinInput({
         <input
           type="text"
           name="userName"
-          value={userName} // state에 저장된 이름을 input의 value로 설정
-          onChange={handleUserName} // 입력이 변경될 때 state를 업데이트
+          value={userName}
+          onChange={handleUserName}
           className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
           placeholder="김신한"
         />
@@ -250,8 +229,8 @@ export default function JoinInput({
         <input
           type="text"
           name="userId"
-          value={userId} // state에 저장된 이름을 input의 value로 설정
-          onChange={handleUserId} // 입력이 변경될 때 state를 업데이트
+          value={userId}
+          onChange={handleUserId}
           className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
           placeholder="shinhan"
         />
@@ -272,14 +251,14 @@ export default function JoinInput({
         <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
           비밀번호를 입력해주세요.
         </span>
-        <p className="block text-xs font-thin text-slate-700 text-gray-400">
+        <p className="block text-xs font-thin text-gray-400">
           비밀번호는 특수문자, 숫자를 무조건 포함하는 8자리 이상이어야 합니다.
         </p>
         <input
           type="password"
           name="password"
-          value={password} // state에 저장된 이름을 input의 value로 설정
-          onChange={handlePassword} // 입력이 변경될 때 state를 업데이트
+          value={password}
+          onChange={handlePassword}
           className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
         />
         {errorPsw && password !== undefined && errorPsw !== null && (
@@ -296,8 +275,8 @@ export default function JoinInput({
         <input
           type="password"
           name="password"
-          value={checkPsw} // state에 저장된 이름을 input의 value로 설정
-          onChange={handleCheckPsw} // 입력이 변경될 때 state를 업데이트
+          value={checkPsw}
+          onChange={handleCheckPsw}
           className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
         />
         {errorCheckPsw &&
@@ -334,8 +313,8 @@ export default function JoinInput({
         <input
           type="tel"
           name="phoneNumber"
-          value={phoneNumber} // state에 저장된 전화번호를 input의 value로 설정
-          onChange={handlePhoneNumber} // 입력이 변경될 때 state를 업데이트
+          value={phoneNumber}
+          onChange={handlePhoneNumber}
           pattern="[0-9]{11}"
           className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
           placeholder="00000000000"

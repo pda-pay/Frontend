@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import ApproachPage from "./routes/approach/ApproachPage";
-import MydataAgreePage from "./routes/agree/MydataAgreePage";
+//import MydataAgreePage from "./routes/agree/MydataAgreePage";
 import JoinPage from "./routes/loginnjoin/JoinPage";
 import LoginPage from "./routes/loginnjoin/LoginPage";
 import MenubarLayout from "./components/MenubarLayout";
@@ -24,6 +24,9 @@ import FranchiseQrCreatePage from "./routes/franchise/FranchiseQrCreatePage";
 import QRPage from "./routes/franchise/QRPage";
 import FranchiseLoginPage from "./routes/franchise/FranchiseLoginPage";
 import PaymentHistoryPage from "./routes/payment/PaymentHistoryPage";
+import CashRepayPage from "./routes/repay/CashRepayPage";
+import MortgagedRepayPage from "./routes/repay/MortgagedRepayPage";
+import NotificationBox from "./routes/notificationBox/NotificationBox";
 
 const routers = [
   {
@@ -31,10 +34,10 @@ const routers = [
     element: <ApproachPage />,
     // index: true
   },
-  {
-    path: "/mydata",
-    element: <MydataAgreePage />,
-  },
+  // {
+  //   path: "/mydata",
+  //   element: <MydataAgreePage />,
+  // },
   {
     path: "/serviceagree",
     element: <ServiceAgreePage />,
@@ -150,6 +153,18 @@ const routers = [
   {
     path: "/paymenthistory",
     element: <PaymentHistoryPage />,
+  },
+  {
+    path: "/cashrepay",
+    element: <CashRepayPage />,
+  },
+  {
+    path: "/mortgagedrepay",
+    element: <MortgagedRepayPage />,
+  },
+  {
+    path: "/notificationBox",
+    element: <NotificationBox />,
   },
 ];
 

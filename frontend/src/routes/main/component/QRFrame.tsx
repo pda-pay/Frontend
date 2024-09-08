@@ -26,7 +26,9 @@ export default function QRFrame({ member }: QRProps) {
           className="absolute inset-0  opacity-50"
           onClick={() => navigate("/serviceagree")}
         >
-          <ServiceBlockFrame></ServiceBlockFrame>
+          <ServiceBlockFrame>
+            결제 서비스에 가입해서 바로 확인해보세요.
+          </ServiceBlockFrame>
         </div>
       )}
     </div>

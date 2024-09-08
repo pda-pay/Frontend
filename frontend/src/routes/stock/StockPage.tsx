@@ -9,7 +9,7 @@ import MoveButton from "../../components/button/MoveButton";
 import ButtonBar from "../../components/button/ButtonBar";
 import payServiceAPI from "../../api/payServiceAPI";
 import axios from "axios";
-//import { useNavigate } from "react-router-dom";
+import userAPI from "../../api/userAPI";
 
 type ItemObject = {
   accountNumber: string;
@@ -26,7 +26,10 @@ type ItemObject = {
 
 export default function StockPage() {
   //const navigate = useNavigate();
+  const userservice = new userAPI();
   const payjoinservice = new payServiceAPI();
+
+  const [mem, setMem] = useState<boolean>(false);
 
   //보유 주식 목록: length = 10
   //ownStock은 변하는 일이 없어야 함.
@@ -70,6 +73,22 @@ export default function StockPage() {
   //0이면 증권조회 컴포넌트 출력, 1이면 선택한 주식 컴포넌트 출력
   const [page, setPage] = useState<number>(0);
 
+  const getMem = async () => {
+    try {
+      const response = await userservice.checkMem();
+
+      if (response.status === 200) {
+        setMem(response.data.paymentServiceMember);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getMem();
+  }, []);
+
   //api 호출 후 보유 주식 저장
   const getStocks = async () => {
     try {
@@ -94,8 +113,6 @@ export default function StockPage() {
       const temp = makeMortgagedReqData();
       const response = await payjoinservice.putMortgagedStock(temp);
       if (response.status === 200) {
-        const data = response.data;
-        console.log(data);
         return true;
       } else {
         return false;
@@ -143,37 +160,8 @@ export default function StockPage() {
 
   //선택한 주식 초기화
   useEffect(() => {
-    console.log(ownStock);
     setSelectedStock([...ownStock]);
   }, [ownStock]);
-
-  // useEffect(() => {
-  //   const temp: [
-  //     string,
-  //     string,
-  //     string,
-  //     string,
-  //     number,
-  //     number,
-  //     number,
-  //     number,
-  //     string
-  //   ][] = ownStock.map((row) => {
-  //     const newRow: [
-  //       string,
-  //       string,
-  //       string,
-  //       string,
-  //       number,
-  //       number,
-  //       number,
-  //       number,
-  //       string
-  //     ] = [row[0], row[1], row[2], row[3], row[4], 0, row[5], row[6], row[7]];
-  //     return newRow;
-  //   });
-  //   setSelectedStock(temp);
-  // }, [ownStock]);
 
   //증권별로 구분 후, 보유주식에서 몇번째였는지 0번째에 저장
   const [category, setCategory] = useState<{
@@ -306,11 +294,6 @@ export default function StockPage() {
     });
   };
 
-  useEffect(() => {
-    console.log("바뀜!");
-    console.log(selectedStock);
-  }, [selectedStock]);
-
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   const calculateLimit = () => {
@@ -335,28 +318,6 @@ export default function StockPage() {
   useEffect(() => {
     setLimit(calculateLimit);
   }, [selectedStock]);
-
-  //다음 페이지에서 주식을 다시 받아옴
-  //const location = useLocation();
-
-  // useEffect(() => {
-  //   if (location.state) {
-  //     const { priorityToStock } = location.state as {
-  //       priorityToStock: [
-  //         string,
-  //         string,
-  //         string,
-  //         string,
-  //         number,
-  //         number,
-  //         number,
-  //         number,
-  //         string
-  //       ][];
-  //     };
-  //     setSelectedStock(priorityToStock);
-  //   }
-  // }, [location.state]);
 
   const makeMortgagedReqData = () => {
     return {
@@ -447,14 +408,27 @@ export default function StockPage() {
                 원하는 한도에 맞게 주식을 자동으로 선택해주세요.
               </div> */}
             </div>
-            <ButtonBar
-              beforetext="이전"
-              nexttext="다음"
-              beforeurl="/serviceagree"
-              nexturl="/priority"
-              //nextstate={{ selectedStock: selectedStock }}
-              nextOnClick={putMorgagedStocks}
-            ></ButtonBar>
+
+            <div className="mt-auto">
+              {mem ? (
+                <ButtonBar
+                  beforetext="취소"
+                  nexttext="다음"
+                  beforeurl="/payment"
+                  nexturl="/priority"
+                  nextOnClick={putMorgagedStocks}
+                />
+              ) : (
+                <ButtonBar
+                  beforetext="이전"
+                  nexttext="다음"
+                  beforeurl="/serviceagree"
+                  nexturl="/priority"
+                  //nextstate={{ selectedStock: selectedStock }}
+                  nextOnClick={putMorgagedStocks}
+                ></ButtonBar>
+              )}
+            </div>
           </div>
         </PaddingDiv>
       ) : (
