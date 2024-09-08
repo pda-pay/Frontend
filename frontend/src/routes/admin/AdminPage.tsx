@@ -1,5 +1,6 @@
 import CollateralRatioCompo from "./CollateralRatioCompo";
 import PaymentLogCompo from "./PaymentLogCompo";
+import RepaymentLogCompo from "./RepaymentLogCompo";
 
 export default function AdminPage() {
   return (
@@ -9,7 +10,7 @@ export default function AdminPage() {
         <CollateralRatioCompo />
       </div>
       <div className="grid grid-cols-2 gap-5">
-        <PaymentLogCompo />
+        <RepaymentLogCompo />
         <PaymentLogCompo />
       </div>
     </div>

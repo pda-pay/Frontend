@@ -25,7 +25,9 @@ export default function CollateralRatioCompo() {
 
   return (
     <div>
-      <p className="w-full text-center font-bold text-2xl">담보유지비율 현황</p>
+      <p className="w-full text-center font-bold text-2xl">
+        담보유지비율 현황(160%이하)
+      </p>
       <div className="border border-solid max-h-[40vh] h-[40vh]">
         <div className="grid grid-cols-4 gap-3 text-center">
           <p>고객id</p>
