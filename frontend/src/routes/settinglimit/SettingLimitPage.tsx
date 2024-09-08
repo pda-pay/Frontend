@@ -8,10 +8,15 @@ import ButtonBar from "../../components/button/ButtonBar";
 import payServiceAPI from "../../api/payServiceAPI";
 import axios from "axios";
 import userAPI from "../../api/userAPI";
+import { useLocation } from "react-router-dom";
 
 export default function SettingLimitPage() {
   const userservice = new userAPI();
   const payjoinservice = new payServiceAPI();
+
+  const location = useLocation();
+  // 전달된 state를 받아옵니다. (default 값을 false로 설정)
+  const { menu } = location.state || { menu: false };
 
   const [mem, setMem] = useState<boolean>(false);
 
@@ -142,14 +147,26 @@ export default function SettingLimitPage() {
 
       <div className="mt-auto">
         {mem ? (
-          <ButtonBar
-            beforetext="취소"
-            nexttext="수정 완료"
-            beforeurl="/payment"
-            nextdisabled={errLimit}
-            nexturl="/payment"
-            //nextOnClick={putMorgagedStocks}
-          />
+          <div>
+            {menu ? (
+              <ButtonBar
+                beforetext="취소"
+                nexttext="수정 완료"
+                beforeurl="/payment"
+                nexturl="/payment"
+                //nextOnClick={putMorgagedStocks}
+              />
+            ) : (
+              <ButtonBar
+                beforetext="이전"
+                nexttext="수정 완료"
+                beforeurl="/priority"
+                nextdisabled={errLimit}
+                nexturl="/payment"
+                //nextOnClick={putMorgagedStocks}
+              />
+            )}
+          </div>
         ) : (
           <ButtonBar
             beforetext="이전"

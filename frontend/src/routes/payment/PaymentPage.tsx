@@ -78,7 +78,9 @@ export default function PaymentPage() {
         {memeber && (
           <div className="h-100 grid grid-cols-2 gap-5">
             <MoveButton onClick={openModal}>선결제</MoveButton>
-            <MoveButton onClick={() => navigate("/limit")}>
+            <MoveButton
+              onClick={() => navigate("/limit", { state: { menu: true } })}
+            >
               한도 변경
             </MoveButton>
             <MoveButton onClick={() => navigate("/stock")}>

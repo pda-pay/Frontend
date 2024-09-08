@@ -126,7 +126,7 @@ export default function AllmenuPage() {
           </div>
           <div
             onClick={() => {
-              if (member) navigate("/limit");
+              if (member) navigate("/limit", { state: { menu: true } });
             }}
           >
             <BoldTitle>한도 변경</BoldTitle>
@@ -140,7 +140,7 @@ export default function AllmenuPage() {
           </div>
           <div
             onClick={() => {
-              if (member) navigate("/priority");
+              if (member) navigate("/priority", { state: { menu: true } });
             }}
           >
             <BoldTitle>우선순위 확인 및 변경</BoldTitle>
