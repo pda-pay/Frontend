@@ -85,7 +85,7 @@ export default function CashRepayPage() {
   }, [previousMonthDebt, currentMonthDebt]);
 
   const validateInput = (ip: number) => {
-    if (ip > accountMoney /* || ip > totalDebt */ || ip <= 0) {
+    if (ip > accountMoney || ip > totalDebt || ip <= 0) {
       setErrInput(true);
     } else {
       setRepayAmount(ip);
@@ -148,7 +148,7 @@ export default function CashRepayPage() {
             />
             {errInput && inputValue.length > 0 && (
               <p className="mt-2 text-sm text-red-600">
-                {"계좌 잔액 이하의 금액을 입력해주세요."}
+                {"계좌 잔액, 결제 예정 금액 이하로 입력해주세요."}
               </p>
             )}
           </label>
