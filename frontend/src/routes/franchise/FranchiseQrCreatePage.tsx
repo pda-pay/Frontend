@@ -1,10 +1,9 @@
-import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import NumPad from "../../components/input/NumPad";
 
 export default function FranchiseQrCreatePage() {
   return (
-    <PaddingDiv>
+    <div className="w-screen h-screen flex flex-col p-5 py-7">
       <NumPad />
-    </PaddingDiv>
+    </div>
   );
 }
