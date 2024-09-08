@@ -78,6 +78,10 @@ export default function MortgagedRepayPage() {
   const [previousMonth, setPreviousMonth] = useState<number>(0);
   const [totalDebt, setTotalDebt] = useState<number>(0);
 
+  useEffect(() => {
+    setCurrentMonth((today.getMonth() + 1) % 12);
+  }, []);
+
   //length: 11
   //0: 우선순위, 1: 계좌번호, 2: 수량, 3: 종목코드, 4: 종목명, 5: 증권사코드, 6: 증권사명
   //7: 위험도, 8: 전일종가, 9: 한도, 10: 퍼센트

@@ -17,7 +17,12 @@ export default function PaymentHistoryPage() {
 
   const today = new Date();
   const [year, setYear] = useState<number>(today.getFullYear());
-  const [month, setMonth] = useState<number>(today.getMonth());
+  const [month, setMonth] = useState<number>((today.getMonth() + 1) % 12);
+
+  useEffect(() => {
+    setYear(today.getFullYear());
+    setMonth((today.getMonth() + 1) % 12);
+  }, []);
 
   //결제 아이디, 결제 금액, 결제일, 가게명
   const [paymentHistory, setPaymentHistory] = useState<

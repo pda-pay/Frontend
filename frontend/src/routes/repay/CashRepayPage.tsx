@@ -23,6 +23,10 @@ export default function CashRepayPage() {
   const [previousMonth, setPreviousMonth] = useState<number>(0);
   const [totalDebt, setTotalDebt] = useState<number>(0);
 
+  useEffect(() => {
+    setCurrentMonth((today.getMonth() + 1) % 12);
+  }, []);
+
   const [inputValue, setInputValue] = useState<string>("");
   const [errInput, setErrInput] = useState<boolean>(true);
   const [repayAmount, setRepayAmount] = useState<number>(0);

@@ -17,8 +17,7 @@ import SettingDatePage from "./routes/paymentdate/SettingDatePage";
 import ConfirmPage from "./routes/confirm/ConfirmPage";
 import SimplePage from "./routes/simplepsw/SimplePage";
 import PaymentHistoryPage from "./routes/payment/PaymentHistoryPage";
-import RepayPage from "./routes/repay/RepayPage";
-import CashRepayPage from "./routes/repay/CashRePayPage";
+import CashRepayPage from "./routes/repay/CashRepayPage";
 import MortgagedRepayPage from "./routes/repay/MortgagedRepayPage";
 
 const routers = [
