@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import CollateralCompo, { CollateralCompoProps } from "./CollateralCompo";
-import adminAPI from "../../api/adminAPI";
+import adminAPI, { getCollateralDataI } from "../../api/adminAPI";
 
 export default function CollateralRatioCompo() {
   const [data, setData] = useState<CollateralCompoProps[]>([]);
@@ -8,20 +8,25 @@ export default function CollateralRatioCompo() {
 
   const fetch = async () => {
     const res = await service.getCollateralData();
-    const d: CollateralCompoProps[] = res.data;
-    d.sort((a, b) => a.ratio - b.ratio);
+    const d: getCollateralDataI[] = res.data;
 
-    setData(d);
+    const da: CollateralCompoProps[] = d.map((value) => {
+      return {
+        customerId: value.userId,
+        mortgaged: value.mortgageSum,
+        limit: value.todayLimit,
+        ratio: value.marginRequirement,
+      };
+    });
+
+    da.sort((a, b) => a.ratio - b.ratio);
+
+    setData(da);
   };
 
   useEffect(() => {
     fetch();
   }, []);
-
-  const ids = ["avc", "qwe", "ggs", "sadsad", "eq121", "12sf"];
-  const arr = [150, 160, 142, 121, 100, 155];
-
-  arr.sort((a, b) => a - b);
 
   return (
     <div>
@@ -36,13 +41,13 @@ export default function CollateralRatioCompo() {
           <p>담보유지비율</p>
         </div>
         <div className="max-h-[40vh] overflow-y-auto border p-2 bg-gray-50">
-          {arr.map((value, index) => {
+          {data.map((value) => {
             return (
               <CollateralCompo
-                customerId={ids[index]}
-                mortgaged={1000000}
-                limit={1000000}
-                ratio={value}
+                customerId={value.customerId}
+                mortgaged={value.mortgaged}
+                limit={value.limit}
+                ratio={value.ratio}
               />
             );
           })}
