@@ -413,9 +413,9 @@ export default function StockPage() {
               {mem ? (
                 <ButtonBar
                   beforetext="취소"
-                  nexttext="수정 완료"
-                  beforeurl="/allmenu"
-                  nexturl="/allmenu"
+                  nexttext="다음"
+                  beforeurl="/payment"
+                  nexturl="/priority"
                   nextOnClick={putMorgagedStocks}
                 />
               ) : (

@@ -137,9 +137,9 @@ export default function SettingAccountPage() {
           <ButtonBar
             beforetext="취소"
             nexttext="수정 완료"
-            beforeurl="/allmenu"
+            beforeurl="/payment"
             nextdisabled={!check}
-            nexturl="/allmenu"
+            nexturl="/payment"
             nextOnClick={putBankAccount}
           />
         ) : (
