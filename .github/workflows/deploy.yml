@@ -43,7 +43,9 @@ jobs:
           
 
       - name: Print .env file
-        run: cat .env
+        run: |
+          cd frontend
+          cat .env
 
       
       - name: Generate build        
