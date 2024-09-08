@@ -1,4 +1,5 @@
 import CollateralRatioCompo from "./CollateralRatioCompo";
+import DeclineLogCompo from "./DeclineLogCompo";
 import PaymentLogCompo from "./PaymentLogCompo";
 import RepaymentLogCompo from "./RepaymentLogCompo";
 
@@ -11,7 +12,7 @@ export default function AdminPage() {
       </div>
       <div className="grid grid-cols-2 gap-5">
         <RepaymentLogCompo />
-        <PaymentLogCompo />
+        <DeclineLogCompo />
       </div>
     </div>
   );
