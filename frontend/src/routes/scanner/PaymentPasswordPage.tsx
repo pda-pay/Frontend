@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import PinInput from "react-pin-input";
 import transactionAPI from "../../api/transactionAPI";
+import axios from "axios";
 
 export default function PaymentPasswordPage() {
   const [password, setPassword] = useState<string>("");
@@ -19,12 +20,23 @@ export default function PaymentPasswordPage() {
       });
       navigate("/scanner", { state: result.data });
     } catch (err) {
-      console.log(err);
-      Swal.fire({
-        icon: "warning",
-        title: `<span style="font-size: 20px; font-weight : bolder;">잘못된 비밀번호입니다</span>`,
-        confirmButtonColor: "blue",
-      });
+      if (axios.isAxiosError(err) && err.response) {
+        if (err.response.status === 403) {
+          Swal.fire({
+            icon: "warning",
+            title: `<span style="font-size: 20px; font-weight : bolder;">결제 서비스가 차단되어있습니다.</span>`,
+            confirmButtonColor: "blue",
+          });
+          navigate("/main");
+        }
+
+        console.log(err);
+        Swal.fire({
+          icon: "warning",
+          title: `<span style="font-size: 20px; font-weight : bolder;">잘못된 비밀번호입니다</span>`,
+          confirmButtonColor: "blue",
+        });
+      }
     }
   };
 
