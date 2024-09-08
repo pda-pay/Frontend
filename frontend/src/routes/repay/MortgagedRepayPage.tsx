@@ -135,6 +135,10 @@ export default function MortgagedRepayPage() {
   };
 
   useEffect(() => {
+    validateInput(repayAmount);
+  }, [sellStockPrice]);
+
+  useEffect(() => {
     getRepayAmount();
   }, []);
 
