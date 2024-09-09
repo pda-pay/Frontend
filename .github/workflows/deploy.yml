@@ -25,6 +25,7 @@ jobs:
       - name: Inject environment variables
         run: |
           cd frontend
+          touch .env
           cat <<EOF > .env
           VITE_BACKEND_URL=$VITE_BACKEND_URL
           VITE_SOCKET_URL=$VITE_SOCKET_URL
