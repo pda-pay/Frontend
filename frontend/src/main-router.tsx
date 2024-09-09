@@ -54,6 +54,8 @@ if ("serviceWorker" in navigator) {
 
 const requestFCMToken = async () => {
   const permission = await Notification.requestPermission();
+  console.log("permission", permission);
+
   if (permission === "granted") {
     try {
       const token = await getToken(messaging, {
