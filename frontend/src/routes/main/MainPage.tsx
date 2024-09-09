@@ -6,13 +6,25 @@ import NormalTitle from "../../components/text/NormalTitle";
 import QRFrame from "./component/QRFrame";
 import userAPI from "../../api/userAPI";
 import axios from "axios";
+import { requestFCMToken } from "../../main-router";
+import fcmAPI from "../../api/fcmAPI";
 
 export default function MainPage() {
   const userservice = new userAPI();
+  const fcmApi = new fcmAPI();  
+
   const navigate = useNavigate();
 
   const [name, setName] = useState<string>("익명");
   const [member, setMember] = useState<boolean>(false);
+
+  const fetchToken = async () => {
+    const tokens = await requestFCMToken();
+
+    if (tokens != null) {
+      fcmApi.postUserInfo({token : tokens})
+    }
+  }
 
   const getUserInfo = async () => {
     try {
@@ -28,9 +40,12 @@ export default function MainPage() {
       }
     }
   };
+  
+
 
   useEffect(() => {
     getUserInfo();
+    fetchToken();
   }, []);
 
   return (

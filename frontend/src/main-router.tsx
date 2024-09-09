@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import ApproachPage from "./routes/approach/ApproachPage";
-//import MydataAgreePage from "./routes/agree/MydataAgreePage";
 import JoinPage from "./routes/loginnjoin/JoinPage";
 import LoginPage from "./routes/loginnjoin/LoginPage";
 import MenubarLayout from "./components/MenubarLayout";
@@ -25,13 +24,13 @@ import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDbIsSgAmp3gseqS57ke89BgearBuJETiI",
-  authDomain: "onefourzero-9b623.firebaseapp.com",
-  projectId: "onefourzero-9b623",
-  storageBucket: "onefourzero-9b623.appspot.com",
-  messagingSenderId: "204793101998",
-  appId: "1:204793101998:web:f3d8c5393abfb6daccf73f",
-  measurementId: "G-8HL2VX6RSW",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
@@ -52,25 +51,23 @@ if ("serviceWorker" in navigator) {
     });
 }
 
-const requestFCMToken = async () => {
+export const requestFCMToken = async () => {
   const permission = await Notification.requestPermission();
 
   if (permission === "granted") {
     try {
       const token = await getToken(messaging, {
-        vapidKey: "BBvAL4OLtgr0yJFce3-d-Z7dBs12FQ1vLUj90HthWyS2JMFt6gp9pg9Qdm4eqF9hQ-oQh9ZNQSfxlj84N6cYHOc",
+        vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
       });
-      alert(token);
-      console.log("FCM Token:", token);
+      return token;
+      
     } catch (error) {
       console.error("FCM Token error:", error);
     }
   } else if (permission === "denied") {
-    alert("You denied the notification permission");
+    console.log("You denied the notification permission");
   }
 };
-
-requestFCMToken();
 
 const routers = [
   {
