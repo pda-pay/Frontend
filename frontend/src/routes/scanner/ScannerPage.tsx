@@ -8,6 +8,8 @@ import QrScanner from "qr-scanner";
 import QrFrame from "../../assets/qr-frame.svg";
 import BeatLoaderDiv from "../../components/spinner/BeatLoaderDiv";
 import transactionAPI, { TransactionReqData } from "../../api/transactionAPI";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function ScannerPage() {
   const scanner = useRef<QrScanner>();
@@ -24,10 +26,19 @@ export default function ScannerPage() {
       navigate("/transaction-success-result", { state: result.data });
     } catch (error: any) {
       console.log(error);
-      if (error.response) {
-        navigate("/transaction-fail-result", { state: error.response.data });
-      } else {
-        console.error("Unexpected error:", error);
+
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 400) {
+          navigate("/transaction-fail-result", { state: error.response.data });
+        } else {
+          Swal.fire({
+            icon: "warning",
+            title: `<span style="font-size: 20px; font-weight : bolder;">결제 수행중 오류가 발생했습니다.</span>`,
+            confirmButtonColor: "blue",
+          }).then(() => {
+            navigate("/payment-pw-verify");
+          });
+        }
       }
     }
   };
