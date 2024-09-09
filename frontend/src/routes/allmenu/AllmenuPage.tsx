@@ -30,6 +30,7 @@ export default function AllmenuPage() {
 
   const [name, setName] = useState<string>("익명");
   const [member, setMember] = useState<boolean>(false);
+  const [payValid, setPayValid] = useState<boolean>(true);
 
   const logOut = async () => {
     try {
@@ -51,6 +52,7 @@ export default function AllmenuPage() {
       if (response.status === 200) {
         setName(response.data.name);
         setMember(response.data.paymentServiceMember);
+        setPayValid(response.data.paymentAccess);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -101,7 +103,7 @@ export default function AllmenuPage() {
           {/*TODO: QR 결제하기로 연결*/}
           <div
             onClick={() => {
-              if (member) navigate("/");
+              if (member && payValid) navigate("/payment-pw-verify");
             }}
           >
             <BoldTitle>

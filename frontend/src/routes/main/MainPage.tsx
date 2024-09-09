@@ -17,6 +17,7 @@ export default function MainPage() {
 
   const [name, setName] = useState<string>("익명");
   const [member, setMember] = useState<boolean>(false);
+
   const fetchToken = async () => {
     const tokens = await requestFCMToken();
 
