@@ -5,11 +5,9 @@ import LoginInput from "./component/LoginInput";
 import loginApi from "../../api/loginAPI";
 import ButtonBar from "../../components/button/ButtonBar";
 import axios from "axios";
-import { Cookies } from "react-cookie";
 
 export default function LoginPage() {
   const service = new loginApi();
-  const cookies = new Cookies();
 
   const [loginId, setLoginId] = useState<string>();
   const [password, setPassword] = useState<string>();
