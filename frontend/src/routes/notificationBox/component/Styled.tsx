@@ -25,7 +25,7 @@ export const MenuListBar = styled.div`
 export const MessageWrapper = styled.div<paddingProps>`
   background-color: #e8ecfb;
   padding: ${(props) => props.padding || "20px"};
-  height: calc(100vh - 185px);
+  height: calc(100vh - 190px);
   overflow-y: scroll;
 `;
 export const MessageBoxWrapper = styled.div`

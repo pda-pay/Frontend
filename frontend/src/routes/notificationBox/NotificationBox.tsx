@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import notificationBoxAPI from "../../api/notificationBoxAPI";
 import BoldTitle from "../../components/text/BoldTitle";
 import NormalTitle from "../../components/text/NormalTitle";
 import TimeText from "./component/Timetext";
-import Container from "./component/Container";
 import NotificationButton from "../../components/button/NotificationButton";
 import NotificationDeleteButton from "../../components/button/NotificationDeleteButton";
+import Container from "../../components/settingdiv/Container";
 import { FaEnvelopeOpenText } from "react-icons/fa6";
 import { IoIosArrowBack } from "react-icons/io";
 import {
@@ -37,28 +37,26 @@ export const NotificationBox = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState<string>("전체");
   const [isEditMode, setIsEditMode] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [selectedMessages, setSelectedMessages] = useState<number[]>([]);
-  const categoryList = [
-    "전체",
-    "결제",
-    "한도",
-    "담보",
-    "계좌",
-    "상환",
-    "선결제",
-  ];
+  const categoryList = ["전체", "결제", "한도", "담보", "상환", "선결제"];
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const notificationService = new notificationBoxAPI();
 
   useEffect(() => {
-    axios
-      .get("/mockdata/messages.json")
-      .then((response) => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await notificationService.getNotifications();
         setMessages(response.data.messages);
-      })
-      .catch((error) => console.error("Error fetching data: ", error));
-  });
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+    fetchNotifications();
+  }, [notificationService]);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
@@ -103,10 +101,9 @@ export const NotificationBox = () => {
     setIsDragging(false);
   };
 
-  const filteredMessages = messages.filter((message) =>
-    selectedCategory === 0
-      ? true
-      : message.category === String(selectedCategory)
+  const filteredMessages = messages.filter(
+    (message) =>
+      selectedCategory === "전체" || message.category === selectedCategory
   );
 
   const toggleSelectMessage = (id: number) => {
@@ -119,9 +116,14 @@ export const NotificationBox = () => {
     }
   };
 
-  const deleteMessages = () => {
-    alert("삭제되었습니다.");
-    finishEditMode();
+  const deleteMessages = async () => {
+    try {
+      await notificationService.deleteNotifications(selectedMessages);
+      alert("삭제되었습니다.");
+      finishEditMode();
+    } catch (error) {
+      console.error("Error deleting notifications: ", error);
+    }
   };
 
   const finishEditMode = () => {
@@ -176,12 +178,13 @@ export const NotificationBox = () => {
           {categoryList.map((category, index) => (
             <NotificationButton
               key={index}
-              backgroundColor={
-                selectedCategory === index ? "#363e57" : "f0f0f0"
-              }
-              color={selectedCategory === index ? "white" : "black"}
-              onClick={() => setSelectedCategory(index)}
               marginRight={index === categoryList.length - 1 ? "0" : "10px"}
+              marginBottom="4px"
+              backgroundColor={
+                selectedCategory === category ? "#363e57" : "f0f0f0"
+              }
+              color={selectedCategory === category ? "white" : "black"}
+              onClick={() => setSelectedCategory(category)}
             >
               {category}
             </NotificationButton>
@@ -190,14 +193,14 @@ export const NotificationBox = () => {
       </Container>
       <MessageWrapper padding={isEditMode ? "20px 20px 100px 20px" : "20px"}>
         {filteredMessages.length === 0 ? (
-          <div className="flex flex-col items-center mt-[20px]">
+          <div className="flex flex-col items-center justify-center mt-[60px]">
             <FaEnvelopeOpenText size="100px" color="#363e57" />
             <BoldTitle>알림이 없습니다.</BoldTitle>
           </div>
         ) : (
           <>
             {filteredMessages.map((message, index) => (
-              <MessageBoxWrapper>
+              <MessageBoxWrapper key={index}>
                 {isEditMode ? (
                   <>
                     {selectedMessages.includes(message.id) ? (
@@ -219,7 +222,7 @@ export const NotificationBox = () => {
                 ) : (
                   <></>
                 )}
-                <MessageBox key={index}>
+                <MessageBox key={index} className="shadow-lg">
                   <BoldTitle>{message.title}</BoldTitle>
                   <NormalTitle>{message.content}</NormalTitle>
                   <TimeText>{message.createdAt}</TimeText>
