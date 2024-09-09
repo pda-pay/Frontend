@@ -43,11 +43,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
-console.log(firebaseConfig);
-
-onMessage(messaging, (payload) => {
-  console.log("Message received. Payload:", payload);
-});
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker
