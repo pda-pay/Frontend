@@ -79,8 +79,8 @@ export default function MainPage() {
   useEffect(() => {
     // 로그인 정보 가져오기
     getUserInfo();
-    requestFCMToken();
-    onMessageListener();
+    // requestFCMToken();
+    // onMessageListener();
   }, []);
 
   return (
