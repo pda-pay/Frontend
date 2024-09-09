@@ -6,10 +6,15 @@ import NormalTitle from "../../components/text/NormalTitle";
 import QRFrame from "./component/QRFrame";
 import userAPI from "../../api/userAPI";
 import axios from "axios";
+import { Cookies } from "react-cookie";
 
 export default function MainPage() {
   const userservice = new userAPI();
   const navigate = useNavigate();
+
+  const cookies = new Cookies();
+  console.log("메인페이지 접근: 라이브러리: " + cookies.get("accessToken"));
+  console.log("메인페이지 접근: 도큐먼트: " + document.cookie);
 
   const [name, setName] = useState<string>("익명");
   const [member, setMember] = useState<boolean>(false);
