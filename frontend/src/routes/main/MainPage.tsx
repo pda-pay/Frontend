@@ -50,7 +50,7 @@ export default function MainPage() {
   return (
     <div style={{ backgroundColor: "#9abade33" }}>
       <PaddingDiv>
-        <div>
+        <div className="flex flex-col gap-5">
           {!member && (
             <LargeButton
               type="blue"
@@ -61,11 +61,13 @@ export default function MainPage() {
             </LargeButton>
           )}
 
-          <NormalTitle>
-            <span className="font-bold">{name}님,</span> QR 코드를 인식해서
-            빠르게 결제해보세요.
-          </NormalTitle>
-          <QRFrame member={member}></QRFrame>
+          <div className="flex flex-col gap-5 my-20">
+            <NormalTitle>
+              <span className="font-bold">{name}님,</span> QR 코드를 인식해서
+              빠르게 결제해보세요.
+            </NormalTitle>
+            <QRFrame member={member}></QRFrame>
+          </div>
         </div>
       </PaddingDiv>
     </div>
