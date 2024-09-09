@@ -37,22 +37,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 
-const requestFCMToken = async () => {
-  const permission = await Notification.requestPermission();
-  if (permission === "granted") {
-    try {
-      const token = await getToken(messaging, {
-        vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
-      });
-      console.log("FCM Token:", token);
-    } catch (error) {
-      console.error("FCM Token error:", error);
-    }
-  } else if (permission === "denied") {
-    alert("You denied the notification permission");
-  }
-};
-
 onMessage(messaging, (payload) => {
   console.log("Message received. Payload:", payload);
 });
@@ -67,6 +51,23 @@ if ("serviceWorker" in navigator) {
       console.log("Service worker registration failed:", error);
     });
 }
+
+const requestFCMToken = async () => {
+  const permission = await Notification.requestPermission();
+  if (permission === "granted") {
+    try {
+      const token = await getToken(messaging, {
+        vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
+      });
+      alert(token);
+      console.log("FCM Token:", token);
+    } catch (error) {
+      console.error("FCM Token error:", error);
+    }
+  } else if (permission === "denied") {
+    alert("You denied the notification permission");
+  }
+};
 
 requestFCMToken();
 
