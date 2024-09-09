@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import NormalTitle from "../../components/text/NormalTitle";
 import ButtonBar from "../../components/button/ButtonBar";
+import payServiceAPI from "../../api/payServiceAPI";
+import axios from "axios";
 
 export default function SimplePage() {
+  const payjoinservice = new payServiceAPI();
+
   const [password, setPassword] = useState<string>();
   const [checkPsw, setCheckPsw] = useState<string>();
   const [errPsw, setErrPsw] = useState<boolean>();
@@ -11,8 +15,28 @@ export default function SimplePage() {
   const [inputValue, setInputValue] = useState<string>("");
   const [inputChkValue, setInputChkValue] = useState<string>("");
 
+  const postPassword = async (): Promise<boolean> => {
+    try {
+      const temp = {
+        paymentPassword: password,
+      };
+
+      const response = await payjoinservice.postSimplePassword(temp);
+
+      if (response.status === 200) {
+        return true;
+      } else return false;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 400) {
+          console.log("간편비번 post 요청 에러 발생: " + error);
+        }
+      }
+      return false;
+    }
+  };
+
   const validatePsw = () => {
-    console.log("비번 " + password);
     if (password !== undefined && password.length !== 6) {
       setErrPsw(true);
     } else {
@@ -37,7 +61,6 @@ export default function SimplePage() {
   }, [password, checkPsw]);
 
   const validateChkPsw = () => {
-    console.log("chk비번 " + checkPsw);
     if (password !== checkPsw) {
       setErrChkPsw(true);
     } else {
@@ -117,6 +140,7 @@ export default function SimplePage() {
           password === undefined ||
           checkPsw === undefined
         }
+        nextOnClick={postPassword}
       />
     </PaddingDiv>
   );

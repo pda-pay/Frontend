@@ -81,13 +81,8 @@ export default function ShowSelectedPage({
     setTemp(t);
   };
 
-  useEffect(() => {
-    console.log("temp is " + temp);
-  }, [temp]);
-
   const clickFinishButton = () => {
     for (let i = 0; i < temp.length; i++) {
-      console.log("click finish button: " + i + "is " + temp[i][2]);
       handleSelectedStock(i, temp[i][2]);
     }
   };
@@ -109,9 +104,8 @@ export default function ShowSelectedPage({
       <NormalTitle>
         현재 확보한 총 한도는
         <span className="font-bold text-blue-700">
-          {" "}
           {limit.toLocaleString()}원
-        </span>{" "}
+        </span>
         입니다.
         <div className="text-sm	text-gray-400">
           각 종목을 클릭하면 담보로 할 주수 수정이 가능합니다.

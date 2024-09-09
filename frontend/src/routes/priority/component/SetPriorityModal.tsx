@@ -6,20 +6,34 @@ import MoveButton from "../../../components/button/MoveButton";
 
 interface ModalProps {
   unPriority: [
-    number, //0: id
-    string, //1: 증권사 코드
-    string, //2: 증권사명
-    string, //3: 종목명
-    string, //4: 등급
-    number, //5: 전일종가
-    number, //6: 우선순위로 남은 주수
-    number, //7: 담보로 잡은 전체 주수
-    number, //8: 한도
-    string //9: 계좌 번호
+    string,
+    number,
+    string,
+    string,
+    number,
+    string,
+    string,
+    number,
+    number,
+    number
   ][];
   isModalOpen: boolean;
   handleCloseModal: () => void;
-  addPriority: (rowIdx: number, value: number) => void;
+  addPriority: (
+    clickedRow: [
+      string,
+      number,
+      string,
+      string,
+      number,
+      string,
+      string,
+      number,
+      number,
+      number
+    ],
+    value: number
+  ) => void;
 }
 
 export default function SetPriorityModal({
@@ -28,8 +42,24 @@ export default function SetPriorityModal({
   handleCloseModal,
   addPriority,
 }: ModalProps) {
-  //여기 고객이 선택한 종목의 row 인덱스와 쪼갠 주수 저장
-  const [tempSelected, setTempSelected] = useState<[number, number]>();
+  const [tempSelected, setTempSelected] =
+    useState<
+      [
+        [
+          string,
+          number,
+          string,
+          string,
+          number,
+          string,
+          string,
+          number,
+          number,
+          number
+        ],
+        number
+      ]
+    >();
   //고객이 종목 누르면 입력창
   const [showInput, setShowInput] = useState<boolean>(false);
   //고객이 누른 종목의 row 인덱스
@@ -47,7 +77,6 @@ export default function SetPriorityModal({
   };
 
   const clickedStock = (index: number) => {
-    //입력창을 열고
     openInput();
     //어떤 주식이 선택됐는지 unPriority 배열의 row 인덱스
     setClickedRowIdx(index);
@@ -63,24 +92,22 @@ export default function SetPriorityModal({
   };
 
   const validateInput = (ip: number) => {
-    if (ip > unPriority[clickedRowIdx][6] || ip < 0) {
+    if (ip > unPriority[clickedRowIdx][1] || ip < 0) {
       setErrInput(true);
     } else setErrInput(false);
   };
 
   const handleTempSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value; // 입력값을 문자열로 처리
+    const value = event.target.value;
     const valueToNum = Number(value);
 
-    // 숫자 또는 빈 문자열일 때만 상태 업데이트
     if (value === "" || !isNaN(Number(value))) {
       setInputValue(value);
       validateInput(valueToNum);
-      if (!errInput) setTempSelected([clickedRowIdx, valueToNum]);
+      if (!errInput) setTempSelected([unPriority[clickedRowIdx], valueToNum]);
     }
   };
 
-  //input 창 스크롤 방지
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -91,10 +118,8 @@ export default function SetPriorityModal({
       }
     };
 
-    // 이벤트 리스너 등록
     window.addEventListener("wheel", handleWheel, { passive: false });
 
-    // 이벤트 리스너 해제
     return () => {
       window.removeEventListener("wheel", handleWheel);
     };
@@ -109,7 +134,7 @@ export default function SetPriorityModal({
       </div>
 
       {!showInput ? (
-        <div>
+        <div className="flex flex-col gap-5">
           <NormalTitle>우선 순위가 정해지지 않은 담보 주식</NormalTitle>
 
           {unPriority.length !== 0 ? (
@@ -134,12 +159,12 @@ export default function SetPriorityModal({
                 {unPriority.map((stock, index) => (
                   <tbody onClick={() => clickedStock(index)}>
                     <tr>
-                      <td>{stock[2]}</td>
-                      <td>{stock[3]}</td>
                       <td>{stock[6]}</td>
-                      <td>{stock[5]}</td>
-                      <td>{stock[4]}</td>
-                      <td>{stock[8]}</td>
+                      <td>{stock[3]}</td>
+                      <td>{stock[1]}</td>
+                      <td>{stock[8].toLocaleString()}</td>
+                      <td>{stock[7]}</td>
+                      <td>{stock[9].toLocaleString()}</td>
                     </tr>
                   </tbody>
                 ))}
@@ -152,11 +177,15 @@ export default function SetPriorityModal({
       ) : (
         <div className="flex flex-col">
           <div>
-            {unPriority[clickedRowIdx][2]} {unPriority[clickedRowIdx][3]}의 몇
-            주를 우선순위에 추가할까요?
+            <span className="font-bold">
+              {unPriority[clickedRowIdx][6]} {unPriority[clickedRowIdx][3]}
+            </span>
+            의 몇 주를 우선순위에 추가할까요?
           </div>
           <label className="block">
-            <span>최대 {unPriority[clickedRowIdx][6]}주 선택 가능합니다.</span>
+            <span className="text-sm text-gray-400">
+              최대 {unPriority[clickedRowIdx][1]}주 선택 가능합니다.
+            </span>
             <input
               ref={inputRef}
               type="number"

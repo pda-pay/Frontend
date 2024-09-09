@@ -15,7 +15,7 @@ export default function QRFrame({ member }: QRProps) {
       <BackgroundFrame color="white">
         <div
           className="flex justify-center items-center"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/payment-pw-verify")}
         >
           <RiQrScan2Line className="size-64" />
         </div>
@@ -26,7 +26,9 @@ export default function QRFrame({ member }: QRProps) {
           className="absolute inset-0  opacity-50"
           onClick={() => navigate("/serviceagree")}
         >
-          <ServiceBlockFrame></ServiceBlockFrame>
+          <ServiceBlockFrame>
+            결제 서비스에 가입해서 바로 확인해보세요.
+          </ServiceBlockFrame>
         </div>
       )}
     </div>
