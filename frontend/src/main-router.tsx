@@ -35,6 +35,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
+console.log(firebaseConfig)
 
 onMessage(messaging, (payload) => {
   console.log("Message received. Payload:", payload);
@@ -60,7 +61,7 @@ export const requestFCMToken = async () => {
         vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
       });
       return token;
-      
+
     } catch (error) {
       console.error("FCM Token error:", error);
     }

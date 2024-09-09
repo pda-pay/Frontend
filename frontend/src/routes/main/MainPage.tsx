@@ -22,6 +22,7 @@ export default function MainPage() {
     const tokens = await requestFCMToken();
 
     if (tokens != null) {
+      console.log(tokens);
       fcmApi.postUserInfo({token : tokens})
     }
   }
