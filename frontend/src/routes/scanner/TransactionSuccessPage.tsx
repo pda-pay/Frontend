@@ -1,4 +1,3 @@
-import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import BackgroundFrame from "../../components/backgroundframe/BackgroundFrame";
 import ButtonBar from "../../components/button/ButtonBar";
 import { useLocation } from "react-router-dom";
@@ -8,7 +7,7 @@ export default function TransactionSuccessPage() {
   const result = location.state;
 
   return (
-    <PaddingDiv>
+    <div className="w-screen h-screen flex flex-col p-5 py-7 justify-between">
       <p className="mt-16 text-xl text-center font-bold">
         결제가 완료되었습니다.
       </p>
@@ -38,13 +37,12 @@ export default function TransactionSuccessPage() {
           </div>
         </div>
       </BackgroundFrame>
-
       <ButtonBar
         beforeurl="/main"
         nexturl="/payment"
         beforetext="메인으로"
         nexttext="결제내역으로"
       ></ButtonBar>
-    </PaddingDiv>
+    </div>
   );
 }

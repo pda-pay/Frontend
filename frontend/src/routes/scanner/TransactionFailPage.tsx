@@ -1,4 +1,3 @@
-import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import BackgroundFrame from "../../components/backgroundframe/BackgroundFrame";
 import BasicButton from "../../components/button/BasicButton";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -12,7 +11,7 @@ export default function TransactionFailPage() {
   const navigate = useNavigate();
 
   return (
-    <PaddingDiv>
+    <div className="w-screen h-screen flex flex-col p-5 py-7 justify-between">
       <p className="mt-16 text-xl text-center font-bold">
         결제에 실패했습니다.
       </p>
@@ -43,6 +42,6 @@ export default function TransactionFailPage() {
           onClick={() => navigate("/main")}
         />
       </div>
-    </PaddingDiv>
+    </div>
   );
 }
