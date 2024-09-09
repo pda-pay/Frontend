@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import joinAPI from "../../../api/joinAPI";
 import BasicButton from "../../../components/button/BasicButton";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 interface ButtonProps {
   unValid: boolean;
@@ -11,6 +12,8 @@ interface ButtonProps {
 export default function JoinButtonbar({ unValid, userInfo }: ButtonProps) {
   const service = new joinAPI();
   const navigate = useNavigate();
+
+  const [errMsg, setErrMsg] = useState<string>();
 
   const joinFinish = async () => {
     try {
@@ -29,24 +32,32 @@ export default function JoinButtonbar({ unValid, userInfo }: ButtonProps) {
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
+        setErrMsg(error.response?.data.message);
         console.log("에러 발생: " + error);
       }
     }
   };
+
+  useEffect(() => {
+    setErrMsg("");
+  }, [unValid]);
 
   const moveNext = () => {
     navigate("/");
   };
 
   return (
-    <BasicButton
-      type="blue"
-      disabled={unValid}
-      onClick={() => {
-        joinFinish();
-      }}
-    >
-      다음
-    </BasicButton>
+    <div>
+      {errMsg && <p className="mt-2 text-sm text-red-600">{errMsg}</p>}
+      <BasicButton
+        type="blue"
+        disabled={unValid}
+        onClick={() => {
+          joinFinish();
+        }}
+      >
+        다음
+      </BasicButton>
+    </div>
   );
 }

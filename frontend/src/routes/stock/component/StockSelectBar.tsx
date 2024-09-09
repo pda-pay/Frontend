@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Select from "react-select";
 
 interface SelectProps {
@@ -59,12 +60,28 @@ export default function StockSelectBar({
     }
   };
 
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
+
+  const handleMenuOpen = () => {
+    setMenuIsOpen(true);
+  };
+
+  const handleMenuClose = () => {
+    setMenuIsOpen(false);
+  };
+
   return (
-    <Select
-      options={range}
-      value={range[amount]}
-      onChange={onChangeSelected}
-      styles={customStyles}
-    />
+    <div onClick={(e) => e.stopPropagation()}>
+      <Select
+        options={range}
+        value={range[amount]}
+        onChange={onChangeSelected}
+        styles={customStyles}
+        //셀렉트바 클릭?
+        menuIsOpen={menuIsOpen}
+        onMenuOpen={handleMenuOpen}
+        onMenuClose={handleMenuClose}
+      />
+    </div>
   );
 }
