@@ -228,6 +228,10 @@ export default function JoinInput({
   ]);
 
   useEffect(() => {
+    setErrCallMsg("");
+  }, [phoneNumber]);
+
+  useEffect(() => {
     onValidChange(valid);
   }, [valid]);
 
@@ -368,20 +372,23 @@ export default function JoinInput({
               }
             </p>
           )}
-        {errorCerti &&
-          phoneNumber !== undefined &&
-          errorCerti !== null &&
-          certiCheck && (
-            <p className="mt-2 text-sm text-red-600">{errCallMsg}</p>
-          )}
+        {errCallMsg !== "" && (
+          <p className="mt-2 text-sm text-red-600">{errCallMsg}</p>
+        )}
       </label>
       {isModalOpen && (
-        <CertificateModal
-          phoneNumber={phoneNumber}
-          isModalOpen={isModalOpen}
-          handleCloseModal={closeModal}
-          handleCertiCheck={handleCerti}
-        />
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <CertificateModal
+            phoneNumber={phoneNumber}
+            isModalOpen={isModalOpen}
+            handleCloseModal={closeModal}
+            handleCertiCheck={handleCerti}
+          />
+        </div>
       )}
     </div>
   );
