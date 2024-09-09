@@ -14,7 +14,6 @@ export default function QRFrame({ member }: QRProps) {
   const navigate = useNavigate();
   const userservice = new userAPI();
   const [payValid, setPayValid] = useState<boolean>(true);
-
   const getUserInfo = async () => {
     try {
       const response = await userservice.checkMem();
@@ -39,7 +38,7 @@ export default function QRFrame({ member }: QRProps) {
         <div
           className="flex justify-center items-center"
           onClick={() => {
-            if (payValid) navigate("/payment-pw-verify");
+            if (payValid && member) navigate("/payment-pw-verify");
           }}
         >
           <RiQrScan2Line className="size-64" />
