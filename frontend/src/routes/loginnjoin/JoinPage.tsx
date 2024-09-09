@@ -3,8 +3,12 @@ import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import BoldTitle from "../../components/text/BoldTitle";
 import JoinButtonbar from "./component/JoinButtonbar";
 import JoinInput from "./component/JoinInput";
+import { IoChevronBackOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 export default function JoinPage() {
+  const navigate = useNavigate();
+
   const [userInfo, setUserInfo] = useState<string[]>(["", "", "", ""]);
   const handleUserInfo = (index: number, value: string) => {
     setUserInfo([
@@ -22,8 +26,13 @@ export default function JoinPage() {
 
   return (
     <PaddingDiv>
-      <div>
-        <BoldTitle>안녕하세요!</BoldTitle>
+      <div className="flex flex-col gap-10">
+        <span className="mr-auto" onClick={() => navigate("/")}>
+          <IoChevronBackOutline />
+        </span>
+        <div>
+          <BoldTitle>안녕하세요!</BoldTitle>
+        </div>
       </div>
       <JoinInput
         onValidChange={handleValidChange}
