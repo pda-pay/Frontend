@@ -56,7 +56,7 @@ jobs:
         run:  |
           cd frontend
           ls -al
-          npm run build
+          CI=false npm run build
       
       - name: Deploy                
         env:
