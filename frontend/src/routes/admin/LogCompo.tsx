@@ -1,6 +1,6 @@
 interface LogCompoProps {
   id: number;
-  customerId: number;
+  customerId: string;
   amount: number;
   franchiseCode: number;
   isSuccess: string;

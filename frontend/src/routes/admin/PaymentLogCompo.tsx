@@ -3,7 +3,7 @@ import LogCompo from "./LogCompo";
 
 interface LogMessage {
   id: number;
-  customerId: number;
+  loginId: string;
   amount: number;
   franchiseCode: number;
   isSuccess: string;
@@ -13,18 +13,24 @@ interface LogMessage {
 export default function PaymentLogCompo() {
   const [messages, setMessages] = useState<LogMessage[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
+  const eventSource = useRef<EventSource | null>(null);
 
   useEffect(() => {
-    const eventSource = new EventSource("ws");
+    eventSource.current = new EventSource(
+      import.meta.env.VITE_BACKEND_URL + "/notification/payment"
+    );
 
-    eventSource.onmessage = (event) => {
+    eventSource.current.addEventListener("simple", (event) => {
+      console.log(event);
       const log: LogMessage = JSON.parse(event.data);
 
       setMessages((prevMessages) => [...prevMessages, log]);
-    };
+    });
 
     return () => {
-      eventSource.close();
+      if (eventSource.current != null) {
+        eventSource.current.close();
+      }
     };
   }, []);
 
@@ -33,8 +39,6 @@ export default function PaymentLogCompo() {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
   }, [messages]);
-
-  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
   return (
     <div>
@@ -52,15 +56,15 @@ export default function PaymentLogCompo() {
           className="max-h-[40vh] overflow-y-auto border p-2 bg-gray-50"
           ref={containerRef}
         >
-          {arr.map((value) => {
+          {messages.map((value) => {
             return (
               <LogCompo
-                id={value}
-                customerId={123}
-                amount={10000}
-                franchiseCode={400}
-                isSuccess={"성공"}
-                date="2024-09-08 15:09"
+                id={value.id}
+                customerId={value.loginId}
+                amount={value.amount}
+                franchiseCode={value.franchiseCode}
+                isSuccess={value.isSuccess}
+                date={value.date}
               />
             );
           })}
