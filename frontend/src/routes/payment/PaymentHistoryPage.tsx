@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import PaddingDiv from "../../components/settingdiv/PaddingDiv";
-import NormalTitle from "../../components/text/NormalTitle";
 import paymentAPI from "../../api/paymentAPI";
 import axios from "axios";
 import BoldTitle from "../../components/text/BoldTitle";
