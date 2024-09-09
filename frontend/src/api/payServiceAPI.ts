@@ -37,6 +37,10 @@ export interface PutAccountReqData {
   };
 }
 
+export interface PutLimitReqData {
+  currentLimit: number;
+}
+
 export interface PutPaymentDateReqData {
   repaymentDate: number;
 }
@@ -83,6 +87,13 @@ export default class payServiceAPI extends BaseApi {
   }
 
   //한도 보내기
+  async putLimit(data: PutLimitReqData) {
+    const resp = await this.fetcher.put(
+      "/payment/users/limit-information",
+      data
+    );
+    return resp;
+  }
 
   //은행 계좌 가져오기
   async getAccount() {
