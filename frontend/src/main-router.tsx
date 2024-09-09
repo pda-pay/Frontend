@@ -15,6 +15,13 @@ import SettingAccountPage from "./routes/account/SettingAccountPage";
 import SettingDatePage from "./routes/paymentdate/SettingDatePage";
 import ConfirmPage from "./routes/confirm/ConfirmPage";
 import SimplePage from "./routes/simplepsw/SimplePage";
+import ScannerPage from "./routes/scanner/ScannerPage";
+import TransactionFailPage from "./routes/scanner/TransactionFailPage";
+import TransactionSuccessPage from "./routes/scanner/TransactionSuccessPage";
+import PaymentPasswordPage from "./routes/scanner/PaymentPasswordPage";
+import FranchiseQrCreatePage from "./routes/franchise/FranchiseQrCreatePage";
+import QRPage from "./routes/franchise/QRPage";
+import FranchiseLoginPage from "./routes/franchise/FranchiseLoginPage";
 import PaymentHistoryPage from "./routes/payment/PaymentHistoryPage";
 import CashRepayPage from "./routes/repay/CashRepayPage";
 import MortgagedRepayPage from "./routes/repay/MortgagedRepayPage";
@@ -93,6 +100,18 @@ const routers = [
     element: <LoginPage />,
   },
   {
+    path: "/franchise/login",
+    element: <FranchiseLoginPage />,
+  },
+  {
+    path: "/franchise/createqr",
+    element: <FranchiseQrCreatePage />,
+  },
+  {
+    path: "/franchise/qr",
+    element: <QRPage />,
+  },
+  {
     path: "/main",
     element: <MenubarLayout />,
     children: [
@@ -135,6 +154,22 @@ const routers = [
         index: true,
       },
     ],
+  },
+  {
+    path: "/scanner",
+    element: <ScannerPage />,
+  },
+  {
+    path: "/transaction-fail-result",
+    element: <TransactionFailPage />,
+  },
+  {
+    path: "/transaction-success-result",
+    element: <TransactionSuccessPage />,
+  },
+  {
+    path: "/payment-pw-verify",
+    element: <PaymentPasswordPage />,
   },
   {
     path: "/stock",

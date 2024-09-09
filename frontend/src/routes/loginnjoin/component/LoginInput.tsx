@@ -47,6 +47,7 @@ export default function LoginInput({ handleLoginId, handlePWD }: LoginProps) {
         </span>
         <input
           type="password"
+          // inputmode="numeric"
           name="password"
           value={password}
           onChange={handlePassword}
