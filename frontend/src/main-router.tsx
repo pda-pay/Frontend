@@ -29,7 +29,7 @@ import NotificationBox from "./routes/notificationBox/NotificationBox";
 import ProtectedPages from "./ProtectedPages";
 
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { getMessaging, getToken } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
