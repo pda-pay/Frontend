@@ -55,6 +55,7 @@ if ("serviceWorker" in navigator) {
 const requestFCMToken = async () => {
   const permission = await Notification.requestPermission();
   console.log("permission", permission);
+  console.log("vapid", import.meta.env.VITE_FIREBASE_VAPID_KEY);
 
   if (permission === "granted") {
     try {
