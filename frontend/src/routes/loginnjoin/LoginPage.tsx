@@ -24,8 +24,6 @@ export default function LoginPage() {
       });
 
       if (response.status === 200) {
-        const accessToken = await cookies.get("accessToken");
-
         return true;
       }
       return false;
