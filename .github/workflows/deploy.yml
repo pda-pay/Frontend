@@ -36,7 +36,7 @@ jobs:
           echo "VITE_FIREBASE_MEASUREMENT_ID=$VITE_FIREBASE_MEASUREMENT_ID" >> .env
           echo "VITE_FIREBASE_VAPID_KEY=$VITE_FIREBASE_VAPID_KEY" >> .env
         env:
-          VITE_BACKEND_URL: ${{ secrets.VITE_BACKEND_URL 
+          VITE_BACKEND_URL: ${{ secrets.VITE_BACKEND_URL }}
           VITE_SOCKET_URL: ${{ secrets.VITE_SOCKET_URL }}
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
