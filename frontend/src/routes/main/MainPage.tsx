@@ -6,7 +6,6 @@ import NormalTitle from "../../components/text/NormalTitle";
 import QRFrame from "./component/QRFrame";
 import userAPI from "../../api/userAPI";
 import axios from "axios";
-import { requestFCMToken } from "../../main-router";
 
 export default function MainPage() {
   const userservice = new userAPI();
@@ -31,7 +30,6 @@ export default function MainPage() {
   };
 
   useEffect(() => {
-    requestFCMToken();
     getUserInfo();
   }, []);
 

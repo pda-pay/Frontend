@@ -37,7 +37,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 
-export const requestFCMToken = async () => {
+const requestFCMToken = async () => {
   const permission = await Notification.requestPermission();
   if (permission === "granted") {
     try {
@@ -67,6 +67,8 @@ if ("serviceWorker" in navigator) {
       console.log("Service worker registration failed:", error);
     });
 }
+
+requestFCMToken();
 
 const routers = [
   {
