@@ -6,18 +6,25 @@ import NormalTitle from "../../components/text/NormalTitle";
 import QRFrame from "./component/QRFrame";
 import userAPI from "../../api/userAPI";
 import axios from "axios";
-import { Cookies } from "react-cookie";
+import { requestFCMToken } from "../../main-router";
+import fcmAPI from "../../api/fcmAPI";
 
 export default function MainPage() {
   const userservice = new userAPI();
-  const navigate = useNavigate();
+  const fcmApi = new fcmAPI();
 
-  const cookies = new Cookies();
-  console.log("메인페이지 접근: 라이브러리: " + cookies.get("accessToken"));
-  console.log("메인페이지 접근: 도큐먼트: " + document.cookie);
+  const navigate = useNavigate();
 
   const [name, setName] = useState<string>("익명");
   const [member, setMember] = useState<boolean>(false);
+  const fetchToken = async () => {
+    const tokens = await requestFCMToken();
+
+    if (tokens != null) {
+      console.log(tokens);
+      fcmApi.postUserInfo({ token: tokens });
+    }
+  };
 
   const getUserInfo = async () => {
     try {
@@ -36,6 +43,7 @@ export default function MainPage() {
 
   useEffect(() => {
     getUserInfo();
+    fetchToken();
   }, []);
 
   return (

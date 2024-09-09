@@ -15,7 +15,7 @@ export default function QRFrame({ member }: QRProps) {
       <BackgroundFrame color="white">
         <div
           className="flex justify-center items-center"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/payment-pw-verify")}
         >
           <RiQrScan2Line className="size-64" />
         </div>

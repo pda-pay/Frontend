@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import styled from "styled-components";
 import axios from "axios";
 import userAPI from "../../api/userAPI";
 import PaddingDiv from "../../components/settingdiv/PaddingDiv";
@@ -7,6 +8,16 @@ import NormalTitle from "../../components/text/NormalTitle";
 import loginApi from "../../api/loginAPI";
 import { useNavigate } from "react-router-dom";
 import CashMortgagedModal from "../repay/component/CashMortgagedModal";
+import { FaBell } from "react-icons/fa6";
+
+const StyledFaBell = styled(FaBell)`
+  font-size: 27px;
+  margin-left: auto;
+  cursor: pointer;
+  &:hover {
+    color: #1342ba;
+  }
+`;
 
 export default function AllmenuPage() {
   const navigate = useNavigate();
@@ -63,12 +74,13 @@ export default function AllmenuPage() {
           boxShadow: "0 5px 5px -5px rgba(0,0,0,0.12)",
         }}
       >
-        <div className="py-10 px-5 flex items-center">
+        <div className="py-10 px-5 flex items-center ">
           <NormalTitle>
             <span className="font-bold">{name}님,</span> 안녕하세요.
           </NormalTitle>
+          <StyledFaBell onClick={() => navigate("/notificationBox")} />
           <button
-            className="text-xs ml-auto"
+            className="text-xs ml-[13px]"
             style={{ backgroundColor: "#9abade33", borderRadius: "20px" }}
             onClick={logOut}
           >
@@ -78,7 +90,7 @@ export default function AllmenuPage() {
       </div>
       <div>
         <NormalTitle>
-          <span className="text-gray-400">결제 서비스</span>
+          <span className="text-gray-400 cursor-default">결제 서비스</span>
         </NormalTitle>
         <div className="ml-3 mt-3 flex flex-col gap-2">
           {!member && (
@@ -92,21 +104,25 @@ export default function AllmenuPage() {
               if (member) navigate("/");
             }}
           >
-            <BoldTitle>QR 결제하기</BoldTitle>
+            <BoldTitle>
+              <span className="cursor-pointer">QR 결제하기</span>
+            </BoldTitle>
           </div>
           <div
             onClick={() => {
               if (member) navigate("/paymenthistory");
             }}
           >
-            <BoldTitle>결제 내역 보기</BoldTitle>
+            <BoldTitle>
+              <span className="cursor-pointer">결제 내역 보기</span>
+            </BoldTitle>
           </div>
         </div>
       </div>
 
       <div>
         <NormalTitle>
-          <span className="text-gray-400">한도 및 상환</span>
+          <span className="text-gray-400 cursor-default">한도 및 상환</span>
         </NormalTitle>
 
         <div className="ml-3 mt-3 flex flex-col gap-2">
@@ -115,42 +131,52 @@ export default function AllmenuPage() {
               if (member) openModal();
             }}
           >
-            <BoldTitle>선결제하기</BoldTitle>
+            <BoldTitle>
+              <span className="cursor-pointer">선결제하기</span>
+            </BoldTitle>
           </div>
           <div
             onClick={() => {
               if (member) navigate("/account");
             }}
           >
-            <BoldTitle>결제 계좌 변경</BoldTitle>
+            <BoldTitle>
+              <span className="cursor-pointer">결제 계좌 변경</span>
+            </BoldTitle>
           </div>
           <div
             onClick={() => {
               if (member) navigate("/limit", { state: { menu: true } });
             }}
           >
-            <BoldTitle>한도 변경</BoldTitle>
+            <BoldTitle>
+              <span className="cursor-pointer">한도 변경</span>
+            </BoldTitle>
           </div>
           <div
             onClick={() => {
               if (member) navigate("/stock");
             }}
           >
-            <BoldTitle>담보 변경</BoldTitle>
+            <BoldTitle>
+              <span className="cursor-pointer">담보 변경</span>
+            </BoldTitle>
           </div>
           <div
             onClick={() => {
               if (member) navigate("/priority", { state: { menu: true } });
             }}
           >
-            <BoldTitle>우선순위 확인 및 변경</BoldTitle>
+            <BoldTitle>
+              <span className="cursor-pointer">우선순위 확인 및 변경</span>
+            </BoldTitle>
           </div>
         </div>
       </div>
 
       <div>
         <NormalTitle>
-          <span className="text-gray-400">자산 현황</span>
+          <span className="text-gray-400 cursor-default">자산 현황</span>
         </NormalTitle>
         <div className="ml-3 mt-3 flex flex-col gap-2">
           <div
@@ -158,14 +184,18 @@ export default function AllmenuPage() {
               if (member) navigate("/asset");
             }}
           >
-            <BoldTitle>자산 확인하기</BoldTitle>
+            <BoldTitle>
+              <span className="cursor-pointer">자산 확인하기</span>
+            </BoldTitle>
           </div>
           <div
             onClick={() => {
               if (member) navigate("/asset");
             }}
           >
-            <BoldTitle>잔고 확인하기</BoldTitle>
+            <BoldTitle>
+              <span className="cursor-pointer">잔고 확인하기</span>
+            </BoldTitle>
           </div>
         </div>
       </div>
