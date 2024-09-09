@@ -43,7 +43,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
-console.log(firebaseConfig)
+console.log(firebaseConfig);
 
 onMessage(messaging, (payload) => {
   console.log("Message received. Payload:", payload);
@@ -69,7 +69,6 @@ export const requestFCMToken = async () => {
         vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
       });
       return token;
-
     } catch (error) {
       console.error("FCM Token error:", error);
     }
@@ -222,19 +221,23 @@ const routers = [
   },
   {
     path: "/scanner",
-    element: <ScannerPage />,
+    //element: <ScannerPage />,
+    element: <ProtectedPages element={<ScannerPage />} />,
   },
   {
     path: "/transaction-fail-result",
-    element: <TransactionFailPage />,
+    //element: <TransactionFailPage />,
+    element: <ProtectedPages element={<TransactionFailPage />} />,
   },
   {
     path: "/transaction-success-result",
-    element: <TransactionSuccessPage />,
+    //element: <TransactionSuccessPage />,
+    element: <ProtectedPages element={<TransactionSuccessPage />} />,
   },
   {
     path: "/payment-pw-verify",
-    element: <PaymentPasswordPage />,
+    //element: <PaymentPasswordPage />,
+    element: <ProtectedPages element={<PaymentPasswordPage />} />,
   },
   {
     path: "/stock",
