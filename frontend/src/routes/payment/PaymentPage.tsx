@@ -26,7 +26,7 @@ export default function PaymentPage() {
       const response = await userservice.checkMem();
 
       if (response.status === 200) {
-        setName(response.data.userId);
+        setName(response.data.name);
         setMember(response.data.paymentServiceMember);
       }
     } catch (error) {

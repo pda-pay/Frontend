@@ -38,7 +38,7 @@ export default function MainPage() {
       const response = await userservice.checkMem();
 
       if (response.status === 200) {
-        setName(response.data.userId);
+        setName(response.data.name);
         setMember(response.data.paymentServiceMember);
       }
     } catch (error) {
@@ -98,7 +98,8 @@ export default function MainPage() {
           )}
 
           <NormalTitle>
-            {name}님, QR 코드를 인식해서 빠르게 결제해보세요.
+            <span className="font-bold">{name}님,</span> QR 코드를 인식해서
+            빠르게 결제해보세요.
           </NormalTitle>
           <QRFrame member={member}></QRFrame>
         </div>
