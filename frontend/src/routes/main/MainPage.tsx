@@ -15,7 +15,7 @@ export default function MainPage() {
 
   const navigate = useNavigate();
 
-  const [name, setName] = useState<string>("익명");
+  const [name, setName] = useState<string>("");
   const [member, setMember] = useState<boolean>(false);
 
   const fetchToken = async () => {
