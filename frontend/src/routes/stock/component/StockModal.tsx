@@ -66,7 +66,7 @@ export default function StockModal({
               />
             </p>
           </div>
-          <div className="flex gap-2 mt-32">
+          <div className="flex gap-2 mt-10 h-10 w-50">
             <BasicButton onClick={handleDeleteButton}>종목 삭제</BasicButton>
             <BasicButton onClick={handleFinishButton}>선택 완료</BasicButton>
           </div>

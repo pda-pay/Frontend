@@ -252,7 +252,7 @@ export default function AllmenuPage() {
               <span className="cursor-pointer">자산 확인하기</span>
             </BoldTitle>
           </div>
-          <div
+          {/* <div
             onClick={() => {
               if (member) navigate("/asset");
             }}
@@ -260,7 +260,8 @@ export default function AllmenuPage() {
             <BoldTitle>
               <span className="cursor-pointer">잔고 확인하기</span>
             </BoldTitle>
-          </div>
+          </div> */}
+          <div className="mb-20"></div>
         </div>
       </div>
       {isModalOpen && (

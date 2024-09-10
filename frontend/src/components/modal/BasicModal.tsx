@@ -18,6 +18,16 @@ const StyledModal: ReactModal.Styles = {
   },
   content: {
     width: "360px",
+    height: "200px",
+    display: "flex", // 추가: 컨텐츠 높이에 맞추기 위해 flex 사용
+    flexDirection: "column",
+    //justifyContent: "center",
+    //display: "flex",
+    // justifyItems: "center",
+    //alignItems: "center",
+    ///
+    //width: "100%",
+    //height: "fitContent",
     //height: "",
     zIndex: "150",
     position: "absolute",
@@ -27,7 +37,6 @@ const StyledModal: ReactModal.Styles = {
     borderRadius: "10px",
     boxShadow: "2px 2px 2px rgba(0, 0, 0, 0.25)",
     backgroundColor: "white",
-    justifyContent: "center",
     overflow: "auto",
     //overflow: "visible",
     maxHeight: "80vh", // 최대 높이 설정 (스크롤을 위해)
