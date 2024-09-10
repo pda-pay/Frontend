@@ -1,6 +1,5 @@
 import BackgroundFrame from "../../../components/backgroundframe/BackgroundFrame";
 import { RiQrScan2Line } from "react-icons/ri";
-import ServiceBlockFrame from "../../../components/backgroundframe/ServiceBlockFrame";
 import { useNavigate } from "react-router-dom";
 import userAPI from "../../../api/userAPI";
 import axios from "axios";
