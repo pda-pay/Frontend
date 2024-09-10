@@ -20,7 +20,7 @@ export interface getMortgageDeclineI {
 export default class adminAPI extends BaseApi {
   async getCollateralData() {
     const resp = await this.fetcher.get(
-      "/schedule/user-margin-requirements-under?limit=160"
+      "/asset/margin-requirement/under?limit=170"
     );
     return resp;
   }
