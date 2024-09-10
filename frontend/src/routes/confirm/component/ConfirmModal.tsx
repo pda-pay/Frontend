@@ -1,6 +1,5 @@
 import BasicModal from "../../../components/modal/BasicModal";
 import XButton from "../../../components/button/XButton";
-import styled from "styled-components";
 
 interface ModalProps {
   priority?: [
@@ -29,12 +28,6 @@ interface ModalProps {
   isModalOpen: boolean;
   handleCloseModal: () => void;
 }
-
-const StyledTable = styled.table`
-  width: 100%;
-  border-collapse: separate; /* border-spacing을 적용하기 위해 separate로 설정 */
-  border-spacing: 0 10px; /* 행 사이에 10px 간격을 추가 */
-`;
 
 export default function ConfirmModal({
   priority,
