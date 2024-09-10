@@ -19,7 +19,7 @@ export default function AlertAccountModal({
         <span
           onClick={() => {
             handleCloseAlert();
-            navigate("/payment");
+            navigate(-1);
           }}
         >
           <XButton />
