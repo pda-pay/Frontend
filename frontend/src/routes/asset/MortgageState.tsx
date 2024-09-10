@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import BoldTitle from "../../components/text/BoldTitle";
 import PercentageBar from "./PercentageBar";
 import StockSeperator from "./StockSeperator";
 import payServiceAPI from "../../api/payServiceAPI";
+import { ItemObject } from "../stock/StockPage";
 
 export interface StockInfo {
   companyName: string;
@@ -41,7 +41,7 @@ export default function MortgageState() {
     let f = 0;
     let m = 0;
 
-    result.stockMortgagedStocks.forEach((value) => {
+    result.stockMortgagedStocks.forEach((value: ItemObject) => {
       if (value.mortgagedQuantity > 0) {
         m += value.mortgagedQuantity * value.stockPrice;
         data.mortgaged.push({
