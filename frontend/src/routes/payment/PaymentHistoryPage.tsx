@@ -133,7 +133,7 @@ export default function PaymentHistoryPage() {
               <div className="flex flex-col ">
                 <div>{history[3]}</div>
                 <div className="text-sm text-gray-400">
-                  {history[2].split("T")}
+                  {history[2].replace("T", " ")}
                 </div>
               </div>
               <div className="font-bold ml-auto">

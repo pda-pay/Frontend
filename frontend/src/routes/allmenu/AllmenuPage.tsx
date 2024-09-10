@@ -272,6 +272,7 @@ export default function AllmenuPage() {
             </span>
           </BoldTitle>
         </div>
+        <div className="mb-20"></div>
       </div>
       {isModalOpen && (
         <CashMortgagedModal

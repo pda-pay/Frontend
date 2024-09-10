@@ -1,5 +1,5 @@
 import Modal from "react-modal";
-import React from 'react';
+import React from "react";
 
 interface ModalProps {
   isOpen: boolean;
@@ -29,7 +29,6 @@ const StyledModal: ReactModal.Styles = {
     borderRadius: "10px",
     boxShadow: "2px 2px 2px rgba(0, 0, 0, 0.25)",
     backgroundColor: "white",
-    justifyContent: "center",
     overflow: "auto",
     padding: "20px",
   },
@@ -41,14 +40,8 @@ export default function BasicModal({
   children,
 }: ModalProps) {
   return (
-    <Modal 
-      isOpen={isOpen} 
-      onRequestClose={onRequestClose} 
-      style={StyledModal}
-    >
-      <div className="flex flex-col">
-        {children}
-      </div>
+    <Modal isOpen={isOpen} onRequestClose={onRequestClose} style={StyledModal}>
+      <div className="flex flex-col">{children}</div>
     </Modal>
   );
 }
