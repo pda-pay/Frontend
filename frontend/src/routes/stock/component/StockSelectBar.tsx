@@ -71,16 +71,17 @@ export default function StockSelectBar({
   };
 
   return (
-    <div onClick={(e) => e.stopPropagation()}>
+    <div onClick={(e) => e.stopPropagation()} onTouchStart={(e) => e.preventDefault()}>
       <Select
         options={range}
         value={range[amount]}
         onChange={onChangeSelected}
         styles={customStyles}
-        //셀렉트바 클릭?
         menuIsOpen={menuIsOpen}
         onMenuOpen={handleMenuOpen}
         onMenuClose={handleMenuClose}
+        isSearchable={false}
+        blurInputOnSelect
       />
     </div>
   );
