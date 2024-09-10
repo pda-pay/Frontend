@@ -18,10 +18,7 @@ export default function StockItem(props: StockItemProps) {
       `}
     >
       <div className="flex flex-row items-center justify-between space-y-1">
-        <img
-          className="h-5"
-          src={`/public/companyLogo/${props.companyName}.png`}
-        />
+        <img className="h-5" src={`/companyLogo/${props.companyName}.png`} />
         <p className="text-base">{props.companyName}</p>
       </div>
       <div className="flex flex-row justify-between text-sm w-full max-w-[120px] truncate">
