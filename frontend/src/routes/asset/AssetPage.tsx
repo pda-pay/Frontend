@@ -9,6 +9,7 @@ import StockPieChart from "./StockPieChart";
 export default function AssetPage() {
   const service = new userAPI();
   const [name, setName] = useState<string>("익명");
+  const [member, setMember] = useState<boolean>(false);
 
   const getUserInfo = async () => {
     try {
@@ -16,6 +17,7 @@ export default function AssetPage() {
 
       if (response.status === 200) {
         setName(response.data.name);
+        setMember(response.data.paymentServiceMember);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -37,8 +39,17 @@ export default function AssetPage() {
         <strong className="font-bold">{name}님,</strong>자산 현황을 확인해보세요
       </p>
       <StockPieChart />
-      <CollateralRatioGraph />
-      <MortgageState />
+      <div className="relative">
+        <div className={`${!member ? "filter blur-sm" : ""}`}>
+          <CollateralRatioGraph />
+          <MortgageState />
+        </div>
+        {!member && (
+          <div className="absolute inset-0 flex items-center justify-center text-black text-xl font-bold">
+            결제 서비스 가입 후 이용 가능합니다.
+          </div>
+        )}
+      </div>
     </div>
   );
 }

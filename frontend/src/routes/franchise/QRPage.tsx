@@ -16,7 +16,7 @@ export default function QRPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [seconds, setSeconds] = useState(300);
+  const [seconds, setSeconds] = useState(60);
   const [isAvailable, setAvailable] = useState(true);
 
   const [qrValue, setQrValue] = useState<IqrValue | null>(null);

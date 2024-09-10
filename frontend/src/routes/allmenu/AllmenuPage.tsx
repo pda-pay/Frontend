@@ -116,6 +116,16 @@ export default function AllmenuPage() {
     }
   };
 
+  // const notifyToNonmember = () => {
+  //   Swal.fire({
+  //     icon: "warning",
+  //     title: `<span style="font-size: 20px; font-weight : bolder;">결제 서비스 가입 후 이용 가능합니다.</span>`,
+  //     confirmButtonColor: "blue",
+  //   }).then(() => {
+  //     navigate("/serviceagree");
+  //   });
+  // };
+
   useEffect(() => {
     getUserInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -159,7 +169,7 @@ export default function AllmenuPage() {
           {!member && (
             <BoldTitle>
               <span onClick={() => navigate("/serviceagree")}>
-                결제 서비스 가입 하기
+                결제 서비스 가입하기
               </span>
             </BoldTitle>
           )}
@@ -201,6 +211,7 @@ export default function AllmenuPage() {
               onClick={() => {
                 if (member) openModal();
                 else openAlert();
+                //else notifyToNonmember();
               }}
             >
               선결제하기
@@ -212,6 +223,7 @@ export default function AllmenuPage() {
               onClick={() => {
                 if (member) navigate("/account");
                 else openAlert();
+                //else notifyToNonmember();
               }}
             >
               결제 계좌 변경
@@ -223,6 +235,7 @@ export default function AllmenuPage() {
               onClick={() => {
                 if (member) navigate("/limit", { state: { menu: true } });
                 else openAlert();
+                //else notifyToNonmember();
               }}
             >
               한도 변경
@@ -235,6 +248,7 @@ export default function AllmenuPage() {
               onClick={() => {
                 if (member) navigate("/stock");
                 else openAlert();
+                //else notifyToNonmember();
               }}
             >
               담보 변경
@@ -247,6 +261,7 @@ export default function AllmenuPage() {
               onClick={() => {
                 if (member) navigate("/priority", { state: { menu: true } });
                 else openAlert();
+                //else notifyToNonmember();
               }}
             >
               우선순위 확인 및 변경
@@ -259,6 +274,7 @@ export default function AllmenuPage() {
                 if (member)
                   navigate("/repayment-history", { state: { menu: true } });
                 else openAlert();
+                //else notifyToNonmember();
               }}
             >
               상환 내역 보기
