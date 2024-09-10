@@ -20,6 +20,7 @@ export default function PaymentPage() {
   //TODO: 여기서 백엔드에게 이름과 가입 여부 가져오기
   const [name, setName] = useState<string>("익명");
   const [memeber, setMember] = useState<boolean>(false);
+  const [payValid, setPayValid] = useState<boolean>(true);
 
   const getUserInfo = async () => {
     try {
@@ -28,6 +29,7 @@ export default function PaymentPage() {
       if (response.status === 200) {
         setName(response.data.name);
         setMember(response.data.paymentServiceMember);
+        setPayValid(response.data.paymentAccess);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -45,15 +47,13 @@ export default function PaymentPage() {
       <PaddingDiv>
         <div>
           {memeber ? (
-            <LargeButton
-              type="blue"
-              //TODO: QR로 결제하는 페이지로 이동
-              // onClick={() =>
-              //   navigate("/qr"})
-              // }
+            <span
+              onClick={() => {
+                if (payValid) navigate("/payment-pw-verify");
+              }}
             >
-              QR로 결제하기
-            </LargeButton>
+              <LargeButton type="blue">QR로 결제하기</LargeButton>
+            </span>
           ) : (
             <LargeButton type="blue" onClick={() => navigate("/serviceagree")}>
               결제 서비스 가입하기

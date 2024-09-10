@@ -15,18 +15,36 @@ self.addEventListener("push", function (e) {
   const notificationTitle = resultData.title;
   const notificationOptions = {
     body: resultData.body,
-    icon: resultData.image,
-    tag: resultData.tag,
-    ...resultData,
+
+    icon: "/icons/512140.png",
+    tag: "140pay",
+    data: e.data.json().data,
   };
-  console.log("push: ", { resultData, notificationTitle, notificationOptions });
 
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
 self.addEventListener("notificationclick", function (event) {
   console.log("notification click");
-  const url = "/";
   event.notification.close();
+
+  const category = event.notification.data.category;
+  let url;
+
+  switch (category) {
+    case "상환":
+      url = "/payment";
+      break;
+    case "전체":
+      url = "/allMenu";
+      break;
+    default:
+      url = "/main";
+  }
+
   event.waitUntil(clients.openWindow(url));
+});
+
+self.addEventListener("message", function (event) {
+  console.log("Received message from client:", event.data);
 });

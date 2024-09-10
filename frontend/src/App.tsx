@@ -5,8 +5,14 @@ import "slick-carousel/slick/slick-theme.css";
 import Modal from "react-modal";
 
 Modal.setAppElement("#root");
+import { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    // 강제로 라이트 모드로 설정
+    document.documentElement.style.setProperty("color-scheme", "light");
+  }, []);
+
   return <RouterProvider router={MainRouter}></RouterProvider>;
 }
 

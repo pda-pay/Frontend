@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import ApproachPage from "./routes/approach/ApproachPage";
-//import MydataAgreePage from "./routes/agree/MydataAgreePage";
 import JoinPage from "./routes/loginnjoin/JoinPage";
 import LoginPage from "./routes/loginnjoin/LoginPage";
 import MenubarLayout from "./components/MenubarLayout";
@@ -27,9 +26,10 @@ import PaymentHistoryPage from "./routes/payment/PaymentHistoryPage";
 import CashRepayPage from "./routes/repay/CashRepayPage";
 import MortgagedRepayPage from "./routes/repay/MortgagedRepayPage";
 import NotificationBox from "./routes/notificationBox/NotificationBox";
+import ProtectedPages from "./ProtectedPages";
 
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { getMessaging, getToken } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -44,26 +44,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 
-export const requestFCMToken = async () => {
-  const permission = await Notification.requestPermission();
-  if (permission === "granted") {
-    try {
-      const token = await getToken(messaging, {
-        vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
-      });
-      console.log("FCM Token:", token);
-    } catch (error) {
-      console.error("FCM Token error:", error);
-    }
-  } else if (permission === "denied") {
-    alert("You denied the notification permission");
-  }
-};
-
-onMessage(messaging, (payload) => {
-  console.log("Message received. Payload:", payload);
-});
-
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker
     .register("/firebase-messaging-sw.js")
@@ -75,19 +55,32 @@ if ("serviceWorker" in navigator) {
     });
 }
 
+export const requestFCMToken = async () => {
+  const permission = await Notification.requestPermission();
+
+  if (permission === "granted") {
+    try {
+      const token = await getToken(messaging, {
+        vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
+      });
+      return token;
+    } catch (error) {
+      console.error("FCM Token error:", error);
+    }
+  } else if (permission === "denied") {
+    console.log("You denied the notification permission");
+  }
+};
+
 const routers = [
   {
     path: "/",
     element: <ApproachPage />,
-    // index: true
   },
-  // {
-  //   path: "/mydata",
-  //   element: <MydataAgreePage />,
-  // },
   {
     path: "/serviceagree",
-    element: <ServiceAgreePage />,
+    //element: <ServiceAgreePage />,
+    element: <ProtectedPages element={<ServiceAgreePage />} />,
   },
   {
     path: "/join",
@@ -97,6 +90,17 @@ const routers = [
     path: "/login",
     element: <LoginPage />,
   },
+  // {
+  //   path: "/main",
+  //   element: <MenubarLayout />,
+  //   children: [
+  //     {
+  //       path: "",
+  //       element: <MainPage />,
+  //       index: true,
+  //     },
+  //   ],
+  // },
   {
     path: "/franchise/login",
     element: <FranchiseLoginPage />,
@@ -111,107 +115,179 @@ const routers = [
   },
   {
     path: "/main",
-    element: <MenubarLayout />,
+    element: <ProtectedPages />, // ProtectedRoute를 부모 요소로 사용
     children: [
       {
         path: "",
-        element: <MainPage />,
-        index: true,
+        element: <MenubarLayout />, // MenubarLayout은 ProtectedRoute 내부에 렌더링됨
+        children: [
+          {
+            path: "",
+            element: <MainPage />, // 기본 자식 라우트
+            index: true,
+          },
+        ],
       },
     ],
   },
+  // {
+  //   path: "/payment",
+  //   element: <MenubarLayout />,
+  //   children: [
+  //     {
+  //       path: "",
+  //       element: <PaymentPage />,
+  //       index: true,
+  //     },
+  //   ],
+  // },
   {
     path: "/payment",
-    element: <MenubarLayout />,
+    element: <ProtectedPages />,
     children: [
       {
         path: "",
-        element: <PaymentPage />,
-        index: true,
+        element: <MenubarLayout />,
+        children: [
+          {
+            path: "",
+            element: <PaymentPage />,
+            index: true,
+          },
+        ],
       },
     ],
   },
+  // {
+  //   path: "/asset",
+  //   element: <MenubarLayout />,
+  //   children: [
+  //     {
+  //       path: "",
+  //       element: <AssetPage />,
+  //       index: true,
+  //     },
+  //   ],
+  // },
   {
     path: "/asset",
-    element: <MenubarLayout />,
+    element: <ProtectedPages />,
     children: [
       {
         path: "",
-        element: <AssetPage />,
-        index: true,
+        element: <MenubarLayout />,
+        children: [
+          {
+            path: "",
+            element: <AssetPage />,
+            index: true,
+          },
+        ],
       },
     ],
   },
+  // {
+  //   path: "/allmenu",
+  //   element: <MenubarLayout />,
+  //   children: [
+  //     {
+  //       path: "",
+  //       element: <AllmenuPage />,
+  //       index: true,
+  //     },
+  //   ],
+  // },
   {
     path: "/allmenu",
-    element: <MenubarLayout />,
+    element: <ProtectedPages />,
     children: [
       {
         path: "",
-        element: <AllmenuPage />,
-        index: true,
+        element: <MenubarLayout />,
+        children: [
+          {
+            path: "",
+            element: <AllmenuPage />,
+            index: true,
+          },
+        ],
       },
     ],
   },
   {
     path: "/scanner",
-    element: <ScannerPage />,
+    //element: <ScannerPage />,
+    element: <ProtectedPages element={<ScannerPage />} />,
   },
   {
     path: "/transaction-fail-result",
-    element: <TransactionFailPage />,
+    //element: <TransactionFailPage />,
+    element: <ProtectedPages element={<TransactionFailPage />} />,
   },
   {
     path: "/transaction-success-result",
-    element: <TransactionSuccessPage />,
+    //element: <TransactionSuccessPage />,
+    element: <ProtectedPages element={<TransactionSuccessPage />} />,
   },
   {
     path: "/payment-pw-verify",
-    element: <PaymentPasswordPage />,
+    //element: <PaymentPasswordPage />,
+    element: <ProtectedPages element={<PaymentPasswordPage />} />,
   },
   {
     path: "/stock",
-    element: <StockPage />,
+    //element: <StockPage />,
+    element: <ProtectedPages element={<StockPage />} />,
   },
   {
     path: "/priority",
-    element: <PriorityPage />,
+    //element: <PriorityPage />,
+    element: <ProtectedPages element={<PriorityPage />} />,
   },
   {
     path: "/limit",
-    element: <SettingLimitPage />,
+    //element: <SettingLimitPage />,
+    element: <ProtectedPages element={<SettingLimitPage />} />,
   },
   {
     path: "/account",
-    element: <SettingAccountPage />,
+    //element: <SettingAccountPage />,
+    element: <ProtectedPages element={<SettingAccountPage />} />,
   },
   {
     path: "/paymentdate",
-    element: <SettingDatePage />,
+    //element: <SettingDatePage />,
+    element: <ProtectedPages element={<SettingDatePage />} />,
   },
   {
     path: "/confirm",
-    element: <ConfirmPage />,
+    //element: <ConfirmPage />,
+    element: <ProtectedPages element={<ConfirmPage />} />,
   },
   {
     path: "/simple",
-    element: <SimplePage />,
+    //element: <SimplePage />,
+    element: <ProtectedPages element={<SimplePage />} />,
   },
   {
     path: "/paymenthistory",
-    element: <PaymentHistoryPage />,
+    //element: <PaymentHistoryPage />,
+    element: <ProtectedPages element={<PaymentHistoryPage />} />,
   },
   {
     path: "/cashrepay",
-    element: <CashRepayPage />,
+    //element: <CashRepayPage />,
+    element: <ProtectedPages element={<CashRepayPage />} />,
   },
   {
     path: "/mortgagedrepay",
-    element: <MortgagedRepayPage />,
+    //element: <MortgagedRepayPage />,
+    element: <ProtectedPages element={<MortgagedRepayPage />} />,
   },
   {
     path: "/notificationBox",
-    element: <NotificationBox />,
+    //element: <NotificationBox />,
+    element: <ProtectedPages element={<NotificationBox />} />,
   },
 ];
 

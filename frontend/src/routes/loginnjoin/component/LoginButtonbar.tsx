@@ -3,6 +3,7 @@ import BasicButton from "../../../components/button/BasicButton";
 import loginApi from "../../../api/loginAPI";
 import { useState } from "react";
 import axios from "axios";
+import { Cookies } from "react-cookie";
 
 interface LoginProps {
   loginId: string | undefined;
@@ -12,6 +13,8 @@ interface LoginProps {
 export default function LoginButtonbar({ loginId, password }: LoginProps) {
   const service = new loginApi();
   const navigate = useNavigate();
+
+  const cookies = new Cookies();
 
   const [errMsg, setErrMsg] = useState<string>();
 
@@ -23,7 +26,15 @@ export default function LoginButtonbar({ loginId, password }: LoginProps) {
       });
 
       if (response.status === 200) {
-        navigate("/main", { state: { id: loginId, name: response.data.name } });
+        const accessToken = await cookies.get("accessToken");
+
+        if (accessToken !== undefined) {
+          navigate("/main");
+        }
+
+        // navigate("/main", {
+        //   state: { id: loginId, name: response.data.name },
+        // });
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {

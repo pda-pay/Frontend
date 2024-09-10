@@ -66,6 +66,8 @@ export default function StockPage() {
     ][]
   >([]);
 
+  const [totalDebt, setTotalDebt] = useState<number>(0);
+
   //한도
   const [limit, setLimit] = useState<number>(0);
   //모달창 관리
@@ -98,6 +100,7 @@ export default function StockPage() {
         const data = response.data.stockMortgagedStocks;
         saveOwnStock(data);
         //setOwnStock([...data]);
+        setTotalDebt(response.data.totalDebt);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -126,6 +129,20 @@ export default function StockPage() {
       return false;
     }
   };
+
+  //true이면 버튼 비활성화
+  const [unValid, setUnValid] = useState<boolean>(true);
+
+  //한도가 결제예정액보다 낮으면 || 선택한 주식이 없으면
+  const validateLimit = () => {
+    if (limit < totalDebt || limit <= 0) {
+      setUnValid(true);
+    } else setUnValid(false);
+  };
+
+  useEffect(() => {
+    validateLimit();
+  }, [limit]);
 
   const saveOwnStock = (data: ItemObject[]) => {
     const temp: [
@@ -393,6 +410,13 @@ export default function StockPage() {
 
           <div className="mt-auto">
             <div className="mb-5">
+              {unValid && (
+                <p className="mt-2 text-sm text-red-600">
+                  결제예정액 {totalDebt.toLocaleString()}원 보다 높게 한도를
+                  잡아야 합니다.
+                </p>
+              )}
+
               <div className="flex justify-between mb-5">
                 <BoldTitle>
                   현재 확보한 최대 한도: <br />
@@ -416,6 +440,7 @@ export default function StockPage() {
                   nexttext="다음"
                   beforeurl="/payment"
                   nexturl="/priority"
+                  nextdisabled={unValid}
                   nextOnClick={putMorgagedStocks}
                 />
               ) : (
@@ -424,6 +449,7 @@ export default function StockPage() {
                   nexttext="다음"
                   beforeurl="/serviceagree"
                   nexturl="/priority"
+                  nextdisabled={unValid}
                   //nextstate={{ selectedStock: selectedStock }}
                   nextOnClick={putMorgagedStocks}
                 ></ButtonBar>
