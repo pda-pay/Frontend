@@ -74,6 +74,10 @@ export default function StockPieChart() {
       processedData[companyName].labels.push(stockName);
     });
 
+    if (processedData.담보.series.length == 0) {
+      delete processedData.담보;
+    }
+
     setCompanyList([...Object.keys(processedData)]);
     setTotalData(processedData);
 
