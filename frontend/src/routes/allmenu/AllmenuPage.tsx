@@ -12,6 +12,7 @@ import { FaBell } from "react-icons/fa6";
 import fcmAPI from "../../api/fcmAPI";
 import notificationBoxAPI from "../../api/notificationBoxAPI";
 import Swal from "sweetalert2";
+import NotMemberModal from "../../components/modal/NotMemberModal";
 
 interface Message {
   id: number;
@@ -56,6 +57,10 @@ export default function AllmenuPage() {
   const fcmApi = new fcmAPI();
 
   const notificationService = new notificationBoxAPI();
+
+  const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
+  const openAlert = () => setIsAlertOpen(true);
+  const closeAlert = () => setIsAlertOpen(false);
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -195,6 +200,7 @@ export default function AllmenuPage() {
               className="cursor-pointer"
               onClick={() => {
                 if (member) openModal();
+                else openAlert();
               }}
             >
               선결제하기
@@ -205,6 +211,7 @@ export default function AllmenuPage() {
               className="cursor-pointer"
               onClick={() => {
                 if (member) navigate("/account");
+                else openAlert();
               }}
             >
               결제 계좌 변경
@@ -215,6 +222,7 @@ export default function AllmenuPage() {
               className="cursor-pointer"
               onClick={() => {
                 if (member) navigate("/limit", { state: { menu: true } });
+                else openAlert();
               }}
             >
               한도 변경
@@ -226,6 +234,7 @@ export default function AllmenuPage() {
               className="cursor-pointer"
               onClick={() => {
                 if (member) navigate("/stock");
+                else openAlert();
               }}
             >
               담보 변경
@@ -237,6 +246,7 @@ export default function AllmenuPage() {
               className="cursor-pointer"
               onClick={() => {
                 if (member) navigate("/priority", { state: { menu: true } });
+                else openAlert();
               }}
             >
               우선순위 확인 및 변경
@@ -248,6 +258,7 @@ export default function AllmenuPage() {
               onClick={() => {
                 if (member)
                   navigate("/repayment-history", { state: { menu: true } });
+                else openAlert();
               }}
             >
               상환 내역 보기
@@ -265,7 +276,7 @@ export default function AllmenuPage() {
             <span
               className="cursor-pointer"
               onClick={() => {
-                if (member) navigate("/asset");
+                navigate("/asset");
               }}
             >
               자산 확인하기
@@ -274,6 +285,12 @@ export default function AllmenuPage() {
         </div>
         <div className="mb-20"></div>
       </div>
+      {isAlertOpen && (
+        <NotMemberModal
+          isModalOpen={isAlertOpen}
+          handleCloseModal={closeAlert}
+        />
+      )}
       {isModalOpen && (
         <CashMortgagedModal
           isModalOpen={isModalOpen}
