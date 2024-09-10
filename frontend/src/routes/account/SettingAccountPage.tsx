@@ -118,7 +118,7 @@ export default function SettingAccountPage() {
           </BackgroundFrame>
         ))}
       </div>
-      <div>
+      <div className="flex flex-col gap-3">
         <BoldTitle>선택한 계좌</BoldTitle>
         <BackgroundFrame color="blue">
           {account.length !== 0 ? (

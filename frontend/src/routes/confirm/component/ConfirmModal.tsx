@@ -58,7 +58,7 @@ export default function ConfirmModal({
                   <th>종목명</th>
                   <th>담보잡은 주수</th>
                   <th>전일 종가</th>
-                  <th>등급</th>
+                  <th>안정성</th>
                   <th>가능 한도</th>
                 </tr>
               </thead>
