@@ -53,7 +53,7 @@ export default function QRFrame({ member }: QRProps) {
             }
           }}
         >
-          <RiQrScan2Line className="size-64" />
+          <RiQrScan2Line className="size-64 cursor-pointer" />
         </div>
       </BackgroundFrame>
 

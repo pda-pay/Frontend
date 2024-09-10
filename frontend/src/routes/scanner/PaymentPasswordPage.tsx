@@ -62,7 +62,7 @@ export default function PaymentPasswordPage() {
       {isLoading && <BeatLoaderDiv />}
       <PaddingDiv>
         <div className="flex justify-between flex-col h-[40vh] items-center">
-          <p className="mt-16 text-xl text-center font-bold">
+          <p className="cursor-default mt-16 text-xl text-center font-bold">
             결제 비밀번호 6자리를 입력해주세요.
           </p>
           <PinInput

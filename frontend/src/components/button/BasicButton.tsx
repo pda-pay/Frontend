@@ -23,7 +23,9 @@ const StyledButton = styled.button<ButtonProps>`
   &:hover {
     opacity: 0.9;
   }
-
+  &:focus {
+    outline: none;
+  }
   &:disabled {
     background-color: #f8f8f8;
     cursor: not-allowed;

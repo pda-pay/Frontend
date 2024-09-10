@@ -76,7 +76,7 @@ export default function PayInfo({ member }: UserProps) {
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative cursor-default">
       <BackgroundFrame color="white">
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
@@ -95,7 +95,7 @@ export default function PayInfo({ member }: UserProps) {
             <div className="flex justify-between">
               <BoldTitle>최근 이용 내역</BoldTitle>
               <span
-                className="text-gray-400"
+                className="text-gray-400 cursor-pointer"
                 onClick={() => navigate("/paymenthistory")}
               >
                 더보기
