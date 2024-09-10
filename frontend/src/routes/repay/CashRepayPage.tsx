@@ -5,6 +5,7 @@ import BoldTitle from "../../components/text/BoldTitle";
 import paymentAPI from "../../api/paymentAPI";
 import NormalTitle from "../../components/text/NormalTitle";
 import ButtonBar from "../../components/button/ButtonBar";
+import AlertMortgagedRepayModal from "./component/AlertMortgagedRepayModal";
 
 export default function CashRepayPage() {
   const repayservice = new paymentAPI();
@@ -65,13 +66,18 @@ export default function CashRepayPage() {
     }
   };
 
+  const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
+  const openAlert = () => setIsAlertOpen(true);
+  const closeAlert = () => setIsAlertOpen(false);
+
   const postCashRepayAmount = async (): Promise<boolean> => {
     try {
       const temp = { amount: repayAmount };
       const response = await repayservice.postCashRepayAmount(temp);
 
       if (response.status === 200) {
-        return true;
+        openAlert();
+        return false;
       } else return false;
     } catch (error) {
       console.log(error);
@@ -169,6 +175,12 @@ export default function CashRepayPage() {
           nextOnClick={postCashRepayAmount}
         />
       </div>
+      {isAlertOpen && (
+        <AlertMortgagedRepayModal
+          isAlertOpen={isAlertOpen}
+          handleCloseAlert={closeAlert}
+        />
+      )}
     </PaddingDiv>
   );
 }

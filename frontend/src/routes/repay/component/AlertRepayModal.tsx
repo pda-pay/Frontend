@@ -26,7 +26,7 @@ export default function AlertRepayModal({
         <span
           onClick={() => {
             handleCloseAlert();
-            navigate("/payment");
+            navigate(-1);
           }}
         >
           <XButton />
