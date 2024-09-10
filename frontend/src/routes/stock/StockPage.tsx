@@ -379,6 +379,7 @@ export default function StockPage() {
             companyName: stock[6],
             stabilityLevel: stock[7],
             limitPrice: stock[9],
+            stockPrice: stock[8],
           })
         ),
     };

@@ -18,7 +18,7 @@ const StyledModal: ReactModal.Styles = {
   },
   content: {
     width: "360px",
-    height: "180px",
+    //height: "",
     zIndex: "150",
     position: "absolute",
     top: "50%",
@@ -29,6 +29,8 @@ const StyledModal: ReactModal.Styles = {
     backgroundColor: "white",
     justifyContent: "center",
     overflow: "auto",
+    //overflow: "visible",
+    maxHeight: "80vh", // 최대 높이 설정 (스크롤을 위해)
   },
 };
 

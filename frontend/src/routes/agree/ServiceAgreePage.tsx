@@ -13,12 +13,14 @@ export default function ServiceAgreePage() {
           <PaymentTerms />
         </AgreeFrame>
       </div>
-      <ButtonBar
-        nexturl="/stock"
-        beforeurl="/main"
-        nexttext="동의"
-        beforetext="비동의"
-      ></ButtonBar>
+      <div className="mt-auto">
+        <ButtonBar
+          nexturl="/stock"
+          beforeurl="/main"
+          nexttext="동의"
+          beforetext="비동의"
+        ></ButtonBar>
+      </div>
     </PaddingDiv>
   );
 }

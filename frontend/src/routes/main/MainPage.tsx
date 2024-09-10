@@ -15,7 +15,7 @@ export default function MainPage() {
 
   const navigate = useNavigate();
 
-  const [name, setName] = useState<string>("익명");
+  const [name, setName] = useState<string>("");
   const [member, setMember] = useState<boolean>(false);
 
   const fetchToken = async () => {
@@ -50,7 +50,7 @@ export default function MainPage() {
   return (
     <div style={{ backgroundColor: "#9abade33" }}>
       <PaddingDiv>
-        <div>
+        <div className="flex flex-col gap-5">
           {!member && (
             <LargeButton
               type="blue"
@@ -61,14 +61,16 @@ export default function MainPage() {
             </LargeButton>
           )}
 
-          <NormalTitle marginBottom="20px">
-            <span className="font-bold">
-              {name}님,
-              <br />
-            </span>{" "}
-            QR 코드를 인식해서 빠르게 결제해보세요.
-          </NormalTitle>
-          <QRFrame member={member} />
+          <div className="flex flex-col gap-5 my-20">
+            <NormalTitle marginBottom="20px">
+              <span className="font-bold">
+                {name}님,
+                <br />
+              </span>{" "}
+              QR 코드를 인식해서 빠르게 결제해보세요.
+            </NormalTitle>
+            <QRFrame member={member} />
+          </div>
         </div>
       </PaddingDiv>
     </div>
