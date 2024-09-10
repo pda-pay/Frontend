@@ -116,6 +116,7 @@ export default function QRPage() {
           type="blue"
           children={"다시 생성"}
           onClick={() => {
+            wsRef.current?.close();
             navigate("/franchise/createqr");
           }}
         />

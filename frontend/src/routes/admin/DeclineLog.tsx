@@ -13,7 +13,7 @@ export default function DeclineLog(props: DeclineLogProps) {
         {props.mortgaged.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원
       </p>
       <p>{props.limit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</p>
-      <p>{(props.mortgaged / props.limit) * 100}%</p>
+      <p>{((props.mortgaged / props.limit) * 100).toFixed(2)}%</p>
       <p>{props.declineRatio}%</p>
     </div>
   );

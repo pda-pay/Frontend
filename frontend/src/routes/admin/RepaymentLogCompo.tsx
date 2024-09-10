@@ -12,14 +12,38 @@ export default function RepaymentLogCompo() {
   }
   const [messages, setMessages] = useState<LogMessage[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
-  const eventSource = useRef<EventSource | null>(null);
+  const repaymentEventSource = useRef<EventSource | null>(null);
+  const offsetAlltEventSource = useRef<EventSource | null>(null);
+  const offsetNottEventSource = useRef<EventSource | null>(null);
 
   useEffect(() => {
-    eventSource.current = new EventSource(
+    repaymentEventSource.current = new EventSource(
       import.meta.env.VITE_BACKEND_URL + "/notification/repayment"
     );
 
-    eventSource.current.addEventListener("repayment", (event) => {
+    repaymentEventSource.current.addEventListener("repayment", (event) => {
+      console.log(event);
+      const log: LogMessage = JSON.parse(event.data);
+
+      setMessages((prevMessages) => [...prevMessages, log]);
+    });
+
+    offsetAlltEventSource.current = new EventSource(
+      import.meta.env.VITE_BACKEND_URL + "/notification/offset/all-payed"
+    );
+
+    offsetAlltEventSource.current.addEventListener("repayment", (event) => {
+      console.log(event);
+      const log: LogMessage = JSON.parse(event.data);
+
+      setMessages((prevMessages) => [...prevMessages, log]);
+    });
+
+    offsetNottEventSource.current = new EventSource(
+      import.meta.env.VITE_BACKEND_URL + "/notification/offset/not-all-payed"
+    );
+
+    offsetNottEventSource.current.addEventListener("repayment", (event) => {
       console.log(event);
       const log: LogMessage = JSON.parse(event.data);
 
@@ -27,8 +51,10 @@ export default function RepaymentLogCompo() {
     });
 
     return () => {
-      if (eventSource.current != null) {
-        eventSource.current.close();
+      if (repaymentEventSource.current != null) {
+        offsetAlltEventSource.current?.close();
+        offsetNottEventSource.current?.close();
+        repaymentEventSource.current.close();
       }
     };
   }, []);

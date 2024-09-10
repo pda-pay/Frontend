@@ -1,7 +1,33 @@
+import { useEffect, useState } from "react";
 import DeclineLog from "./DeclineLog";
+import adminAPI, { getMortgageDeclineI } from "../../api/adminAPI";
 
 export default function DeclineLogCompo() {
-  const arr = [1, 2, 3, 4, 5, 6];
+  const service = new adminAPI();
+  const [data, setData] = useState<getMortgageDeclineI[]>([]);
+
+  const fetch = async () => {
+    const result = await service.getMortgageDecline(20);
+
+    const d: getMortgageDeclineI[] = result.data;
+
+    const arr = [];
+
+    d.map((value) => {
+      arr.push({
+        userId: value.userId,
+        mortgaged: value.mortgageSum,
+        limit: value.todayLimit,
+        declineRatio: value.mortgageSumRateOfChange,
+      });
+    });
+
+    setData(d);
+  };
+
+  useEffect(() => {
+    fetch();
+  }, []);
 
   return (
     <div>
@@ -17,13 +43,14 @@ export default function DeclineLogCompo() {
           <p>전일대비 하락폭</p>
         </div>
         <div className="max-h-[40vh] overflow-y-auto border p-2 bg-gray-50">
-          {arr.map((value) => {
+          {data.map((value, index) => {
             return (
               <DeclineLog
-                userId={value.toString()}
-                mortgaged={1000000}
-                limit={500000}
-                declineRatio={21}
+                key={index}
+                userId={value.userId}
+                mortgaged={value.mortgageSum}
+                limit={value.todayLimit}
+                declineRatio={value.mortgageSumRateOfChange}
               />
             );
           })}
