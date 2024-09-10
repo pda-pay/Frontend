@@ -29,7 +29,7 @@ export default function PayInfo({ member }: UserProps) {
 
   const [paymentAmount, setPaymentAmount] = useState<number>(0);
   const [creditLimit, setCreditLimit] = useState<number>(500000);
-  const [accountDeposit, setAccountDeposit] = useState<number>(1000000);
+  const [remainCreditLimit, setRemainCreditLimit] = useState<number>(1000000);
   //결제 번호, 결제 금액, 날짜, 가게
   const [paymentHistory, setPaymentHistory] = useState<
     [number, number, string, string][]
@@ -46,7 +46,7 @@ export default function PayInfo({ member }: UserProps) {
         const data = response.data;
         setPaymentAmount(data.paymentAmount);
         setCreditLimit(data.creditLimit);
-        setAccountDeposit(data.accountDeposit);
+        setRemainCreditLimit(data.remainCreditLimit);
         saveHistory(data.paymentHistories);
       }
     } catch (error) {
@@ -76,7 +76,7 @@ export default function PayInfo({ member }: UserProps) {
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative cursor-default">
       <BackgroundFrame color="white">
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
@@ -88,14 +88,14 @@ export default function PayInfo({ member }: UserProps) {
             </div>
             <div className="text-gray-500">
               <div>한도: {creditLimit.toLocaleString()}원</div>
-              <div>연결계좌 잔액: {accountDeposit.toLocaleString()}원</div>
+              <div>남은 한도: {remainCreditLimit.toLocaleString()}원</div>
             </div>
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex justify-between">
               <BoldTitle>최근 이용 내역</BoldTitle>
               <span
-                className="text-gray-400"
+                className="text-gray-400 cursor-pointer"
                 onClick={() => navigate("/paymenthistory")}
               >
                 더보기

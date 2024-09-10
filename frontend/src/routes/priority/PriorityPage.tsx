@@ -479,11 +479,14 @@ export default function PriorityPage() {
           </span>
           입니다.
         </NormalTitle>
-        <div className="text-sm	text-gray-400">
+        <div className="text-sm	text-gray-400 cursor-default">
           + 버튼을 통해 반대매매 시 우선으로 처리할 증권을 추가해보세요.
         </div>
         <div className="flex justify-center">
-          <IoAddCircle className="size-32 text-gray-400" onClick={openModal} />
+          <IoAddCircle
+            className="size-32 text-gray-400 cursor-pointer"
+            onClick={openModal}
+          />
         </div>
       </div>
 

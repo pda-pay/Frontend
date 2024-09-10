@@ -28,7 +28,7 @@ export default function StockSeperator(props: MyStockData) {
         <StockDetailModal stockInfo={modalData} />
       </BasicModal>
 
-      <div className="grid grid-cols-2 p-2 text-center font-bold">
+      <div className="cursor-default grid grid-cols-2 p-2 text-center font-bold">
         <p>담보로 잡은 주식</p>
         <p>담보로 잡지 않은 주식</p>
       </div>
@@ -61,21 +61,23 @@ export default function StockSeperator(props: MyStockData) {
           })}
         </div>
       </div>
-      <div className="grid grid-cols-2 p-2 text-center font-bold">
-        <p
+      <div className="flex justify-around font-bold">
+        <span
           onClick={() => {
             onClickMore(props.mortgaged);
           }}
+          className="cursor-pointer"
         >
           더보기
-        </p>
-        <p
+        </span>
+        <span
           onClick={() => {
             onClickMore(props.free);
           }}
+          className="cursor-pointer"
         >
           더보기
-        </p>
+        </span>
       </div>
     </div>
   );

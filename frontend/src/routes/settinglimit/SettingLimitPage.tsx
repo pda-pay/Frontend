@@ -188,7 +188,7 @@ export default function SettingLimitPage() {
             담보 유지 비율: {(mortgageRate | 0).toLocaleString()}%
           </NormalTitle>
         </BackgroundFrame>
-        <div className="text-sm	text-gray-400 mt-[5px]">
+        <div className="text-sm	text-gray-400 cursor-default mt-[5px]">
           최대 한도를 늘리려면 담보를 더 잡아야 합니다.
         </div>
       </div>

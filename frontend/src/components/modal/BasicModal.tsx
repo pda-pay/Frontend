@@ -1,4 +1,5 @@
 import Modal from "react-modal";
+import React from "react";
 
 interface ModalProps {
   isOpen: boolean;
@@ -8,7 +9,7 @@ interface ModalProps {
 
 const StyledModal: ReactModal.Styles = {
   overlay: {
-    backgroundColor: " rgba(0, 0, 0, 0.4)",
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
     width: "100%",
     height: "100vh",
     zIndex: "10",
@@ -18,17 +19,8 @@ const StyledModal: ReactModal.Styles = {
   },
   content: {
     width: "360px",
-    height: "200px",
-    display: "flex", // 추가: 컨텐츠 높이에 맞추기 위해 flex 사용
-    flexDirection: "column",
-    //justifyContent: "center",
-    //display: "flex",
-    // justifyItems: "center",
-    //alignItems: "center",
-    ///
-    //width: "100%",
-    //height: "fitContent",
-    //height: "",
+    height: "fit-content",
+    maxHeight: "80vh",
     zIndex: "150",
     position: "absolute",
     top: "50%",
@@ -38,8 +30,7 @@ const StyledModal: ReactModal.Styles = {
     boxShadow: "2px 2px 2px rgba(0, 0, 0, 0.25)",
     backgroundColor: "white",
     overflow: "auto",
-    //overflow: "visible",
-    maxHeight: "80vh", // 최대 높이 설정 (스크롤을 위해)
+    padding: "20px",
   },
 };
 

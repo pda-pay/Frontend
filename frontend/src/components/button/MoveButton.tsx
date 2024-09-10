@@ -18,9 +18,11 @@ const StyledButton = styled.button<ButtonProps>`
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
 
   &:hover {
-    opacity: 0.9;
+    background-color: #f9f9f9;
   }
-
+  &:focus {
+    outline: none;
+  }
   &:disabled {
     background-color: #f8f8f8;
     cursor: not-allowed;
