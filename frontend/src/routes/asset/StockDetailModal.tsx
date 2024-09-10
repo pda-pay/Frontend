@@ -12,9 +12,10 @@ export default function StockDetailModal(props: StockDetailModalProps) {
         <p className="col-span-1 truncate">종목명</p>
         <p className="col-span-1 truncate">주수</p>
         <p className="col-span-1 truncate">현재가</p>
-        <p className="col-span-1 truncate">위험도</p>
+        <p className="col-span-1 truncate">안정성</p>
         <p className="col-span-1 truncate">한도</p>
       </div>
+
       {props.stockInfo.map((value, index) => {
         return (
           <div className="grid grid-cols-6 gap-1 text-[10px]" key={index}>
@@ -25,9 +26,17 @@ export default function StockDetailModal(props: StockDetailModalProps) {
             />
             <p className="col-span-1 truncate">{value.name}</p>
             <p className="col-span-1 truncate">{value.amount}</p>
-            <p className="col-span-1 truncate">{value.stockPrice}</p>
+            <p className="col-span-1 truncate">
+              {value.stockPrice
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </p>
             <p className="col-span-1 truncate">{value.stabilityLevel}</p>
-            <p className="col-span-1 truncate">{value.limitPrice}</p>
+            <p className="col-span-1 truncate">
+              {value.limitPrice
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </p>
           </div>
         );
       })}
