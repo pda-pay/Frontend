@@ -3,6 +3,7 @@ import { MyStockData, StockInfo } from "./MortgageState";
 import StockDetailModal from "./StockDetailModal";
 import StockItem from "./StockItem";
 import BasicModal from "../../components/modal/BasicModal";
+import { IoClose } from "react-icons/io5";
 
 export default function StockSeperator(props: MyStockData) {
   const [modalData, setModaData] = useState<StockInfo[]>([]);
@@ -21,6 +22,9 @@ export default function StockSeperator(props: MyStockData) {
           setShowModal(false);
         }}
       >
+        <div className="flex justify-end">
+          <IoClose onClick={() => setShowModal(false)} size={25} />
+        </div>
         <StockDetailModal stockInfo={modalData} />
       </BasicModal>
 
