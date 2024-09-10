@@ -23,6 +23,7 @@ import FranchiseQrCreatePage from "./routes/franchise/FranchiseQrCreatePage";
 import QRPage from "./routes/franchise/QRPage";
 import FranchiseLoginPage from "./routes/franchise/FranchiseLoginPage";
 import PaymentHistoryPage from "./routes/payment/PaymentHistoryPage";
+import AdminPage from "./routes/admin/AdminPage";
 import CashRepayPage from "./routes/repay/CashRepayPage";
 import MortgagedRepayPage from "./routes/repay/MortgagedRepayPage";
 import NotificationBox from "./routes/notificationBox/NotificationBox";
@@ -289,6 +290,10 @@ const routers = [
     path: "/notificationBox",
     //element: <NotificationBox />,
     element: <ProtectedPages element={<NotificationBox />} />,
+  },
+  {
+    path: "/admin",
+    element: <AdminPage />,
   },
   {
     path: "/repayment-history",
