@@ -9,6 +9,7 @@ import payServiceAPI from "../../api/payServiceAPI";
 import axios from "axios";
 import userAPI from "../../api/userAPI";
 import { useLocation } from "react-router-dom";
+import AlertPriorityModal from "./component/AlertPriorityModal";
 
 type mortgagedObject = {
   accountNumber: string;
@@ -248,12 +249,20 @@ export default function PriorityPage() {
     setUnPriority([...temp]);
   };
 
+  const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
+  const openAlert = () => setIsAlertOpen(true);
+  const closeAlert = () => setIsAlertOpen(false);
+
   const putPriority = async (): Promise<boolean> => {
     try {
       const temp = makePriorityReqData();
       const response = await payjoinservice.putPriorityStock(temp);
 
       if (response.status === 200) {
+        if (mem && menu) {
+          openAlert();
+          return false;
+        }
         return true;
       } else {
         return false;
@@ -515,6 +524,12 @@ export default function PriorityPage() {
           />
         )}
       </div>
+      {isAlertOpen && (
+        <AlertPriorityModal
+          isAlertOpen={isAlertOpen}
+          handleCloseAlert={closeAlert}
+        />
+      )}
 
       {isModalOpen && (
         <SetPriorityModal

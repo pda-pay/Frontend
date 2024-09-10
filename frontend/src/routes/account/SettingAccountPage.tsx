@@ -6,6 +6,7 @@ import ButtonBar from "../../components/button/ButtonBar";
 import payServiceAPI from "../../api/payServiceAPI";
 import axios from "axios";
 import userAPI from "../../api/userAPI";
+import AlertAccountModal from "./AlertAccountModal";
 
 type AccountObject = {
   accountNumber: string;
@@ -58,11 +59,19 @@ export default function SettingAccountPage() {
     }
   };
 
+  const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
+  const openAlert = () => setIsAlertOpen(true);
+  const closeAlert = () => setIsAlertOpen(false);
+
   const putBankAccount = async (): Promise<boolean> => {
     try {
       const temp = makePriorityReqData();
       const response = await payjoinservice.putAccount(temp);
       if (response.status === 200) {
+        if (mem) {
+          openAlert();
+          return false;
+        }
         return true;
       } else return false;
     } catch (error) {
@@ -153,6 +162,12 @@ export default function SettingAccountPage() {
           />
         )}
       </div>
+      {isAlertOpen && (
+        <AlertAccountModal
+          isAlertOpen={isAlertOpen}
+          handleCloseAlert={closeAlert}
+        />
+      )}
     </PaddingDiv>
   );
 }

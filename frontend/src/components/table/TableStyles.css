@@ -1,0 +1,12 @@
+.styled-table {
+  width: 100%;
+  border-collapse: separate; /* separate로 설정하여 border-spacing이 적용되도록 */
+  border-spacing: 0 10px; /* 행 사이에 10px의 간격 추가 */
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 8px 16px;
+  background: #f8f9fa; /* 셀의 배경색 */
+  border: 1px solid #ddd; /* 셀의 테두리 */
+}

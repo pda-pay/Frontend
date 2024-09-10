@@ -9,6 +9,7 @@ import payServiceAPI from "../../api/payServiceAPI";
 import axios from "axios";
 import userAPI from "../../api/userAPI";
 import { useLocation } from "react-router-dom";
+import AlertModal from "./component/AlertModal";
 
 export default function SettingLimitPage() {
   const userservice = new userAPI();
@@ -21,6 +22,10 @@ export default function SettingLimitPage() {
   const [mem, setMem] = useState<boolean>(false);
 
   const [count, setCount] = useState<number>(0);
+
+  const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
+  const openAlert = () => setIsAlertOpen(true);
+  const closeAlert = () => setIsAlertOpen(false);
 
   //TODO: api GET요청으로 받아온 데이터
   //현재한도, 최대한도, 담보금액
@@ -98,7 +103,11 @@ export default function SettingLimitPage() {
       const response = await payjoinservice.putLimit(temp);
 
       if (response.status === 200) {
-        return true;
+        //수정일경우, alert를 확인해야 페이지 넘어가게
+        if (menu) {
+          openAlert();
+          return false;
+        } else return true;
       } else return false;
     } catch (error) {
       console.log(error);
@@ -244,6 +253,9 @@ export default function SettingLimitPage() {
           />
         )}
       </div>
+      {isAlertOpen && (
+        <AlertModal isAlertOpen={isAlertOpen} handleCloseAlert={closeAlert} />
+      )}
     </PaddingDiv>
   );
 }
