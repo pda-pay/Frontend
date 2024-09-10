@@ -46,7 +46,7 @@ const AnimatedQRIcon = styled(RiQrScan2Line)`
   animation:
     ${scanAnimation} 2s ease-in-out infinite,
     ${gradientAnimation} 8s linear infinite;
-  font-size: 180px; // 아이콘 크기를 더 키웠습니다
+  font-size: 180px;
   cursor: pointer;
 `;
 
@@ -56,11 +56,29 @@ const CenteredIconContainer = styled.div`
   align-items: center;
   height: 100%;
   width: 100%;
+  position: relative;
 `;
 
 const LargerContainer = styled.div`
-  height: 400px; // 컨테이너의 높이를 400px로 설정
-  width: 100%; // 너비는 100%로 유지
+  height: 400px;
+  width: 100%;
+`;
+
+const OverlayMessage = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #4285F4;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
 `;
 
 export default function QRFrame({ member }: QRProps) {
@@ -90,33 +108,26 @@ export default function QRFrame({ member }: QRProps) {
       <BackgroundFrame color="white">
         <CenteredIconContainer
           onClick={() => {
-            if (member) {
-              if (payValid) {
-                navigate("/payment-pw-verify");
-              } else {
-                Swal.fire({
-                  icon: "warning",
-                  title:
-                    '<span style="font-size: 20px; font-weight : bolder;">현재 결제 서비스를 이용할 수<br/> 없습니다.</span>',
-                  confirmButtonColor: "blue",
-                });
-              }
+            if (member && payValid) {
+              navigate("/payment-pw-verify");
+            } else if (member && !payValid) {
+              Swal.fire({
+                icon: "warning",
+                title:
+                  '<span style="font-size: 20px; font-weight : bolder;">현재 결제 서비스를 이용할 수<br/> 없습니다.</span>',
+                confirmButtonColor: "blue",
+              });
             }
           }}
         >
           <AnimatedQRIcon />
+          {!member && (
+            <OverlayMessage onClick={() => navigate("/serviceagree")}>
+              결제 서비스에 가입해서<br />바로 확인해보세요.
+            </OverlayMessage>
+          )}
         </CenteredIconContainer>
       </BackgroundFrame>
-      {!member && (
-        <div
-          className="absolute inset-0 opacity-50"
-          onClick={() => navigate("/serviceagree")}
-        >
-          <ServiceBlockFrame>
-            결제 서비스에 가입해서 바로 확인해보세요.
-          </ServiceBlockFrame>
-        </div>
-      )}
     </LargerContainer>
   );
 }
