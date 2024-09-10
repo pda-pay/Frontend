@@ -1,5 +1,5 @@
 import { ApexOptions } from "apexcharts";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import payServiceAPI from "../../api/payServiceAPI";
 
@@ -15,6 +15,7 @@ export default function StockPieChart() {
   });
   const [companyList, setCompanyList] = useState<string[]>([]);
   const [totalData, setTotalData] = useState<TotalData>({});
+  const [clickedIndex, setClickedIndex] = useState<number>(0);
 
   const service = new payServiceAPI();
 
@@ -76,14 +77,16 @@ export default function StockPieChart() {
     setCompanyList([...Object.keys(processedData)]);
     setTotalData(processedData);
 
-    changeChartData(processedData["전체"]);
+    changeChartData(processedData["전체"], 0);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  const changeChartData = (data: DataPerCompany) => {
+  const changeChartData = (data: DataPerCompany, index: number) => {
+    setClickedIndex(index);
+
     if (data.labels.length > 6) {
       const sum = data.series.slice(6).reduce((acc, curr) => acc + curr, 0);
       data.series.splice(6, data.series.length - 6, sum);
@@ -126,9 +129,11 @@ export default function StockPieChart() {
           return (
             <span
               key={index}
-              className="inline-block px-2 py-1 mx-2 bg-gray-200 text-gray-800 rounded-lg shadow-md"
+              className={`inline-block px-2 py-1 mx-2 ${
+                index == clickedIndex ? "bg-cyan-300" : "bg-gray-200"
+              } text-gray-800 rounded-lg shadow-md`}
               onClick={() => {
-                changeChartData(totalData[value]);
+                changeChartData(totalData[value], index);
               }}
             >
               {value}
