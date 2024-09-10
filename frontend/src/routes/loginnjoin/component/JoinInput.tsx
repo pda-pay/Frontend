@@ -342,6 +342,7 @@ export default function JoinInput({
           name="password"
           value={password}
           onChange={handlePassword}
+          placeholder="비밀번호 입력"
           className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
         />
         {errorPsw && password !== undefined && errorPsw !== null && (
@@ -360,6 +361,7 @@ export default function JoinInput({
           name="password"
           value={checkPsw}
           onChange={handleCheckPsw}
+          placeholder="비밀번호 확인"
           className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
         />
         {errorCheckPsw &&
