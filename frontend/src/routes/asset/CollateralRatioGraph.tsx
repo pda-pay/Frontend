@@ -72,7 +72,7 @@ export default function CollateralRatioGraph() {
       dataLabels: {
         enabled: true,
         enabledOnSeries: [2],
-        formatter: function (val) {
+        formatter: function (val: number) {
           return Math.trunc(val / 10000);
         },
       },
