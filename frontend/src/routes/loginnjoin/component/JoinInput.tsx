@@ -55,11 +55,24 @@ export default function JoinInput({
 
   //아이디가 올바른지 검사하는 함수
   const validateId = (): boolean => {
-    const idRegex = /^[a-zA-Z0-9]+$/;
-    if (userId === "" || userId === undefined || userId.length === 0) {
-      if (userId?.length === 0) setUserId(undefined);
-      return true;
+    const idRegex = /^[a-zA-Z0-9]{4,}$/;
+    const spaceRegex = /\s/;
+    
+    if (userId === undefined || userId === null) {
+      return false;
     }
+  
+    // 띄어쓰기 체크
+    if (spaceRegex.test(userId)) {
+      return false;
+    }
+  
+    if (userId === "" || userId.length === 0) {
+      setUserId(undefined);
+      return false;
+    }
+  
+    // 최소 4글자 이상 및 영문자, 숫자만 포함되어 있는지 체크
     return idRegex.test(userId);
   };
 
@@ -125,7 +138,7 @@ export default function JoinInput({
   };
 
   useEffect(() => {
-    if (!validateId()) setErrIdMsg("영어와 숫자만 사용해주세요.");
+    if (!validateId()) setErrIdMsg("영문/숫자 조합 (4자 이상), 공백 불가합니다.");
     else setErrIdMsg("");
   }, [userId]);
 
