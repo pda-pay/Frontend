@@ -29,7 +29,7 @@ export default function ApproachPage() {
     <PaddingDiv>
       <div className="flex flex-col mt-auto mb-auto gap-10">
         <div className="flex justify-center w-full mb-12">
-          <img src="/public/images/140PAY.jpg" alt="Logo" />
+          <img src="/images/140PAY.jpg" alt="Logo" />
         </div>
         <div className="flex flex-col gap-7">
           <LargeButton type="blue" onClick={() => navigate("/login")}>
