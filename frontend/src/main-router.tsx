@@ -30,6 +30,7 @@ import ProtectedPages from "./ProtectedPages";
 
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
+import RepaymentHistoryPage from "./routes/repaymentHistory/RepaymentHistoryPage";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -288,6 +289,10 @@ const routers = [
     path: "/notificationBox",
     //element: <NotificationBox />,
     element: <ProtectedPages element={<NotificationBox />} />,
+  },
+  {
+    path: "/repayment-history",
+    element: <ProtectedPages element={<RepaymentHistoryPage />} />,
   },
 ];
 

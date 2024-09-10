@@ -41,6 +41,7 @@ export default function StockPieChart() {
       },
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     result.data.stockMortgagedStocks.forEach((stock: any) => {
       const {
         companyName,
@@ -126,7 +127,7 @@ export default function StockPieChart() {
           return (
             <span
               key={index}
-              className="inline-block px-2 py-1 mx-2 bg-gray-200 text-gray-800 rounded-lg shadow-md"
+              className="cursor-pointer inline-block px-2 py-1 mx-2 bg-gray-200 text-gray-800 rounded-lg shadow-md"
               onClick={() => {
                 changeChartData(totalData[value]);
               }}

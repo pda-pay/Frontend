@@ -5,5 +5,5 @@ interface TitleProps {
 }
 
 export default function BoldTitle({ children }: TitleProps) {
-  return <div className="text-lg font-bold">{children}</div>;
+  return <div className="text-lg font-bold cursor-default">{children}</div>;
 }

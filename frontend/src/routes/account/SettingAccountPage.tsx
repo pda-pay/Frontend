@@ -110,8 +110,11 @@ export default function SettingAccountPage() {
       <BoldTitle>결제 계좌를 선택해주세요.</BoldTitle>
       <div className="flex flex-col gap-3">
         {accountList.map((row, index) => (
-          <BackgroundFrame color="blue">
-            <div className="flex gap-10" onClick={() => handleAccount(index)}>
+          <BackgroundFrame color="blue" cursor="pointer" hoverColor="#688db633">
+            <div
+              className="flex gap-10 cursor-pointer "
+              onClick={() => handleAccount(index)}
+            >
               <span>{row[2]}</span>
               <span>{row[0]}</span>
             </div>

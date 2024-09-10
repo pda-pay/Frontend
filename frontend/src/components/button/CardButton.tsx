@@ -9,6 +9,7 @@ export default function CardButton({ active }: ButtonProps) {
   const navigate = useNavigate();
   return (
     <div
+      className="cursor-pointer"
       onClick={() => navigate("/payment")}
       style={{ color: active ? "#1c5cff" : "black" }}
     >

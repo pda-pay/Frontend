@@ -1,5 +1,6 @@
 import BackgroundFrame from "../../../components/backgroundframe/BackgroundFrame";
 import BoldTitle from "../../../components/text/BoldTitle";
+import { CiCircleMinus } from "react-icons/ci";
 
 interface PriProps {
   //0: 계좌번호, 1: 담보잡은주수, 2: 종목코드, 3: 종목명, 4: 우선순위,
@@ -84,7 +85,15 @@ export default function PriorityFrame({
                       {/* <td>{stock[8].toLocaleString()}</td> */}
                       {/* <td>{stock[7]}</td> */}
                       <td>{stock[9]}</td>
-                      <td onClick={() => deletePriority(rowIndex, stock)}>-</td>
+                      <td>
+                        <span className="flex justify-center">
+                          <CiCircleMinus
+                            className="cursor-pointer"
+                            color="red"
+                            onClick={() => deletePriority(rowIndex, stock)}
+                          />
+                        </span>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
