@@ -5,15 +5,6 @@ import MortgageState from "./MortgageState";
 
 import axios from "axios";
 import StockPieChart from "./StockPieChart";
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
-
-interface checkMem {
-  name: string;
-  paymentAccess: boolean;
-  paymentServiceMember: boolean;
-  userId: string;
-}
 
 export default function AssetPage() {
   const service = new userAPI();
