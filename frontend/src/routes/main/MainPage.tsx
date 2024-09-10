@@ -61,11 +61,14 @@ export default function MainPage() {
             </LargeButton>
           )}
 
-          <NormalTitle>
-            <span className="font-bold">{name}님,</span> QR 코드를 인식해서
-            빠르게 결제해보세요.
+          <NormalTitle marginBottom="20px">
+            <span className="font-bold">
+              {name}님,
+              <br />
+            </span>{" "}
+            QR 코드를 인식해서 빠르게 결제해보세요.
           </NormalTitle>
-          <QRFrame member={member}></QRFrame>
+          <QRFrame member={member} />
         </div>
       </PaddingDiv>
     </div>

@@ -12,10 +12,12 @@ export default function FranchiseLoginPage() {
   const navigate = useNavigate();
   const service = new franchiseAPI();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleUserId = (event: any) => {
     setFranchiseId(event.target.value);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handlePassword = (event: any) => {
     setPassword(event.target.value);
   };

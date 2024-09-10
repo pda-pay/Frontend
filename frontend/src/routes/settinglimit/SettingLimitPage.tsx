@@ -143,7 +143,9 @@ export default function SettingLimitPage() {
     <PaddingDiv>
       <BoldTitle>한도를 설정해보세요.</BoldTitle>
       <div>
-        <NormalTitle>현재 고객님의 한도 현황입니다.</NormalTitle>
+        <NormalTitle marginBottom="5px">
+          현재 고객님의 한도 현황입니다.
+        </NormalTitle>
         <BackgroundFrame color="blue">
           <BoldTitle>현재 한도: {currentLimit.toLocaleString()} 원</BoldTitle>
           <BoldTitle>최대 한도: {totalLimit.toLocaleString()} 원</BoldTitle>
@@ -159,12 +161,14 @@ export default function SettingLimitPage() {
             담보 유지 비율: {(mortgageRate | 0).toLocaleString()}%
           </NormalTitle>
         </BackgroundFrame>
-        <div className="text-sm	text-gray-400">
+        <div className="text-sm	text-gray-400 mt-[5px]">
           최대 한도를 늘리려면 담보를 더 잡아야 합니다.
         </div>
       </div>
       <div>
-        <NormalTitle>원하시는 한도를 입력해주세요.</NormalTitle>
+        <NormalTitle marginBottom="10px">
+          원하시는 한도를 입력해주세요.
+        </NormalTitle>
         <BackgroundFrame color="blue">
           <div>
             <label className="block">

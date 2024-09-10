@@ -57,7 +57,7 @@ export default function LoginPage() {
       {/* <LoginButtonbar loginId={loginId} password={password} /> */}
       <div>
         {errMsg !== undefined && (
-          <p className="mt-2 text-sm text-red-600">{errMsg}</p>
+          <p className="mt-2 text-sm text-red-600 mb-[20px]">{errMsg}</p>
         )}
         <ButtonBar
           beforetext="이전"
