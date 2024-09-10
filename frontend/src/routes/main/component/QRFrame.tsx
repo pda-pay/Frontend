@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import userAPI from "../../../api/userAPI";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 interface QRProps {
   member: boolean;
@@ -38,7 +39,18 @@ export default function QRFrame({ member }: QRProps) {
         <div
           className="flex justify-center items-center"
           onClick={() => {
-            if (payValid && member) navigate("/payment-pw-verify");
+            if (member) {
+              if (payValid) {
+                navigate("/payment-pw-verify");
+              } else {
+                Swal.fire({
+                  icon: "warning",
+                  title:
+                    '<span style="font-size: 20px; font-weight : bolder;">현재 결제 서비스를 이용할 수<br/> 없습니다.</span>',
+                  confirmButtonColor: "blue",
+                });
+              }
+            }
           }}
         >
           <RiQrScan2Line className="size-64" />
