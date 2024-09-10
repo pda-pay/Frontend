@@ -1,14 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import BasicModal from "../../components/modal/BasicModal";
-import XButton from "../../components/button/XButton";
-import BoldTitle from "../../components/text/BoldTitle";
+import XButton from "../../../components/button/XButton";
+import BasicModal from "../../../components/modal/BasicModal";
 
 interface ModalProps {
   isAlertOpen: boolean;
   handleCloseAlert: () => void;
 }
 
-export default function AlertAccountModal({
+export default function AlertMortgagedRepayModal({
   isAlertOpen,
   handleCloseAlert,
 }: ModalProps) {
@@ -25,9 +24,7 @@ export default function AlertAccountModal({
           <XButton />
         </span>
       </div>
-      <div>
-        <BoldTitle>변경되었습니다.</BoldTitle>
-      </div>
+      <div>상환되었습니다.</div>
     </BasicModal>
   );
 }

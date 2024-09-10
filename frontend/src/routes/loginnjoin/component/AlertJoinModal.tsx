@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import BasicModal from "../../components/modal/BasicModal";
-import XButton from "../../components/button/XButton";
-import BoldTitle from "../../components/text/BoldTitle";
+import BasicModal from "../../../components/modal/BasicModal";
+import XButton from "../../../components/button/XButton";
+import BoldTitle from "../../../components/text/BoldTitle";
 
 interface ModalProps {
   isAlertOpen: boolean;
   handleCloseAlert: () => void;
 }
 
-export default function AlertAccountModal({
+export default function AlertJoinModal({
   isAlertOpen,
   handleCloseAlert,
 }: ModalProps) {
@@ -19,14 +19,18 @@ export default function AlertAccountModal({
         <span
           onClick={() => {
             handleCloseAlert();
-            navigate(-1);
+            navigate("/");
           }}
         >
           <XButton />
         </span>
       </div>
       <div>
-        <BoldTitle>변경되었습니다.</BoldTitle>
+        <BoldTitle>
+          회원가입 성공!
+          <br />
+          로그인해주세요.
+        </BoldTitle>
       </div>
     </BasicModal>
   );

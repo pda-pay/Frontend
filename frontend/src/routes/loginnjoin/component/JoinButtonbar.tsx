@@ -1,8 +1,9 @@
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import joinAPI from "../../../api/joinAPI";
 import BasicButton from "../../../components/button/BasicButton";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import AlertJoinModal from "./AlertJoinModal";
 
 interface ButtonProps {
   unValid: boolean;
@@ -11,9 +12,13 @@ interface ButtonProps {
 
 export default function JoinButtonbar({ unValid, userInfo }: ButtonProps) {
   const service = new joinAPI();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const [errMsg, setErrMsg] = useState<string>();
+
+  const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
+  const openAlert = () => setIsAlertOpen(true);
+  const closeAlert = () => setIsAlertOpen(false);
 
   const joinFinish = async () => {
     try {
@@ -26,7 +31,8 @@ export default function JoinButtonbar({ unValid, userInfo }: ButtonProps) {
 
       if (response.status === 201) {
         //여기서 버튼 비활성화 state 관리
-        moveNext();
+        //moveNext();
+        openAlert();
       } else if (response.status === 400) {
         console.log((await response).data.message);
       }
@@ -42,9 +48,9 @@ export default function JoinButtonbar({ unValid, userInfo }: ButtonProps) {
     setErrMsg("");
   }, [unValid]);
 
-  const moveNext = () => {
-    navigate("/");
-  };
+  // const moveNext = () => {
+  //   navigate("/");
+  // };
 
   return (
     <div>
@@ -56,8 +62,14 @@ export default function JoinButtonbar({ unValid, userInfo }: ButtonProps) {
           joinFinish();
         }}
       >
-        다음
+        가입하기
       </BasicButton>
+      {isAlertOpen && (
+        <AlertJoinModal
+          isAlertOpen={isAlertOpen}
+          handleCloseAlert={closeAlert}
+        />
+      )}
     </div>
   );
 }
