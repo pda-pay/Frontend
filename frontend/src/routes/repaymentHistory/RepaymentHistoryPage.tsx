@@ -32,6 +32,7 @@ export default function RepaymentHistoryPage() {
   useEffect(() => {
     setYear(today.getFullYear());
     setMonth((today.getMonth() + 1) % 12);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 상환 금액, 상환 시간, 상환 타입
@@ -73,6 +74,7 @@ export default function RepaymentHistoryPage() {
 
   useEffect(() => {
     getHistory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedMonth, selectedYear]);
 
   const moveLeftMoveButton = () => {

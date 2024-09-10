@@ -131,7 +131,9 @@ export default function StockPieChart() {
             <span
               key={index}
               className={`cursor-pointer inline-block px-2 py-1 mx-2 ${
-                index == clickedIndex ? "bg-cyan-300" : "bg-gray-200"
+                index == clickedIndex
+                  ? "bg-[#3469F2] text-white"
+                  : "bg-gray-200"
               } text-gray-800 rounded-lg shadow-md`}
               onClick={() => {
                 changeChartData(totalData[value], index);
