@@ -1,9 +1,26 @@
 import { useNavigate } from "react-router-dom";
 import PaddingDiv from "../../components/settingdiv/PaddingDiv";
 import LargeButton from "../../components/button/LargeButton";
+import userAPI from "../../api/userAPI";
+import { useEffect } from "react";
 
 export default function ApproachPage() {
+  const userservice = new userAPI();
   const navigate = useNavigate();
+
+  const getUserInfo = async () => {
+    try {
+      const response = await userservice.checkMem();
+
+      if (response.status === 200) {
+        navigate("/main");
+      }
+    } catch (error) {
+      navigate("/")
+    }
+  };
+
+  useEffect(()=> {getUserInfo},[]);
 
   return (
     <PaddingDiv>
