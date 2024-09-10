@@ -9,6 +9,7 @@ export default function HomeButton({ active }: ButtonProps) {
   const navigate = useNavigate();
   return (
     <div
+      className="cursor-pointer"
       onClick={() => navigate("/main")}
       style={{ color: active ? "#1c5cff" : "black" }}
     >

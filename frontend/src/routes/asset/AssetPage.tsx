@@ -31,13 +31,11 @@ export default function AssetPage() {
       style={{ backgroundColor: "#9abade33" }}
       className="w-screen p-5 pt-7 pb-20 flex flex-col"
     >
-      <p className="text-lg">
+      <p className="text-lg cursor-default">
         <strong className="font-bold">{name}님,</strong>자산 현황을 확인해보세요
       </p>
       <StockPieChart />
-
       <CollateralRatioGraph />
-
       <MortgageState />
     </div>
   );

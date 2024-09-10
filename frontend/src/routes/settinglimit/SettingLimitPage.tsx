@@ -20,6 +20,8 @@ export default function SettingLimitPage() {
 
   const [mem, setMem] = useState<boolean>(false);
 
+  const [count, setCount] = useState<number>(0);
+
   //TODO: api GET요청으로 받아온 데이터
   //현재한도, 최대한도, 담보금액
   //const data: [number, number, number] = [50000000, 50000000, 10000000000];
@@ -38,7 +40,7 @@ export default function SettingLimitPage() {
   const [mortgageRate, setMortgageRate] = useState<number>(
     (totalMortgagedPrice / currentLimit) * 100
   );
-  const [errLimit, setErrLimit] = useState<boolean>();
+  const [errLimit, setErrLimit] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
 
   const [inputValue, setInputValue] = useState<string>("");
@@ -80,6 +82,10 @@ export default function SettingLimitPage() {
   };
 
   useEffect(() => {
+    setCount(count + 1);
+  }, [currentLimit]);
+
+  useEffect(() => {
     getLimit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -101,16 +107,21 @@ export default function SettingLimitPage() {
   };
 
   const validateLimit = () => {
+    if (count === 2) {
+      setErrLimit(true);
+      setErrMsg("");
+      return;
+    }
     if (
       currentLimit > totalLimit ||
-      currentLimit < 0 ||
+      currentLimit <= 0 ||
       mortgageRate < 140 ||
       totalPaymentAmount > currentLimit
     ) {
       setErrLimit(true);
       if (currentLimit > totalLimit)
         setErrMsg("최대 한도 이하로 설정해주세요.");
-      else if (currentLimit < 0) setErrMsg("양수로 입력해주세요.");
+      else if (currentLimit <= 0) setErrMsg("0 이상의 정수로 입력해주세요.");
       else if (mortgageRate < 140)
         setErrMsg("담보 유지 비율이 140% 이상이 되도록 설정해주세요.");
       else if (totalPaymentAmount > currentLimit)
@@ -134,10 +145,15 @@ export default function SettingLimitPage() {
   };
 
   useEffect(() => {
+    //if (currentLimit === 0) setCurrentLimit(null);
+  }, []);
+
+  useEffect(() => {
     validateLimit();
   }, [currentLimit, mortgageRate]);
 
   useEffect(() => {
+    console.log("currentLimit" + currentLimit);
     setMortgageRate((totalMortgagedPrice / currentLimit) * 100);
   }, [currentLimit]);
 
@@ -163,7 +179,7 @@ export default function SettingLimitPage() {
             담보 유지 비율: {(mortgageRate | 0).toLocaleString()}%
           </NormalTitle>
         </BackgroundFrame>
-        <div className="text-sm	text-gray-400 mt-[5px]">
+        <div className="text-sm	text-gray-400 cursor-default mt-[5px]">
           최대 한도를 늘리려면 담보를 더 잡아야 합니다.
         </div>
       </div>

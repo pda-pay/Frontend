@@ -43,8 +43,12 @@ const StyledCard = styled.div<ColorProps>`
   width: 316px;
   height: 200px;
   //background-color: #9abade;
-  background-color: ${(props) => props.bgColor}; /* 랜덤 색상을 설정 */
-  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
+  //background-color: ${(props) => props.bgColor}; /* 랜덤 색상을 설정 */
+  background-image: url("/images/cardbright.png"); /* 이미지 경로를 설정 */
+  background-size: cover;
+  //box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.3s ease; /* hover 효과 시 부드럽게 변화하도록 설정 */
   margin: 0 10px; /* 카드 사이의 간격을 넓힘 */
 `;
 
@@ -75,7 +79,7 @@ export default function SCard({
             />
           </div>
         </div>
-        <div className="flex flex-row-reverse">
+        <div className="flex flex-row-reverse mt-2">
           <p>총 가격 {(stockInfo[9] * stockInfo[2]).toLocaleString()}원</p>
         </div>
         <div className="flex flex-row-reverse">

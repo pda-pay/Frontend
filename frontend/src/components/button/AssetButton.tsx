@@ -9,6 +9,7 @@ export default function AssetButton({ active }: ButtonProps) {
   const navigate = useNavigate();
   return (
     <div
+      className="cursor-pointer"
       onClick={() => navigate("/asset")}
       style={{ color: active ? "#1c5cff" : "black" }}
     >

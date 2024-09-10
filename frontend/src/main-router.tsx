@@ -31,6 +31,7 @@ import ProtectedPages from "./ProtectedPages";
 
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
+import RepaymentHistoryPage from "./routes/repaymentHistory/RepaymentHistoryPage";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -293,6 +294,10 @@ const routers = [
   {
     path: "/admin",
     element: <AdminPage />,
+  },
+  {
+    path: "/repayment-history",
+    element: <ProtectedPages element={<RepaymentHistoryPage />} />,
   },
 ];
 

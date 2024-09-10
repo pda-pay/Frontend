@@ -12,6 +12,7 @@ interface colorFuncProps {
   value: number;
   seriesIndex: number;
   dataPointIndex: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   w: any;
 }
 
@@ -142,8 +143,8 @@ export default function CollateralRatioGraph() {
         options={options}
         height={350}
       />
-      <p className="font-bold">한도유지 가능 금액?</p>
-      <div className="text-sm">
+      <p className="font-bold cursor-default">한도유지 가능 금액?</p>
+      <div className="text-sm cursor-default">
         <p>
           고객님이 설정한 결제 한도를 보증할 수 있는 담보 증권의 최소
           금액이에요.

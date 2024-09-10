@@ -46,15 +46,16 @@ export const NotificationBox = () => {
 
   const notificationService = new notificationBoxAPI();
 
+  const fetchNotifications = async () => {
+    try {
+      const response = await notificationService.getNotifications();
+      setMessages(response.data.messages);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const response = await notificationService.getNotifications();
-        setMessages(response.data.messages);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
-    };
     fetchNotifications();
   }, []);
 
@@ -124,6 +125,7 @@ export const NotificationBox = () => {
         title: `<span style="font-size: 20px; font-weight : bolder;">삭제되었습니다.</span>`,
         confirmButtonColor: "blue",
       }).then(() => {
+        fetchNotifications();
         finishEditMode();
       });
     } catch (error) {
@@ -164,6 +166,7 @@ export const NotificationBox = () => {
               <BoldTitle>알림</BoldTitle>
               <RiSettings3Line
                 className="cursor-pointer"
+                size="25px"
                 onClick={() => setIsEditMode(true)}
               />
             </>

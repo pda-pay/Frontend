@@ -1,24 +1,22 @@
-import { useEffect, useState } from "react";
-import PaddingDiv from "../../components/settingdiv/PaddingDiv";
-import paymentAPI from "../../api/paymentAPI";
-import axios from "axios";
-import BoldTitle from "../../components/text/BoldTitle";
-import { IoChevronBackOutline } from "react-icons/io5";
-import { IoChevronForwardOutline } from "react-icons/io5";
-import XButton from "../../components/button/XButton";
-import { PiNoteLight } from "react-icons/pi";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import repaymentAPI from "../../api/repaymentAPI";
+import PaddingDiv from "../../components/settingdiv/PaddingDiv";
+import XButton from "../../components/button/XButton";
+import BoldTitle from "../../components/text/BoldTitle";
+import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
+import { PiNoteLight } from "react-icons/pi";
 import NormalTitle from "../../components/text/NormalTitle";
 
 type HistoryObject = {
-  id: number;
-  paymentAmount: number;
+  repaymentAmount: number;
   createdAt: string;
-  franchiseName: string;
+  type: string;
 };
 
-export default function PaymentHistoryPage() {
-  const paymentservice = new paymentAPI();
+export default function RepaymentHistoryPage() {
+  const repaymentservice = new repaymentAPI();
   const navigate = useNavigate();
 
   const today = new Date();
@@ -34,52 +32,52 @@ export default function PaymentHistoryPage() {
   useEffect(() => {
     setYear(today.getFullYear());
     setMonth((today.getMonth() + 1) % 12);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  //결제 아이디, 결제 금액, 결제일, 가게명
-  const [paymentHistory, setPaymentHistory] = useState<
-    [number, number, string, string][]
+  // 상환 금액, 상환 시간, 상환 타입
+  const [repaymentHistory, setRepaymentHistory] = useState<
+    [number, string, string][]
   >([]);
 
   const getHistory = async () => {
     try {
-      const response = await paymentservice.getPaymentHistory(
+      const response = await repaymentservice.getRepaymentHistory(
         selectedYear,
         selectedMonth
       );
       if (response.status === 200) {
         const data = response.data;
-        saveHistory(data.paymentHistories);
+        saveHistory(data.repaymentHistories);
       } else if (response.status === 204) {
-        setPaymentHistory([]);
-        console.log("결제내역없음");
+        setRepaymentHistory([]);
+        console.log("상환 내역 없음");
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 400 || error.response?.status === 403) {
-          console.log("결제내역 에러: " + error.response.data.message);
+          console.log("상환 내역 에러: " + error.response.data.message);
         }
       }
-      console.log("결제 내역 에러 발생: " + error);
+      console.log("상환 내역 에러 발생: " + error);
     }
   };
 
   const saveHistory = (data: HistoryObject[]) => {
-    const temp: [number, number, string, string][] = data.map((item) => [
-      item.id,
-      item.paymentAmount,
+    const temp: [number, string, string][] = data.map((item) => [
+      item.repaymentAmount,
       item.createdAt,
-      item.franchiseName,
+      item.type,
     ]);
-    setPaymentHistory([...temp]);
+    setRepaymentHistory([...temp]);
   };
 
   useEffect(() => {
     getHistory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedMonth, selectedYear]);
 
   const moveLeftMoveButton = () => {
-    console.log("눌림");
     if (selectedMonth === 1) {
       setSelectedMonth(12);
       setSelectedYear(selectedYear - 1);
@@ -89,7 +87,6 @@ export default function PaymentHistoryPage() {
   };
 
   const moveRightMoveButton = () => {
-    console.log("눌림");
     if (selectedMonth === 12) {
       setSelectedMonth(1);
       setSelectedYear(selectedYear + 1);
@@ -102,12 +99,11 @@ export default function PaymentHistoryPage() {
     <PaddingDiv>
       <div>
         <div className="flex flex-row-reverse">
-          <span onClick={() => navigate("/payment")}>
+          <span onClick={() => navigate(-1)}>
             <XButton />
           </span>
         </div>
-
-        <BoldTitle>결제 내역</BoldTitle>
+        <BoldTitle>상환 내역</BoldTitle>
       </div>
       <div>
         <BoldTitle>
@@ -126,18 +122,18 @@ export default function PaymentHistoryPage() {
           </div>
         </BoldTitle>
       </div>
-      {paymentHistory.length !== 0 ? (
+      {repaymentHistory.length !== 0 ? (
         <div>
-          {paymentHistory.map((history) => (
+          {repaymentHistory.map((history) => (
             <div className="flex justify-between items-center mt-5">
-              <div className="flex flex-col ">
-                <div>{history[3]}</div>
+              <div className="flex flex-col">
+                <div>{history[2]}</div>
                 <div className="text-sm text-gray-400">
-                  {history[2].split("T")}
+                  {history[1].replace("T", " ")}
                 </div>
               </div>
               <div className="font-bold ml-auto">
-                {history[1].toLocaleString()}원
+                {history[0].toLocaleString()}원
               </div>
               <hr />
             </div>
@@ -146,7 +142,7 @@ export default function PaymentHistoryPage() {
       ) : (
         <div className="flex flex-col items-center justify-center mt-[60px]">
           <PiNoteLight size="80px" color="#363e57" />
-          <NormalTitle>결제 내역이 없습니다.</NormalTitle>
+          <NormalTitle>상환 내역이 없습니다.</NormalTitle>
         </div>
       )}
     </PaddingDiv>

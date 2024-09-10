@@ -10,6 +10,7 @@ export interface PutMortgagedReqData {
     companyName: string;
     stabilityLevel: number;
     limitPrice: number;
+    stockPrice: number;
   }[];
 }
 
