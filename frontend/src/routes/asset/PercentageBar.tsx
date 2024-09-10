@@ -32,7 +32,16 @@ export default function PercentageBar(props: PercentageBarProps) {
           },
         },
         tooltip: {
-          enabled: false,
+          enabled: true,
+          y: {
+            formatter: function (val) {
+              return (
+                Math.floor(val)
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원"
+              );
+            },
+          },
         },
         plotOptions: {
           bar: {

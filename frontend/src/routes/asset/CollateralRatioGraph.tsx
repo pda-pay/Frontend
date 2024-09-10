@@ -100,7 +100,9 @@ export default function CollateralRatioGraph() {
           },
           labels: {
             formatter: function (val) {
-              return Math.trunc(val / 10000);
+              return Math.trunc(val / 10000)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             },
           },
         },
@@ -112,7 +114,11 @@ export default function CollateralRatioGraph() {
       tooltip: {
         y: {
           formatter: function (val) {
-            return val + "원";
+            return (
+              Math.floor(val)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원"
+            );
           },
         },
       },
@@ -130,9 +136,6 @@ export default function CollateralRatioGraph() {
       <div>
         <p className="text-xl font-bold">담보유지비율 현황이에요</p>
       </div>
-      <div className="flex flex-col w-full items-end">
-        <p className="text-lg">현재 사용금액: {100000}원</p>
-      </div>
       <ReactApexChart
         type="line"
         series={series}
@@ -148,8 +151,9 @@ export default function CollateralRatioGraph() {
           담보증권가치 / 설정된 결제한도 가 140% 이상이여야만 서비스를 이용할 수
           있어요
           <br />
-          만일 140% 이하인 경우 결제가 중지되고 3 영업일 이내 복구하지 않으면
-          반대매매가 발생할 수 있어요
+          만일 <span className="text-red-500 font-bold">140% 이하</span>인 경우
+          결제가 중지되고 3 영업일 이내 복구하지 않으면 반대매매가 발생할 수
+          있어요
         </p>
       </div>
     </div>

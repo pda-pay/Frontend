@@ -31,6 +31,8 @@ export default function MortgageState() {
   const fetchData = async () => {
     const result = (await service.getAllStock()).data;
 
+    console.log(result);
+
     const data: MyStockData = {
       free: [],
       mortgaged: [],
@@ -64,6 +66,9 @@ export default function MortgageState() {
         stockPrice: value.stockPrice,
       });
     });
+
+    console.log(m);
+    console.log(f);
 
     setFreeAmount(f);
     setMortgagedAmount(m);
