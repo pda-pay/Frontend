@@ -63,11 +63,13 @@ export default function MainPage() {
 
           <div className="flex flex-col gap-5 my-20">
             <NormalTitle marginBottom="20px">
-              <span className="font-bold">
+              <span className="font-bold text-3xl">
                 {name}님,
                 <br />
               </span>{" "}
-              QR 코드를 인식해서 빠르게 결제해보세요.
+              <span className="text-xl">
+                QR 코드를 인식해서 빠르게 결제해보세요.
+              </span>
             </NormalTitle>
             <QRFrame member={member} />
           </div>

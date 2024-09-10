@@ -57,6 +57,7 @@ export const NotificationBox = () => {
 
   useEffect(() => {
     fetchNotifications();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -233,7 +234,7 @@ export const NotificationBox = () => {
                 <MessageBox key={index} className="shadow-lg">
                   <BoldTitle>{message.title}</BoldTitle>
                   <NormalTitle>{message.content}</NormalTitle>
-                  <TimeText>{message.createdAt}</TimeText>
+                  <TimeText>{message.createdAt.replace("T", " ")}</TimeText>
                 </MessageBox>
               </MessageBoxWrapper>
             ))}
