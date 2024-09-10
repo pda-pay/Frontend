@@ -1,5 +1,5 @@
 import { ApexOptions } from "apexcharts";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import payServiceAPI from "../../api/payServiceAPI";
 
