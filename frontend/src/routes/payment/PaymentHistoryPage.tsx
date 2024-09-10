@@ -102,7 +102,11 @@ export default function PaymentHistoryPage() {
     <PaddingDiv>
       <div>
         <div className="flex flex-row-reverse">
-          <span onClick={() => navigate("/payment")}>
+          <span
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
             <XButton />
           </span>
         </div>
