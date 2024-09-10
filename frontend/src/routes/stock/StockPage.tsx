@@ -11,7 +11,7 @@ import payServiceAPI from "../../api/payServiceAPI";
 import axios from "axios";
 import userAPI from "../../api/userAPI";
 
-type ItemObject = {
+export type ItemObject = {
   accountNumber: string;
   quantity: number;
   mortgagedQuantity: number;

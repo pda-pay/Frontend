@@ -1,21 +1,20 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
 import userAPI from "../../api/userAPI";
-import PaddingDiv from "../../components/settingdiv/PaddingDiv";
+import CollateralRatioGraph from "./CollateralRatioGraph";
+import MortgageState from "./MortgageState";
+import StockPieChart from "./StockPieChart";
+import axios from "axios";
 
 export default function AssetPage() {
-  const userservice = new userAPI();
-
+  const service = new userAPI();
   const [name, setName] = useState<string>("익명");
-  const [memeber, setMember] = useState<boolean>(false);
 
   const getUserInfo = async () => {
     try {
-      const response = await userservice.checkMem();
+      const response = await service.checkMem();
 
       if (response.status === 200) {
-        setName(response.data.userId);
-        setMember(response.data.paymentServiceMember);
+        setName(response.data.name);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -27,14 +26,19 @@ export default function AssetPage() {
   useEffect(() => {
     getUserInfo();
   }, []);
-
   return (
-    <PaddingDiv>
-      {memeber ? (
-        <div>{name}님, 자산 페이지임.</div>
-      ) : (
-        <div>자산 페이지임.</div>
-      )}
-    </PaddingDiv>
+    <div
+      style={{ backgroundColor: "#9abade33" }}
+      className="w-screen p-5 pt-7 pb-20 flex flex-col"
+    >
+      <p className="text-lg">
+        <strong className="font-bold">{name}님,</strong>자산 현황을 확인해보세요
+      </p>
+      <StockPieChart />
+
+      <CollateralRatioGraph />
+
+      <MortgageState />
+    </div>
   );
 }

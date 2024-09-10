@@ -9,6 +9,7 @@ import loginApi from "../../api/loginAPI";
 import { useNavigate } from "react-router-dom";
 import CashMortgagedModal from "../repay/component/CashMortgagedModal";
 import { FaBell } from "react-icons/fa6";
+import fcmAPI from "../../api/fcmAPI";
 import notificationBoxAPI from "../../api/notificationBoxAPI";
 import Swal from "sweetalert2";
 
@@ -52,6 +53,7 @@ export default function AllmenuPage() {
   const [member, setMember] = useState<boolean>(false);
   const [payValid, setPayValid] = useState<boolean>(true);
   const [messages, setMessages] = useState<Message[]>([]);
+  const fcmApi = new fcmAPI();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const notificationService = new notificationBoxAPI();
@@ -74,6 +76,7 @@ export default function AllmenuPage() {
 
       if (response.status === 200) {
         console.log("로그아웃 성공");
+        fcmApi.putUserInfo();
         navigate("/");
       }
     } catch (error) {
