@@ -28,15 +28,21 @@ self.addEventListener("notificationclick", function (event) {
   console.log("notification click");
   event.notification.close();
 
-  const category = event.notification.data.category;
+  const page = event.notification.data.page;
   let url;
 
-  switch (category) {
-    case "상환":
+  switch (page) {
+    case "메인":
+      url = "/main";
+      break;
+    case "결제":
       url = "/payment";
       break;
+    case "자산":
+      url = "/asset";
+      break;
     case "전체":
-      url = "/allMenu";
+      url = "/allmenu";
       break;
     default:
       url = "/main";
