@@ -29,6 +29,7 @@ export default function PayInfo({ member }: UserProps) {
 
   const [paymentAmount, setPaymentAmount] = useState<number>(0);
   const [creditLimit, setCreditLimit] = useState<number>(500000);
+  const [currentMonthDebt, setcurrentMonthDebt] = useState<number>(500000);
   const [remainCreditLimit, setRemainCreditLimit] = useState<number>(1000000);
   //결제 번호, 결제 금액, 날짜, 가게
   const [paymentHistory, setPaymentHistory] = useState<
@@ -46,6 +47,7 @@ export default function PayInfo({ member }: UserProps) {
         const data = response.data;
         setPaymentAmount(data.paymentAmount);
         setCreditLimit(data.creditLimit);
+        setcurrentMonthDebt(data.currentMonthDebt);
         setRemainCreditLimit(data.remainCreditLimit);
         saveHistory(data.paymentHistories);
       }
@@ -88,6 +90,7 @@ export default function PayInfo({ member }: UserProps) {
             </div>
             <div className="text-gray-500">
               <div>한도: {creditLimit.toLocaleString()}원</div>
+              <div>당월 사용 금액: {currentMonthDebt.toLocaleString()}원</div>
               <div>남은 한도: {remainCreditLimit.toLocaleString()}원</div>
             </div>
           </div>
