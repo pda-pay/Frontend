@@ -20,7 +20,7 @@ export default function StockDetailModal(props: StockDetailModalProps) {
         return (
           <div className="grid grid-cols-6 gap-1 text-[10px]" key={index}>
             <img
-              src={`/public/companyLogo/${value.companyName}.png`}
+              src={`/companyLogo/${value.companyName}.png`}
               className="w-5 h-auto"
               alt={`${value.companyName} logo`}
             />
