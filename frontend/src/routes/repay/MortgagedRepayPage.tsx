@@ -349,7 +349,7 @@ export default function MortgagedRepayPage() {
                   <th>증권사명</th>
                   <th>종목명</th>
                   <th>선택 주수</th>
-                  <th>전일 종가</th>
+                  <th>현재가</th>
                   {/* <th>등급</th> */}
                   <th>가능 한도</th>
                 </tr>

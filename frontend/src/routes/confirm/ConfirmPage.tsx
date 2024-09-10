@@ -39,7 +39,7 @@ export default function ConfirmPage() {
   const userinfosevice = new userAPI();
 
   const [userInfo, setUserInfo] = useState<[string, boolean, boolean]>([
-    "이름",
+    "",
     false,
     false,
   ]);
@@ -71,7 +71,7 @@ export default function ConfirmPage() {
 
       if (response.status === 200) {
         const temp: [string, boolean, boolean] = [
-          response.data.userId,
+          response.data.name,
           response.data.paymentServiceMember,
           userInfo[2],
         ];
@@ -250,20 +250,23 @@ export default function ConfirmPage() {
                 자세히 보기
               </span>
             </div>
-
-            <ul
-              style={
-                {
-                  /*paddingLeft: "20px" */
+            {priStocks.length === 0 ? (
+              <div>설정한 우선순위가 없습니다.</div>
+            ) : (
+              <ul
+                style={
+                  {
+                    /*paddingLeft: "20px" */
+                  }
                 }
-              }
-            >
-              {fivePriStocks.map((stock) => (
-                <li>
-                  {stock[4]}순위. [{stock[6]}] {stock[3]} {stock[1]}주
-                </li>
-              ))}
-            </ul>
+              >
+                {fivePriStocks.map((stock) => (
+                  <li>
+                    {stock[4]}순위. [{stock[6]}] {stock[3]} {stock[1]}주
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </BackgroundFrame>
       </div>
