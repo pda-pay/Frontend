@@ -16,7 +16,10 @@ export default function JoinInput({
   const certiservice = new certificatePhoneNumberAPI();
   const joinservice = new joinApi();
 
+  const [errCallMsg, setErrCallMsg] = useState<string>();
+
   const [userName, setUserName] = useState<string>();
+  const [errorName, setErrorName] = useState<boolean | null>(null);
   const [userId, setUserId] = useState<string>();
   const [idDup, setIdDup] = useState<boolean | null>(null);
   const [password, setPassword] = useState<string>();
@@ -37,6 +40,18 @@ export default function JoinInput({
   const [isModalOpen, setIsModalOpen] = useState<boolean | null>(null);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  //이름이 올바른지 검사하는 함수
+  const validateName = (name: string): boolean => {
+    const nameRegex = /^[a-zA-Z가-힣]*$/;
+    console.log("유효성검사: " + name.length);
+    if (name === "" || name === undefined || name.length === 0) {
+      if (name.length === 0) setUserName(undefined);
+      console.log("여기 걸려야함");
+      return true;
+    }
+    return nameRegex.test(name);
+  };
 
   //비밀번호 형식이 올바른지 검사하는 함수
   const validatePassword = (password: string): boolean => {
@@ -111,7 +126,8 @@ export default function JoinInput({
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.log("에러 발생: " + error);
+        //console.log("에러 발생: " + error);
+        setErrCallMsg(error.response?.data.message);
       }
     }
   };
@@ -125,6 +141,16 @@ export default function JoinInput({
     checkIdDuplicate();
     setDupCheck(true);
   };
+
+  useEffect(() => {
+    console.log("변경: " + userName?.length);
+    if (userName === undefined) setErrorName(true);
+    else if (!validateName(userName)) {
+      setErrorName(true);
+    } else {
+      setErrorName(false);
+    }
+  }, [userName]);
 
   useEffect(() => {
     if (password === undefined) setErrorPsw(true);
@@ -156,6 +182,11 @@ export default function JoinInput({
   }, [phoneNumber]);
 
   useEffect(() => {
+    if (userName !== undefined) validateName(userName);
+    else setErrorName(true);
+  }, [userName]);
+
+  useEffect(() => {
     setCertiCheck(null);
   }, [phoneNumber]);
 
@@ -175,6 +206,7 @@ export default function JoinInput({
 
   useEffect(() => {
     const temp: boolean | null =
+      !errorName &&
       !idDup &&
       dupCheck &&
       !errorPsw &&
@@ -185,6 +217,7 @@ export default function JoinInput({
     if (temp !== null) setValid(temp);
     else if (temp === null) setValid(false);
   }, [
+    errorName,
     idDup,
     dupCheck,
     errorPsw,
@@ -193,6 +226,10 @@ export default function JoinInput({
     errorCerti,
     certiCheck,
   ]);
+
+  useEffect(() => {
+    setErrCallMsg("");
+  }, [phoneNumber]);
 
   useEffect(() => {
     onValidChange(valid);
@@ -207,11 +244,17 @@ export default function JoinInput({
         <input
           type="text"
           name="userName"
+          pattern="[a-zA-Z가-힣]*"
           value={userName}
           onChange={handleUserName}
           className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
           placeholder="김신한"
         />
+        {errorName && userName !== undefined && errorName !== null && (
+          <p className="mt-2 text-sm text-red-600">
+            {"특수문자와 숫자 입력 불가합니다."}
+          </p>
+        )}
       </label>
       <label className="block">
         <div className="flex justify-between items-center">
@@ -234,7 +277,6 @@ export default function JoinInput({
           className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
           placeholder="shinhan"
         />
-
         {idDup && userId !== undefined && idDup !== null && (
           <p className="mt-2 text-sm text-red-600">
             {"중복되는 아이디입니다."}
@@ -329,22 +371,23 @@ export default function JoinInput({
               }
             </p>
           )}
-        {errorCerti &&
-          phoneNumber !== undefined &&
-          errorCerti !== null &&
-          certiCheck && (
-            <p className="mt-2 text-sm text-red-600">
-              {"전화번호 인증에 실패했습니다."}
-            </p>
-          )}
+        {errCallMsg !== "" && (
+          <p className="mt-2 text-sm text-red-600">{errCallMsg}</p>
+        )}
       </label>
       {isModalOpen && (
-        <CertificateModal
-          phoneNumber={phoneNumber}
-          isModalOpen={isModalOpen}
-          handleCloseModal={closeModal}
-          handleCertiCheck={handleCerti}
-        />
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <CertificateModal
+            phoneNumber={phoneNumber}
+            isModalOpen={isModalOpen}
+            handleCloseModal={closeModal}
+            handleCertiCheck={handleCerti}
+          />
+        </div>
       )}
     </div>
   );

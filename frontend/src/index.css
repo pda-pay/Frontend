@@ -7,7 +7,8 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  /*라이트모드 강제적용*/
+  color-scheme: light only;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
@@ -46,10 +47,10 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
@@ -69,4 +70,17 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* 다크 모드를 무시하고 라이트 모드 강제 적용 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: white;
+    --text-color: black;
+  }
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
 }

@@ -8,6 +8,7 @@ import SetPriorityModal from "./component/SetPriorityModal";
 import payServiceAPI from "../../api/payServiceAPI";
 import axios from "axios";
 import userAPI from "../../api/userAPI";
+import { useLocation } from "react-router-dom";
 
 type mortgagedObject = {
   accountNumber: string;
@@ -37,6 +38,10 @@ type priorityObject = {
 export default function PriorityPage() {
   const payjoinservice = new payServiceAPI();
   const userservice = new userAPI();
+
+  const location = useLocation();
+  // 전달된 state를 받아옵니다. (default 값을 false로 설정)
+  const { menu } = location.state || { menu: false };
 
   const [mem, setMem] = useState<boolean>(false);
 
@@ -481,13 +486,25 @@ export default function PriorityPage() {
 
       <div className="mt-auto">
         {mem ? (
-          <ButtonBar
-            beforetext="취소"
-            nexttext="수정 완료"
-            beforeurl="/allmenu"
-            nexturl="/allmenu"
-            nextOnClick={putPriority}
-          />
+          <div>
+            {menu ? (
+              <ButtonBar
+                beforetext="이전"
+                nexttext="수정 완료"
+                beforeurl="/allmenu"
+                nexturl="/allmenu"
+                nextOnClick={putPriority}
+              />
+            ) : (
+              <ButtonBar
+                beforetext="이전"
+                nexttext="다음"
+                beforeurl="/stock"
+                nexturl="/limit"
+                nextOnClick={putPriority}
+              />
+            )}
+          </div>
         ) : (
           <ButtonBar
             beforetext="이전"

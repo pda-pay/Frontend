@@ -6,24 +6,33 @@ import NormalTitle from "../../components/text/NormalTitle";
 import QRFrame from "./component/QRFrame";
 import userAPI from "../../api/userAPI";
 import axios from "axios";
-import { getToken, onMessage } from "firebase/messaging";
-import messaging from "../../firebase";
-import fcmApi from "../../api/fcmAPI";
+import { requestFCMToken } from "../../main-router";
+import fcmAPI from "../../api/fcmAPI";
 
 export default function MainPage() {
   const userservice = new userAPI();
-  const fcmservice = new fcmApi();
+  const fcmApi = new fcmAPI();
+
   const navigate = useNavigate();
 
   const [name, setName] = useState<string>("익명");
   const [member, setMember] = useState<boolean>(false);
+
+  const fetchToken = async () => {
+    const tokens = await requestFCMToken();
+
+    if (tokens != null) {
+      console.log(tokens);
+      fcmApi.postUserInfo({ token: tokens });
+    }
+  };
 
   const getUserInfo = async () => {
     try {
       const response = await userservice.checkMem();
 
       if (response.status === 200) {
-        setName(response.data.userId);
+        setName(response.data.name);
         setMember(response.data.paymentServiceMember);
       }
     } catch (error) {
@@ -33,39 +42,9 @@ export default function MainPage() {
     }
   };
 
-  const requestFCMToken = async () => {
-    const permission = await Notification.requestPermission();
-
-    if (permission === "granted") {
-      try {
-        const token = await getToken(messaging, {
-          vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
-        });
-
-        console.log(token);
-
-        fcmservice.postUserInfo({
-          token: token,
-        });
-      } catch (error) {
-        console.error("FCM Token error: ", error);
-      }
-    } else if (permission === "denied") {
-      alert("You denied the notification permission");
-    }
-  };
-
-  const onMessageListener = () => {
-    onMessage(messaging, (payload) => {
-      console.log("Message received. Payload:", payload);
-    });
-  };
-
   useEffect(() => {
-    // 로그인 정보 가져오기
     getUserInfo();
-    requestFCMToken();
-    onMessageListener();
+    fetchToken();
   }, []);
 
   return (
@@ -82,10 +61,14 @@ export default function MainPage() {
             </LargeButton>
           )}
 
-          <NormalTitle>
-            {name}님, QR 코드를 인식해서 빠르게 결제해보세요.
+          <NormalTitle marginBottom="20px">
+            <span className="font-bold">
+              {name}님,
+              <br />
+            </span>{" "}
+            QR 코드를 인식해서 빠르게 결제해보세요.
           </NormalTitle>
-          <QRFrame member={member}></QRFrame>
+          <QRFrame member={member} />
         </div>
       </PaddingDiv>
     </div>

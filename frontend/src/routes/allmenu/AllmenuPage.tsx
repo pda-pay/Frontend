@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import styled from "styled-components";
 import axios from "axios";
 import userAPI from "../../api/userAPI";
 import PaddingDiv from "../../components/settingdiv/PaddingDiv";
@@ -6,14 +7,68 @@ import BoldTitle from "../../components/text/BoldTitle";
 import NormalTitle from "../../components/text/NormalTitle";
 import loginApi from "../../api/loginAPI";
 import { useNavigate } from "react-router-dom";
+import CashMortgagedModal from "../repay/component/CashMortgagedModal";
+import { FaBell } from "react-icons/fa6";
+import fcmAPI from "../../api/fcmAPI";
+import notificationBoxAPI from "../../api/notificationBoxAPI";
+import Swal from "sweetalert2";
+
+interface Message {
+  id: number;
+  title: string;
+  content: string;
+  createdAt: string;
+  category: string;
+}
+
+const StyledFaBell = styled(FaBell)`
+  font-size: 27px;
+  margin-left: auto;
+  cursor: pointer;
+  &:hover {
+    color: #1342ba;
+  }
+`;
+const NotificationDot = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  background-color: red;
+  border-radius: 50%;
+  transform: translate(50%, -50%);
+`;
 
 export default function AllmenuPage() {
   const navigate = useNavigate();
   const logservice = new loginApi();
   const userservice = new userAPI();
 
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   const [name, setName] = useState<string>("익명");
   const [member, setMember] = useState<boolean>(false);
+  const [payValid, setPayValid] = useState<boolean>(true);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const fcmApi = new fcmAPI();
+
+  const notificationService = new notificationBoxAPI();
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await notificationService.getNotifications();
+        setMessages(response.data.messages);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+    fetchNotifications();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const logOut = async () => {
     try {
@@ -21,6 +76,7 @@ export default function AllmenuPage() {
 
       if (response.status === 200) {
         console.log("로그아웃 성공");
+        fcmApi.putUserInfo();
         navigate("/");
       }
     } catch (error) {
@@ -33,8 +89,9 @@ export default function AllmenuPage() {
       const response = await userservice.checkMem();
 
       if (response.status === 200) {
-        setName(response.data.userId);
+        setName(response.data.name);
         setMember(response.data.paymentServiceMember);
+        setPayValid(response.data.paymentAccess);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -43,8 +100,20 @@ export default function AllmenuPage() {
     }
   };
 
+  const handlePayment = () => {
+    if (payValid) navigate("/payment-pw-verify");
+    else {
+      Swal.fire({
+        icon: "warning",
+        title: `<span style="font-size: 20px; font-weight : bolder;">현재 결제 서비스를 이용할 수<br/> 없습니다.</span>`,
+        confirmButtonColor: "blue",
+      });
+    }
+  };
+
   useEffect(() => {
     getUserInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -58,94 +127,120 @@ export default function AllmenuPage() {
           boxShadow: "0 5px 5px -5px rgba(0,0,0,0.12)",
         }}
       >
-        <div className="py-10 px-5 flex items-center">
+        <div className="py-10 px-5 flex items-center justify-between">
           <NormalTitle>
             <span className="font-bold">{name}님,</span> 안녕하세요.
           </NormalTitle>
-          <button
-            className="text-xs ml-auto"
-            style={{ backgroundColor: "#9abade33", borderRadius: "20px" }}
-            onClick={logOut}
-          >
-            로그아웃
-          </button>
+          <div className="flex">
+            <div style={{ position: "relative" }}>
+              <StyledFaBell onClick={() => navigate("/notificationBox")} />
+              {messages.length > 0 && <NotificationDot />}
+            </div>
+            <button
+              className="text-xs ml-[13px] focus:outline-none"
+              style={{ backgroundColor: "#9abade33", borderRadius: "20px" }}
+              onClick={logOut}
+            >
+              로그아웃
+            </button>
+          </div>
         </div>
       </div>
       <div>
         <NormalTitle>
-          <span className="text-gray-400">결제 서비스</span>
+          <span className="text-gray-400 cursor-default">결제 서비스</span>
         </NormalTitle>
         <div className="ml-3 mt-3 flex flex-col gap-2">
           {!member && (
-            <div onClick={() => navigate("/serviceagree")}>
-              <BoldTitle>결제 서비스 가입 하기</BoldTitle>
-            </div>
+            <BoldTitle>
+              <span onClick={() => navigate("/serviceagree")}>
+                결제 서비스 가입 하기
+              </span>
+            </BoldTitle>
           )}
           {/*TODO: QR 결제하기로 연결*/}
-          <div
-            onClick={() => {
-              if (member) navigate("/");
-            }}
-          >
-            <BoldTitle>QR 결제하기</BoldTitle>
-          </div>
-          <div
-            onClick={() => {
-              if (member) navigate("/paymenthistory");
-            }}
-          >
-            <BoldTitle>결제 내역 보기</BoldTitle>
-          </div>
+          {member && (
+            <>
+              <BoldTitle>
+                <span
+                  className="cursor-pointer"
+                  onClick={() => handlePayment()}
+                >
+                  QR 결제하기
+                </span>
+              </BoldTitle>
+              <BoldTitle>
+                <span
+                  className="cursor-pointer"
+                  onClick={() => {
+                    navigate("/paymenthistory");
+                  }}
+                >
+                  결제 내역 보기
+                </span>
+              </BoldTitle>
+            </>
+          )}
         </div>
       </div>
 
       <div>
         <NormalTitle>
-          <span className="text-gray-400">한도 및 상환</span>
+          <span className="text-gray-400 cursor-default">한도 및 상환</span>
         </NormalTitle>
-        {/*TODO: 선결제로 이동*/}
+
         <div className="ml-3 mt-3 flex flex-col gap-2">
           <div
             onClick={() => {
-              if (member) navigate("/");
+              if (member) openModal();
             }}
           >
-            <BoldTitle>선결제하기</BoldTitle>
+            <BoldTitle>
+              <span className="cursor-pointer">선결제하기</span>
+            </BoldTitle>
           </div>
           <div
             onClick={() => {
               if (member) navigate("/account");
             }}
           >
-            <BoldTitle>결제 계좌 변경</BoldTitle>
+            <BoldTitle>
+              <span className="cursor-pointer">결제 계좌 변경</span>
+            </BoldTitle>
           </div>
           <div
             onClick={() => {
-              if (member) navigate("/limit");
+              if (member) navigate("/limit", { state: { menu: true } });
             }}
           >
-            <BoldTitle>한도 변경</BoldTitle>
+            <BoldTitle>
+              <span className="cursor-pointer">한도 변경</span>
+            </BoldTitle>
           </div>
           <div
             onClick={() => {
               if (member) navigate("/stock");
             }}
           >
-            <BoldTitle>담보 변경</BoldTitle>
+            <BoldTitle>
+              <span className="cursor-pointer">담보 변경</span>
+            </BoldTitle>
           </div>
           <div
             onClick={() => {
-              if (member) navigate("/priority");
+              if (member) navigate("/priority", { state: { menu: true } });
             }}
           >
-            <BoldTitle>우선순위 확인 및 변경</BoldTitle>
+            <BoldTitle>
+              <span className="cursor-pointer">우선순위 확인 및 변경</span>
+            </BoldTitle>
           </div>
         </div>
       </div>
 
       <div>
         <NormalTitle>
-          <span className="text-gray-400">자산 현황</span>
+          <span className="text-gray-400 cursor-default">자산 현황</span>
         </NormalTitle>
         <div className="ml-3 mt-3 flex flex-col gap-2">
           <div
@@ -153,17 +248,27 @@ export default function AllmenuPage() {
               if (member) navigate("/asset");
             }}
           >
-            <BoldTitle>자산 확인하기</BoldTitle>
+            <BoldTitle>
+              <span className="cursor-pointer">자산 확인하기</span>
+            </BoldTitle>
           </div>
           <div
             onClick={() => {
               if (member) navigate("/asset");
             }}
           >
-            <BoldTitle>잔고 확인하기</BoldTitle>
+            <BoldTitle>
+              <span className="cursor-pointer">잔고 확인하기</span>
+            </BoldTitle>
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <CashMortgagedModal
+          isModalOpen={isModalOpen}
+          handleCloseModal={closeModal}
+        />
+      )}
     </PaddingDiv>
   );
 }

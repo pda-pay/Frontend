@@ -7,22 +7,30 @@ import NormalTitle from "../../components/text/NormalTitle";
 import MoveButton from "../../components/button/MoveButton";
 import userAPI from "../../api/userAPI";
 import axios from "axios";
+import CashMortgagedModal from "../repay/component/CashMortgagedModal";
+import Swal from "sweetalert2";
 
 export default function PaymentPage() {
   const userservice = new userAPI();
   const navigate = useNavigate();
 
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   //TODO: 여기서 백엔드에게 이름과 가입 여부 가져오기
   const [name, setName] = useState<string>("익명");
   const [memeber, setMember] = useState<boolean>(false);
+  const [payValid, setPayValid] = useState<boolean>(true);
 
   const getUserInfo = async () => {
     try {
       const response = await userservice.checkMem();
 
       if (response.status === 200) {
-        setName(response.data.userId);
+        setName(response.data.name);
         setMember(response.data.paymentServiceMember);
+        setPayValid(response.data.paymentAccess);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -33,6 +41,7 @@ export default function PaymentPage() {
 
   useEffect(() => {
     getUserInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -40,15 +49,21 @@ export default function PaymentPage() {
       <PaddingDiv>
         <div>
           {memeber ? (
-            <LargeButton
-              type="blue"
-              //TODO: QR로 결제하는 페이지로 이동
-              // onClick={() =>
-              //   navigate("/qr"})
-              // }
+            <span
+              onClick={() => {
+                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                payValid
+                  ? navigate("/payment-pw-verify")
+                  : Swal.fire({
+                      icon: "warning",
+                      title:
+                        '<span style="font-size: 20px; font-weight : bolder;">현재 결제 서비스를 이용할 수<br/> 없습니다.</span>',
+                      confirmButtonColor: "blue",
+                    });
+              }}
             >
-              QR로 결제하기
-            </LargeButton>
+              <LargeButton type="blue">QR로 결제하기</LargeButton>
+            </span>
           ) : (
             <LargeButton type="blue" onClick={() => navigate("/serviceagree")}>
               결제 서비스 가입하기
@@ -57,12 +72,12 @@ export default function PaymentPage() {
         </div>
         <div>
           {memeber ? (
-            <NormalTitle>
+            <NormalTitle marginBottom="20px">
               <span className="font-bold">{name}님,</span> 이번 달 결제 예정
               금액을 한눈에 확인해보세요.
             </NormalTitle>
           ) : (
-            <NormalTitle>
+            <NormalTitle marginBottom="20px">
               <span className="font-bold">{name}님,</span> 가입해서 결제
               서비스를 이용해보세요.
             </NormalTitle>
@@ -72,8 +87,10 @@ export default function PaymentPage() {
         </div>
         {memeber && (
           <div className="h-100 grid grid-cols-2 gap-5">
-            <MoveButton onClick={() => navigate("/")}>선결제</MoveButton>
-            <MoveButton onClick={() => navigate("/limit")}>
+            <MoveButton onClick={openModal}>선결제</MoveButton>
+            <MoveButton
+              onClick={() => navigate("/limit", { state: { menu: true } })}
+            >
               한도 변경
             </MoveButton>
             <MoveButton onClick={() => navigate("/stock")}>
@@ -85,6 +102,12 @@ export default function PaymentPage() {
           </div>
         )}
       </PaddingDiv>
+      {isModalOpen && (
+        <CashMortgagedModal
+          isModalOpen={isModalOpen}
+          handleCloseModal={closeModal}
+        />
+      )}
     </div>
   );
 }
