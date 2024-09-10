@@ -104,7 +104,7 @@ export default function SettingLimitPage() {
 
       if (response.status === 200) {
         //수정일경우, alert를 확인해야 페이지 넘어가게
-        if (menu) {
+        if (mem) {
           openAlert();
           return false;
         } else return true;
