@@ -8,7 +8,10 @@ export default function ServiceAgreePage() {
   return (
     <PaddingDiv>
       <div>
-        <BoldTitle>결제 서비스 이용을 위한 약관에 동의해주세요!</BoldTitle>
+        <div className="mb-2">
+          <BoldTitle>결제 서비스 이용을 위한 약관에 동의해주세요!</BoldTitle>
+        </div>
+
         <AgreeFrame>
           <PaymentTerms />
         </AgreeFrame>
