@@ -22,7 +22,7 @@ export default function NumPad() {
   };
 
   const onBtnClick = () => {
-    if (inputValue === "0") return;
+    if (inputValue === "0" || inputValue === "") return;
 
     navigate("/franchise/qr", {
       state: { amount: Number(inputValue.replace(/,/g, "")) },
