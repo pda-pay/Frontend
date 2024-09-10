@@ -34,7 +34,7 @@ export default function DeclineLogCompo() {
       <p className="w-full text-center font-bold text-2xl">
         전일 대비 담보 하락 고객(10% 이상)
       </p>
-      <div className="border border-solid max-h-[40vh] h-[40vh]">
+      <div className="border border-solid max-h-[30vh] h-[30vh]">
         <div className="grid grid-cols-5 gap-3 text-center">
           <p>고객id</p>
           <p>현재 담보 총액</p>
@@ -42,7 +42,7 @@ export default function DeclineLogCompo() {
           <p>담보유지비율</p>
           <p>전일대비 하락폭</p>
         </div>
-        <div className="max-h-[40vh] overflow-y-auto border p-2 bg-gray-50">
+        <div className="max-h-[29vh] overflow-y-auto border p-2 bg-gray-50">
           {data.map((value, index) => {
             return (
               <DeclineLog

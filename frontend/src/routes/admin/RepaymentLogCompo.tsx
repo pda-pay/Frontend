@@ -82,7 +82,7 @@ export default function RepaymentLogCompo() {
           <p>일시</p>
         </div>
         <div
-          className="max-h-[40vh] overflow-y-auto border p-2 bg-gray-50"
+          className="max-h-[35vh] overflow-y-auto border p-2 bg-gray-50"
           ref={containerRef}
         >
           {messages.map((value) => {
