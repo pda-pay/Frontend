@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import userAPI from "../../api/userAPI";
 import CollateralRatioGraph from "./CollateralRatioGraph";
 import MortgageState from "./MortgageState";
-import StockPieChart from "./StockPieChart";
+
 import axios from "axios";
+import StockPieChart from "./StockPieChart";
 
 export default function AssetPage() {
   const service = new userAPI();
@@ -25,6 +26,7 @@ export default function AssetPage() {
 
   useEffect(() => {
     getUserInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div

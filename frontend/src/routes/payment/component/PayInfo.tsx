@@ -106,7 +106,7 @@ export default function PayInfo({ member }: UserProps) {
                 <div className="flex justify-between items-center">
                   <div>
                     <NormalTitle>{history[3]}</NormalTitle>
-                    <div>{history[2].split("T")}</div>
+                    <div>{history[2].replace("T", " ")}</div>
                   </div>
                   <div>{history[1]}원</div>
                 </div>
