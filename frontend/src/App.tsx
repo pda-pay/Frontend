@@ -2,6 +2,9 @@ import { RouterProvider } from "react-router-dom";
 import MainRouter from "./main-router";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 import { useEffect } from "react";
 
 function App() {
