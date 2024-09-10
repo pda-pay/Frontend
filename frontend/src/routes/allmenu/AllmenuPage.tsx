@@ -9,6 +9,17 @@ import loginApi from "../../api/loginAPI";
 import { useNavigate } from "react-router-dom";
 import CashMortgagedModal from "../repay/component/CashMortgagedModal";
 import { FaBell } from "react-icons/fa6";
+import fcmAPI from "../../api/fcmAPI";
+import notificationBoxAPI from "../../api/notificationBoxAPI";
+import Swal from "sweetalert2";
+
+interface Message {
+  id: number;
+  title: string;
+  content: string;
+  createdAt: string;
+  category: string;
+}
 
 const StyledFaBell = styled(FaBell)`
   font-size: 27px;
@@ -17,6 +28,16 @@ const StyledFaBell = styled(FaBell)`
   &:hover {
     color: #1342ba;
   }
+`;
+const NotificationDot = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  background-color: red;
+  border-radius: 50%;
+  transform: translate(50%, -50%);
 `;
 
 export default function AllmenuPage() {
@@ -31,6 +52,23 @@ export default function AllmenuPage() {
   const [name, setName] = useState<string>("익명");
   const [member, setMember] = useState<boolean>(false);
   const [payValid, setPayValid] = useState<boolean>(true);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const fcmApi = new fcmAPI();
+
+  const notificationService = new notificationBoxAPI();
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await notificationService.getNotifications();
+        setMessages(response.data.messages);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+    fetchNotifications();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const logOut = async () => {
     try {
@@ -38,6 +76,7 @@ export default function AllmenuPage() {
 
       if (response.status === 200) {
         console.log("로그아웃 성공");
+        fcmApi.putUserInfo();
         navigate("/");
       }
     } catch (error) {
@@ -61,8 +100,20 @@ export default function AllmenuPage() {
     }
   };
 
+  const handlePayment = () => {
+    if (payValid) navigate("/payment-pw-verify");
+    else {
+      Swal.fire({
+        icon: "warning",
+        title: `<span style="font-size: 20px; font-weight : bolder;">현재 결제 서비스를 이용할 수<br/> 없습니다.</span>`,
+        confirmButtonColor: "blue",
+      });
+    }
+  };
+
   useEffect(() => {
     getUserInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -76,18 +127,23 @@ export default function AllmenuPage() {
           boxShadow: "0 5px 5px -5px rgba(0,0,0,0.12)",
         }}
       >
-        <div className="py-10 px-5 flex items-center ">
+        <div className="py-10 px-5 flex items-center justify-between">
           <NormalTitle>
             <span className="font-bold">{name}님,</span> 안녕하세요.
           </NormalTitle>
-          <StyledFaBell onClick={() => navigate("/notificationBox")} />
-          <button
-            className="text-xs ml-[13px]"
-            style={{ backgroundColor: "#9abade33", borderRadius: "20px" }}
-            onClick={logOut}
-          >
-            로그아웃
-          </button>
+          <div className="flex">
+            <div style={{ position: "relative" }}>
+              <StyledFaBell onClick={() => navigate("/notificationBox")} />
+              {messages.length > 0 && <NotificationDot />}
+            </div>
+            <button
+              className="text-xs ml-[13px] focus:outline-none"
+              style={{ backgroundColor: "#9abade33", borderRadius: "20px" }}
+              onClick={logOut}
+            >
+              로그아웃
+            </button>
+          </div>
         </div>
       </div>
       <div>
@@ -96,29 +152,35 @@ export default function AllmenuPage() {
         </NormalTitle>
         <div className="ml-3 mt-3 flex flex-col gap-2">
           {!member && (
-            <div onClick={() => navigate("/serviceagree")}>
-              <BoldTitle>결제 서비스 가입 하기</BoldTitle>
-            </div>
+            <BoldTitle>
+              <span onClick={() => navigate("/serviceagree")}>
+                결제 서비스 가입 하기
+              </span>
+            </BoldTitle>
           )}
           {/*TODO: QR 결제하기로 연결*/}
-          <div
-            onClick={() => {
-              if (member && payValid) navigate("/payment-pw-verify");
-            }}
-          >
-            <BoldTitle>
-              <span className="cursor-pointer">QR 결제하기</span>
-            </BoldTitle>
-          </div>
-          <div
-            onClick={() => {
-              if (member) navigate("/paymenthistory");
-            }}
-          >
-            <BoldTitle>
-              <span className="cursor-pointer">결제 내역 보기</span>
-            </BoldTitle>
-          </div>
+          {member && (
+            <>
+              <BoldTitle>
+                <span
+                  className="cursor-pointer"
+                  onClick={() => handlePayment()}
+                >
+                  QR 결제하기
+                </span>
+              </BoldTitle>
+              <BoldTitle>
+                <span
+                  className="cursor-pointer"
+                  onClick={() => {
+                    navigate("/paymenthistory");
+                  }}
+                >
+                  결제 내역 보기
+                </span>
+              </BoldTitle>
+            </>
+          )}
         </div>
       </div>
 

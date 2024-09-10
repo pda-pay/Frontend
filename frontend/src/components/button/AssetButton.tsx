@@ -1,12 +1,18 @@
 import { IoBarChart } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
-export default function AssetButton() {
-  const navigate = useNavigate();
+type ButtonProps = {
+  active: boolean;
+};
 
+export default function AssetButton({ active }: ButtonProps) {
+  const navigate = useNavigate();
   return (
-    <div onClick={() => navigate("/asset")}>
-      <IoBarChart className="size-6"></IoBarChart>
+    <div
+      onClick={() => navigate("/asset")}
+      style={{ color: active ? "#1c5cff" : "black" }}
+    >
+      <IoBarChart className="size-6 ml-[3px]" />
       자산
     </div>
   );

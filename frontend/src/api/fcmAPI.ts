@@ -9,4 +9,9 @@ export default class fcmApi extends BaseApi {
     const resp = await this.fetcher.post("/notification/tokens", data);
     return resp;
   }
+
+  async putUserInfo() {
+    const resp = await this.fetcher.put("/notification/tokens");
+    return resp;
+  }
 }

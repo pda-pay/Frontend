@@ -118,7 +118,7 @@ export default function CashRepayPage() {
         <div>계좌 잔고: {accountMoney.toLocaleString()}원</div>
       </BackgroundFrame>
       <div>
-        <NormalTitle>결제 예정 금액</NormalTitle>
+        <NormalTitle marginBottom="5px">결제 예정 금액</NormalTitle>
         <BackgroundFrame color="blue">
           <div>{totalDebt.toLocaleString()}원</div>
           <div>
@@ -137,7 +137,7 @@ export default function CashRepayPage() {
       </div>
 
       <div>
-        <NormalTitle>결제할 금액 입력</NormalTitle>
+        <NormalTitle marginBottom="5px">결제할 금액 입력</NormalTitle>
         <BackgroundFrame color="blue">
           <label className="block">
             {/* <span className="text-sm text-gray-400">

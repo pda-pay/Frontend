@@ -9,6 +9,7 @@ import NotificationDeleteButton from "../../components/button/NotificationDelete
 import Container from "../../components/settingdiv/Container";
 import { FaEnvelopeOpenText } from "react-icons/fa6";
 import { IoIosArrowBack } from "react-icons/io";
+import Swal from "sweetalert2";
 import {
   RiCheckboxBlankCircleLine,
   RiCheckboxCircleFill,
@@ -43,7 +44,6 @@ export const NotificationBox = () => {
   const [selectedMessages, setSelectedMessages] = useState<number[]>([]);
   const categoryList = ["전체", "결제", "한도", "담보", "상환", "선결제"];
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const notificationService = new notificationBoxAPI();
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export const NotificationBox = () => {
       }
     };
     fetchNotifications();
-  }, [notificationService]);
+  }, []);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
@@ -119,8 +119,13 @@ export const NotificationBox = () => {
   const deleteMessages = async () => {
     try {
       await notificationService.deleteNotifications(selectedMessages);
-      alert("삭제되었습니다.");
-      finishEditMode();
+      Swal.fire({
+        icon: "success",
+        title: `<span style="font-size: 20px; font-weight : bolder;">삭제되었습니다.</span>`,
+        confirmButtonColor: "blue",
+      }).then(() => {
+        finishEditMode();
+      });
     } catch (error) {
       console.error("Error deleting notifications: ", error);
     }

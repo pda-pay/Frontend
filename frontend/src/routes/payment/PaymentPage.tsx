@@ -8,6 +8,7 @@ import MoveButton from "../../components/button/MoveButton";
 import userAPI from "../../api/userAPI";
 import axios from "axios";
 import CashMortgagedModal from "../repay/component/CashMortgagedModal";
+import Swal from "sweetalert2";
 
 export default function PaymentPage() {
   const userservice = new userAPI();
@@ -40,6 +41,7 @@ export default function PaymentPage() {
 
   useEffect(() => {
     getUserInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -49,7 +51,15 @@ export default function PaymentPage() {
           {memeber ? (
             <span
               onClick={() => {
-                if (payValid) navigate("/payment-pw-verify");
+                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                payValid
+                  ? navigate("/payment-pw-verify")
+                  : Swal.fire({
+                      icon: "warning",
+                      title:
+                        '<span style="font-size: 20px; font-weight : bolder;">현재 결제 서비스를 이용할 수<br/> 없습니다.</span>',
+                      confirmButtonColor: "blue",
+                    });
               }}
             >
               <LargeButton type="blue">QR로 결제하기</LargeButton>
@@ -62,12 +72,12 @@ export default function PaymentPage() {
         </div>
         <div>
           {memeber ? (
-            <NormalTitle>
+            <NormalTitle marginBottom="20px">
               <span className="font-bold">{name}님,</span> 이번 달 결제 예정
               금액을 한눈에 확인해보세요.
             </NormalTitle>
           ) : (
-            <NormalTitle>
+            <NormalTitle marginBottom="20px">
               <span className="font-bold">{name}님,</span> 가입해서 결제
               서비스를 이용해보세요.
             </NormalTitle>
