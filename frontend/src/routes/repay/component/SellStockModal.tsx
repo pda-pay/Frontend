@@ -47,15 +47,21 @@ export default function SellStockModal({
 }: ModalProps) {
   const [inputValue, setInputValue] = useState<string>("");
   const [errInput, setErrInput] = useState<boolean>(true);
+  const [errMessage, setErrMessage] = useState<string>("");
 
   const [selectedAmount, setSelectedAmount] = useState<number>(0);
 
   const validateInput = (ip: number) => {
-    if (ip > clickedRow[2] /* || ip > totalDebt */ || ip <= 0) {
+    if (ip <= 0) {
       setErrInput(true);
+      setErrMessage("최소 1주 이상 입력해주세요.");
+    } else if (ip > clickedRow[2]) {
+      setErrInput(true);
+      setErrMessage(`${clickedRow[2]}주 이하로 입력해주세요.`);
     } else {
       setSelectedAmount(ip);
       setErrInput(false);
+      setErrMessage("");
     }
   };
 
@@ -89,7 +95,7 @@ export default function SellStockModal({
         />
         {errInput && inputValue.length > 0 && (
           <p className="mt-2 text-sm text-red-600">
-            {`0 이상 ${clickedRow[2]} 이하로 입력해주세요.`}
+            {errMessage}
           </p>
         )}
       </label>
