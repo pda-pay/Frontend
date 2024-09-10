@@ -152,7 +152,7 @@ export default function SetPriorityModal({
                     <th>종목명</th>
                     <th>남은 주수</th>
                     <th>전일 종가</th>
-                    <th>안정성</th>
+                    {/* <th>안정성</th> */}
                     <th>가능 한도</th>
                   </tr>
                 </thead>
@@ -163,7 +163,7 @@ export default function SetPriorityModal({
                       <td>{stock[3]}</td>
                       <td>{stock[1]}</td>
                       <td>{stock[8].toLocaleString()}</td>
-                      <td>{stock[7]}</td>
+                      {/* <td>{stock[7]}</td> */}
                       <td>{stock[9].toLocaleString()}</td>
                     </tr>
                   </tbody>

@@ -135,7 +135,7 @@ export default function StockFrame({ stocks, handleTemp }: StockProps) {
                 >
                   <thead>
                     <tr>
-                      <th style={{ textAlign: "left" }}>종목명</th>
+                      <th>종목명</th>
                       <th>계좌</th>
                       <th>담보 주수</th>
                       <th>전일 종가</th>
@@ -155,7 +155,7 @@ export default function StockFrame({ stocks, handleTemp }: StockProps) {
                             cursor: "pointer",
                           }}
                         >
-                          <td style={{ textAlign: "left" }}>{stock[5]}</td>
+                          <td>{stock[5]}</td>
                           <td>{stock[1].slice(0, 3)}</td>
                           <td>{stock[3]}</td>
                           <td>{stock[9].toLocaleString()}원</td>
