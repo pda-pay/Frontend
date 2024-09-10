@@ -31,6 +31,7 @@ export default function SettingLimitPage() {
   //currentlimit 사용 안해서 빌드에러나서 콘솔로그찍음
   useEffect(() => {
     console.log(currentLimit);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //const [limit, setLimit] = useState<number>(data[0]);
@@ -80,6 +81,7 @@ export default function SettingLimitPage() {
 
   useEffect(() => {
     getLimit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const putLimit = async (): Promise<boolean> => {

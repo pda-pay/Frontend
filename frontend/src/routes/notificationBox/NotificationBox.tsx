@@ -44,7 +44,6 @@ export const NotificationBox = () => {
   const [selectedMessages, setSelectedMessages] = useState<number[]>([]);
   const categoryList = ["전체", "결제", "한도", "담보", "상환", "선결제"];
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const notificationService = new notificationBoxAPI();
 
   useEffect(() => {
@@ -57,7 +56,7 @@ export const NotificationBox = () => {
       }
     };
     fetchNotifications();
-  }, [notificationService]);
+  }, []);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);

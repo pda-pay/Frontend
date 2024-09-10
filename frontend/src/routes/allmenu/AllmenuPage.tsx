@@ -55,7 +55,6 @@ export default function AllmenuPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const fcmApi = new fcmAPI();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const notificationService = new notificationBoxAPI();
 
   useEffect(() => {
@@ -68,7 +67,8 @@ export default function AllmenuPage() {
       }
     };
     fetchNotifications();
-  }, [notificationService]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const logOut = async () => {
     try {
@@ -113,6 +113,7 @@ export default function AllmenuPage() {
 
   useEffect(() => {
     getUserInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
