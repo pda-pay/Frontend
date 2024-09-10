@@ -47,6 +47,8 @@ export default function CollateralRatioGraph() {
 
     const data: getHistoryI[] = res.data;
 
+    let maxMortgage = 0;
+
     data.map((value) => {
       asset.data.push(value.mortgageSum);
       limit.data.push(value.todayLimit);
@@ -54,6 +56,8 @@ export default function CollateralRatioGraph() {
       xLabels.push(
         value.createdAt.split("-")[1] + "-" + value.createdAt.split("-")[2]
       );
+
+      maxMortgage = Math.max(maxMortgage, value.mortgageSum);
     });
 
     console.log(s);
@@ -99,6 +103,7 @@ export default function CollateralRatioGraph() {
       },
       yaxis: [
         {
+          show: maxMortgage === 0 ? false : true,
           title: {
             text: "(만원)",
           },
