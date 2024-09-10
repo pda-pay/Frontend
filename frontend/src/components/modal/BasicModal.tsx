@@ -40,7 +40,12 @@ export default function BasicModal({
   children,
 }: ModalProps) {
   return (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose} style={StyledModal}>
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}
+      style={StyledModal}
+      shouldCloseOnOverlayClick={false}
+    >
       <div className="flex flex-col">{children}</div>
     </Modal>
   );
