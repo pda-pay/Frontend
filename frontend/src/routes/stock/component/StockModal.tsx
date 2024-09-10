@@ -3,6 +3,8 @@ import BasicModal from "../../../components/modal/BasicModal";
 import XButton from "../../../components/button/XButton";
 import BasicButton from "../../../components/button/BasicButton";
 import RangeSelectBar from "./RangeSelectBar";
+import BoldTitle from "../../../components/text/BoldTitle";
+import NormalTitle from "../../../components/text/NormalTitle";
 
 interface ModalProps {
   index: number;
@@ -42,25 +44,34 @@ export default function StockModal({
 
   return (
     <BasicModal isOpen={isModalOpen} onRequestClose={onCloseModal}>
-      <div className="flex flex-row-reverse">
-        <span onClick={onCloseModal}>
-          <XButton />
-        </span>
+      <div>
+        <div className="flex flex-col gap-5">
+          <div className="flex flex-row-reverse">
+            <span onClick={onCloseModal}>
+              <XButton />
+            </span>
+          </div>
+          <div className="flex gap-5">
+            <BoldTitle>선택한 주수:</BoldTitle>
+            <BoldTitle>{amount} 주</BoldTitle>
+          </div>
+          <div className="flex gap-3 items-center">
+            <NormalTitle>수정할 주수:</NormalTitle>
+            <p className="w-1/3">
+              <RangeSelectBar
+                index={index}
+                count={max}
+                selected={amount}
+                handleTempSelected={handleTempSelected}
+              />
+            </p>
+          </div>
+          <div className="flex gap-2 mt-32">
+            <BasicButton onClick={handleDeleteButton}>종목 삭제</BasicButton>
+            <BasicButton onClick={handleFinishButton}>선택 완료</BasicButton>
+          </div>
+        </div>
       </div>
-      <h2>선택한 주수: {amount}</h2>
-      <h2>
-        수정할 주수:
-        <p className="w-1/3">
-          <RangeSelectBar
-            index={index}
-            count={max}
-            selected={amount}
-            handleTempSelected={handleTempSelected}
-          />
-        </p>
-      </h2>
-      <BasicButton onClick={handleDeleteButton}>삭제</BasicButton>
-      <BasicButton onClick={handleFinishButton}>완료</BasicButton>
     </BasicModal>
   );
 }
