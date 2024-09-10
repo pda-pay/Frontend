@@ -20,7 +20,7 @@ export default function ApproachPage() {
     }
   };
 
-  useEffect(()=> {getUserInfo},[]);
+  useEffect(()=> {getUserInfo()},[]);
 
   return (
     <PaddingDiv>
