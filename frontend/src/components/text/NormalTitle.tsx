@@ -7,7 +7,10 @@ interface TitleProps {
 
 export default function NormalTitle({ children, marginBottom }: TitleProps) {
   return (
-    <div className="text-lg font-medium" style={{ marginBottom: marginBottom }}>
+    <div
+      className="text-lg font-medium cursor-default"
+      style={{ marginBottom: marginBottom }}
+    >
       {children}
     </div>
   );

@@ -53,6 +53,16 @@ export default function JoinInput({
     return nameRegex.test(name);
   };
 
+  //아이디가 올바른지 검사하는 함수
+  const validateId = (): boolean => {
+    const idRegex = /^[a-zA-Z0-9]+$/;
+    if (userId === "" || userId === undefined || userId.length === 0) {
+      if (userId?.length === 0) setUserId(undefined);
+      return true;
+    }
+    return idRegex.test(userId);
+  };
+
   //비밀번호 형식이 올바른지 검사하는 함수
   const validatePassword = (password: string): boolean => {
     const passwordRegex =
@@ -94,6 +104,8 @@ export default function JoinInput({
     setErrorCerti(!value);
   };
 
+  const [errIdMsg, setErrIdMsg] = useState<string>("");
+
   const checkIdDuplicate = async () => {
     setDupCheck(true);
     try {
@@ -111,6 +123,13 @@ export default function JoinInput({
       }
     }
   };
+
+  useEffect(() => {
+    if (!validateId()) setErrIdMsg("영어와 숫자만 사용해주세요.");
+    else setErrIdMsg("");
+  }, [userId]);
+
+  console.log(errIdMsg);
 
   const certificatePhone = async () => {
     try {
@@ -261,10 +280,13 @@ export default function JoinInput({
           <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
             아이디를 입력해주세요.
           </span>
+
           <button
             className="text-xs"
             style={{ backgroundColor: "#9abade33", borderRadius: "20px" }}
-            onClick={handleDupId}
+            onClick={() => {
+              if (errIdMsg === "") handleDupId();
+            }}
           >
             아이디 중복 확인하기
           </button>
@@ -281,6 +303,9 @@ export default function JoinInput({
           <p className="mt-2 text-sm text-red-600">
             {"중복되는 아이디입니다."}
           </p>
+        )}
+        {userId !== undefined && errIdMsg !== "" && (
+          <p className="mt-2 text-sm text-red-600">{errIdMsg}</p>
         )}
         {!idDup && userId !== undefined && idDup !== null && (
           <p className="mt-2 text-sm text-blue-600">

@@ -1,4 +1,5 @@
 import Modal from "react-modal";
+import React from "react";
 
 interface ModalProps {
   isOpen: boolean;
@@ -8,7 +9,7 @@ interface ModalProps {
 
 const StyledModal: ReactModal.Styles = {
   overlay: {
-    backgroundColor: " rgba(0, 0, 0, 0.4)",
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
     width: "100%",
     height: "100vh",
     zIndex: "10",
@@ -18,7 +19,8 @@ const StyledModal: ReactModal.Styles = {
   },
   content: {
     width: "360px",
-    height: "180px",
+    height: "fit-content",
+    maxHeight: "80vh",
     zIndex: "150",
     position: "absolute",
     top: "50%",
@@ -27,8 +29,8 @@ const StyledModal: ReactModal.Styles = {
     borderRadius: "10px",
     boxShadow: "2px 2px 2px rgba(0, 0, 0, 0.25)",
     backgroundColor: "white",
-    justifyContent: "center",
     overflow: "auto",
+    padding: "20px",
   },
 };
 

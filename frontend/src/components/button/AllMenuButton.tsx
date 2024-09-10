@@ -9,6 +9,7 @@ export default function AllMenuButton({ active }: ButtonProps) {
   const navigate = useNavigate();
   return (
     <div
+      className="cursor-pointer"
       onClick={() => navigate("/allmenu")}
       style={{ color: active ? "#1c5cff" : "black" }}
     >

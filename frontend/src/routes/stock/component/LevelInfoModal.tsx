@@ -19,7 +19,7 @@ export default function LevelInfoModal({
         </span>
       </div>
       <div className="mb-5">
-        <BoldTitle>주식 등급 안내</BoldTitle>
+        <BoldTitle>주식 안정성 안내</BoldTitle>
       </div>
       <p>
         <span className="font-bold">1등급:</span> 가장 안정성이 높은 종목, 한도

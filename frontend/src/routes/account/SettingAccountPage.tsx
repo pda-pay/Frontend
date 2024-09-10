@@ -6,6 +6,7 @@ import ButtonBar from "../../components/button/ButtonBar";
 import payServiceAPI from "../../api/payServiceAPI";
 import axios from "axios";
 import userAPI from "../../api/userAPI";
+import AlertAccountModal from "./AlertAccountModal";
 
 type AccountObject = {
   accountNumber: string;
@@ -58,11 +59,19 @@ export default function SettingAccountPage() {
     }
   };
 
+  const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
+  const openAlert = () => setIsAlertOpen(true);
+  const closeAlert = () => setIsAlertOpen(false);
+
   const putBankAccount = async (): Promise<boolean> => {
     try {
       const temp = makePriorityReqData();
       const response = await payjoinservice.putAccount(temp);
       if (response.status === 200) {
+        if (mem) {
+          openAlert();
+          return false;
+        }
         return true;
       } else return false;
     } catch (error) {
@@ -110,15 +119,18 @@ export default function SettingAccountPage() {
       <BoldTitle>결제 계좌를 선택해주세요.</BoldTitle>
       <div className="flex flex-col gap-3">
         {accountList.map((row, index) => (
-          <BackgroundFrame color="blue">
-            <div className="flex gap-10" onClick={() => handleAccount(index)}>
+          <BackgroundFrame color="blue" cursor="pointer" hoverColor="#688db633">
+            <div
+              className="flex gap-10 cursor-pointer "
+              onClick={() => handleAccount(index)}
+            >
               <span>{row[2]}</span>
               <span>{row[0]}</span>
             </div>
           </BackgroundFrame>
         ))}
       </div>
-      <div>
+      <div className="flex flex-col gap-3">
         <BoldTitle>선택한 계좌</BoldTitle>
         <BackgroundFrame color="blue">
           {account.length !== 0 ? (
@@ -153,6 +165,12 @@ export default function SettingAccountPage() {
           />
         )}
       </div>
+      {isAlertOpen && (
+        <AlertAccountModal
+          isAlertOpen={isAlertOpen}
+          handleCloseAlert={closeAlert}
+        />
+      )}
     </PaddingDiv>
   );
 }

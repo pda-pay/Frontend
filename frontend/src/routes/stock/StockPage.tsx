@@ -379,6 +379,7 @@ export default function StockPage() {
             companyName: stock[6],
             stabilityLevel: stock[7],
             limitPrice: stock[9],
+            stockPrice: stock[8],
           })
         ),
     };
@@ -391,7 +392,7 @@ export default function StockPage() {
           <div className="flex justify-between">
             <BoldTitle>담보로 잡을 주식을 선택해주세요.</BoldTitle>
             <div>
-              <div onClick={openModal}>
+              <div onClick={openModal} className="cursor-pointer">
                 <QuestionButton />
               </div>
               {isModalOpen && (

@@ -44,11 +44,12 @@ export default function ConfirmModal({
       </div>
       <div>
         {mortgage !== undefined ? (
-          <div className="text-xs">
+          <div className="text-xs mt-5">
             <table
               style={{
                 width: "100%",
                 borderCollapse: "collapse",
+                borderSpacing: "0 10px",
                 textAlign: "center",
               }}
             >
@@ -58,8 +59,8 @@ export default function ConfirmModal({
                   <th>종목명</th>
                   <th>담보잡은 주수</th>
                   <th>전일 종가</th>
-                  <th>등급</th>
-                  <th>가능 한도</th>
+                  <th>안정성</th>
+                  {/* <th>가능 한도</th> */}
                 </tr>
               </thead>
               {mortgage.map((stock) => (
@@ -70,14 +71,14 @@ export default function ConfirmModal({
                     <td>{stock[1]}</td>
                     <td>{stock[7].toLocaleString()}</td>
                     <td>{stock[6]}</td>
-                    <td>{(stock[8] * stock[1]).toLocaleString()}</td>
+                    {/* <td>{(stock[8] * stock[1]).toLocaleString()}</td> */}
                   </tr>
                 </tbody>
               ))}
             </table>
           </div>
         ) : (
-          <div className="text-xs">
+          <div className="text-xs mt-5">
             <table
               style={{
                 width: "100%",
@@ -91,8 +92,8 @@ export default function ConfirmModal({
                   <th>종목명</th>
                   <th>담보잡은 주수</th>
                   <th>전일 종가</th>
-                  <th>등급</th>
-                  <th>가능 한도</th>
+                  <th>안정성</th>
+                  {/* <th>가능 한도</th> */}
                 </tr>
               </thead>
               {priority !== undefined ? (
@@ -104,7 +105,7 @@ export default function ConfirmModal({
                       <td>{stock[1]}</td>
                       <td>{stock[8].toLocaleString()}</td>
                       <td>{stock[7]}</td>
-                      <td>{(stock[9] * stock[1]).toLocaleString()}</td>
+                      {/* <td>{(stock[9] * stock[1]).toLocaleString()}</td> */}
                     </tr>
                   </tbody>
                 ))

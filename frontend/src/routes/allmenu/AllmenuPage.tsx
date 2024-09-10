@@ -190,51 +190,69 @@ export default function AllmenuPage() {
         </NormalTitle>
 
         <div className="ml-3 mt-3 flex flex-col gap-2">
-          <div
-            onClick={() => {
-              if (member) openModal();
-            }}
-          >
-            <BoldTitle>
-              <span className="cursor-pointer">선결제하기</span>
-            </BoldTitle>
-          </div>
-          <div
-            onClick={() => {
-              if (member) navigate("/account");
-            }}
-          >
-            <BoldTitle>
-              <span className="cursor-pointer">결제 계좌 변경</span>
-            </BoldTitle>
-          </div>
-          <div
-            onClick={() => {
-              if (member) navigate("/limit", { state: { menu: true } });
-            }}
-          >
-            <BoldTitle>
-              <span className="cursor-pointer">한도 변경</span>
-            </BoldTitle>
-          </div>
-          <div
-            onClick={() => {
-              if (member) navigate("/stock");
-            }}
-          >
-            <BoldTitle>
-              <span className="cursor-pointer">담보 변경</span>
-            </BoldTitle>
-          </div>
-          <div
-            onClick={() => {
-              if (member) navigate("/priority", { state: { menu: true } });
-            }}
-          >
-            <BoldTitle>
-              <span className="cursor-pointer">우선순위 확인 및 변경</span>
-            </BoldTitle>
-          </div>
+          <BoldTitle>
+            <span
+              className="cursor-pointer"
+              onClick={() => {
+                if (member) openModal();
+              }}
+            >
+              선결제하기
+            </span>
+          </BoldTitle>
+          <BoldTitle>
+            <span
+              className="cursor-pointer"
+              onClick={() => {
+                if (member) navigate("/account");
+              }}
+            >
+              결제 계좌 변경
+            </span>
+          </BoldTitle>
+          <BoldTitle>
+            <span
+              className="cursor-pointer"
+              onClick={() => {
+                if (member) navigate("/limit", { state: { menu: true } });
+              }}
+            >
+              한도 변경
+            </span>
+          </BoldTitle>
+
+          <BoldTitle>
+            <span
+              className="cursor-pointer"
+              onClick={() => {
+                if (member) navigate("/stock");
+              }}
+            >
+              담보 변경
+            </span>
+          </BoldTitle>
+
+          <BoldTitle>
+            <span
+              className="cursor-pointer"
+              onClick={() => {
+                if (member) navigate("/priority", { state: { menu: true } });
+              }}
+            >
+              우선순위 확인 및 변경
+            </span>
+          </BoldTitle>
+          <BoldTitle>
+            <span
+              className="cursor-pointer"
+              onClick={() => {
+                if (member)
+                  navigate("/repayment-history", { state: { menu: true } });
+              }}
+            >
+              상환 내역 보기
+            </span>
+          </BoldTitle>
         </div>
       </div>
 
@@ -243,25 +261,18 @@ export default function AllmenuPage() {
           <span className="text-gray-400 cursor-default">자산 현황</span>
         </NormalTitle>
         <div className="ml-3 mt-3 flex flex-col gap-2">
-          <div
-            onClick={() => {
-              if (member) navigate("/asset");
-            }}
-          >
-            <BoldTitle>
-              <span className="cursor-pointer">자산 확인하기</span>
-            </BoldTitle>
-          </div>
-          <div
-            onClick={() => {
-              if (member) navigate("/asset");
-            }}
-          >
-            <BoldTitle>
-              <span className="cursor-pointer">잔고 확인하기</span>
-            </BoldTitle>
-          </div>
+          <BoldTitle>
+            <span
+              className="cursor-pointer"
+              onClick={() => {
+                if (member) navigate("/asset");
+              }}
+            >
+              자산 확인하기
+            </span>
+          </BoldTitle>
         </div>
+        <div className="mb-20"></div>
       </div>
       {isModalOpen && (
         <CashMortgagedModal

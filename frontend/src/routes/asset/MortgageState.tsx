@@ -81,7 +81,9 @@ export default function MortgageState() {
 
   return (
     <div className="flex flex-col justify-center my-5">
-      <p className="text-xl font-bold">담보 주식을 확인해보세요</p>
+      <p className="text-xl font-bold cursor-default">
+        담보 주식을 확인해보세요
+      </p>
       <PercentageBar free={freeAmount} mortgaged={mortgagedAmount} />
       <StockSeperator
         free={MyStockData.free}
