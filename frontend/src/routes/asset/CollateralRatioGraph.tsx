@@ -1,5 +1,7 @@
 import { ApexOptions } from "apexcharts";
 import ReactApexChart from "react-apexcharts";
+import assetAPI, { getHistoryI } from "../../api/assetAPI";
+import { useEffect, useState } from "react";
 
 interface SeriesData {
   name: string;
@@ -14,109 +16,114 @@ interface colorFuncProps {
 }
 
 export default function CollateralRatioGraph() {
-  const asset = {
-    name: "담보 자산 금액",
-    type: "column",
-    data: [
-      441020, 550300, 571230, 560200, 610800, 580900, 630120, 600640, 665800,
-      1123050,
-    ],
-  };
+  const service = new assetAPI();
+  const [series, setSeries] = useState<SeriesData[]>([]);
+  const [options, setOption] = useState<ApexOptions>({});
 
-  const limit = {
-    name: "설정한도",
-    type: "line",
-    data: [
-      400000, 410000, 400000, 400000, 600000, 500000, 310000, 300000, 420000,
-      400000,
-    ],
-  };
+  const fetch = async () => {
+    const res = await service.getHistory();
 
-  const minimum = {
-    name: "한도유지 가능 금액",
-    type: "line",
-    data: limit.data.map((value) => {
-      return 1.4 * value;
-    }),
-  };
+    const asset: SeriesData = {
+      name: "담보 자산 금액",
+      type: "column",
+      data: [],
+    };
 
-  const series = [asset, limit, minimum];
-
-  const xLabels = [
-    "08/29",
-    "08/30",
-    "08/31",
-    "09/01",
-    "09/02",
-    "09/03",
-    "09/04",
-    "09/05",
-    "09/06",
-    "09/07",
-  ];
-
-  const options: ApexOptions = {
-    chart: {
+    const limit: SeriesData = {
+      name: "설정한도",
       type: "line",
-      height: 350,
-      toolbar: {
-        show: false,
-      },
-    },
-    plotOptions: {
-      bar: {
-        horizontal: false,
-        columnWidth: "55%",
-      },
-    },
-    dataLabels: {
-      enabled: true,
-      enabledOnSeries: [2],
-      formatter: function (val) {
-        return Math.trunc(val / 10000);
-      },
-    },
-    stroke: {
-      width: [0, 2, 2],
-    },
-    colors: [
-      function ({ value, dataPointIndex }: colorFuncProps) {
-        if (value < minimum.data[dataPointIndex]) {
-          return "#D7263D";
-        } else {
-          return "#008FFB";
-        }
-      },
-      "#2b908f",
-      "#f9ce1d",
-    ],
-    xaxis: {
-      categories: xLabels,
-    },
-    yaxis: [
-      {
-        title: {
-          text: "(만원)",
+      data: [],
+    };
+
+    const minimum: SeriesData = {
+      name: "한도유지 가능 금액",
+      type: "line",
+      data: [],
+    };
+
+    const s = [asset, limit, minimum];
+    const xLabels: string[] = [];
+
+    const data: getHistoryI[] = res.data;
+
+    data.map((value) => {
+      asset.data.push(value.mortgageSum);
+      limit.data.push(value.todayLimit);
+      minimum.data.push(value.maxLimit * 1.4);
+    });
+
+    console.log(s);
+    setSeries(s);
+
+    const option: ApexOptions = {
+      chart: {
+        type: "line",
+        height: 350,
+        toolbar: {
+          show: false,
         },
-        labels: {
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: "55%",
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        enabledOnSeries: [2],
+        formatter: function (val) {
+          return Math.trunc(val / 10000);
+        },
+      },
+      stroke: {
+        width: [0, 2, 2],
+      },
+      colors: [
+        function ({ value, dataPointIndex }: colorFuncProps) {
+          if (value < minimum.data[dataPointIndex]) {
+            return "#D7263D";
+          } else {
+            return "#008FFB";
+          }
+        },
+        "#2b908f",
+        "#f9ce1d",
+      ],
+      xaxis: {
+        categories: xLabels,
+      },
+      yaxis: [
+        {
+          title: {
+            text: "(만원)",
+          },
+          labels: {
+            formatter: function (val) {
+              return Math.trunc(val / 10000);
+            },
+          },
+        },
+      ],
+      fill: {
+        opacity: 1,
+      },
+
+      tooltip: {
+        y: {
           formatter: function (val) {
-            return Math.trunc(val / 10000);
+            return val + "원";
           },
         },
       },
-    ],
-    fill: {
-      opacity: 1,
-    },
+    };
 
-    tooltip: {
-      y: {
-        formatter: function (val) {
-          return val + "원";
-        },
-      },
-    },
+    setOption(option);
   };
+
+  useEffect(() => {
+    fetch();
+  }, []);
 
   return (
     <div className="flex flex-col justify-center">
