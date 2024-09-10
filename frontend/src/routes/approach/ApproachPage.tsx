@@ -16,11 +16,14 @@ export default function ApproachPage() {
         navigate("/main");
       }
     } catch (error) {
-      navigate("/")
+      navigate("/");
+      console.log(error);
     }
   };
 
-  useEffect(()=> {getUserInfo()},[]);
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
   return (
     <PaddingDiv>
@@ -30,7 +33,7 @@ export default function ApproachPage() {
           <LargeButton type="blue" onClick={() => navigate("/login")}>
             로그인하기
           </LargeButton>
-          <LargeButton type="gray" onClick={() => navigate("/join")}>
+          <LargeButton type="gray" onClick={() => navigate("/mydata")}>
             회원가입하기
           </LargeButton>
         </div>

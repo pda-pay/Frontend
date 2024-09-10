@@ -8,17 +8,22 @@ export default function MydataAgreePage() {
   return (
     <PaddingDiv>
       <div>
-        <BoldTitle>마이데이터 연동을 위한 약관에 동의해주세요!</BoldTitle>
+        <div className="mb-2">
+          <BoldTitle>증권 정보 연동을 위한 약관에 동의해주세요!</BoldTitle>
+        </div>
+
         <AgreeFrame>
           <MydataTerms />
         </AgreeFrame>
       </div>
-      <ButtonBar
-        nexturl="/main"
-        beforeurl="/join"
-        nexttext="동의"
-        beforetext="비동의"
-      ></ButtonBar>
+      <div className="mt-auto">
+        <ButtonBar
+          nexturl="/join"
+          beforeurl="/"
+          nexttext="동의"
+          beforetext="비동의"
+        />
+      </div>
     </PaddingDiv>
   );
 }

@@ -32,6 +32,7 @@ import ProtectedPages from "./ProtectedPages";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
 import RepaymentHistoryPage from "./routes/repaymentHistory/RepaymentHistoryPage";
+import MydataAgreePage from "./routes/agree/MydataAgreePage";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -83,6 +84,10 @@ const routers = [
     path: "/serviceagree",
     //element: <ServiceAgreePage />,
     element: <ProtectedPages element={<ServiceAgreePage />} />,
+  },
+  {
+    path: "/mydata",
+    element: <MydataAgreePage />,
   },
   {
     path: "/join",
