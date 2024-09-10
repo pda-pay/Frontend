@@ -9,6 +9,7 @@ import loginApi from "../../api/loginAPI";
 import { useNavigate } from "react-router-dom";
 import CashMortgagedModal from "../repay/component/CashMortgagedModal";
 import { FaBell } from "react-icons/fa6";
+import fcmAPI from "../../api/fcmAPI";
 
 const StyledFaBell = styled(FaBell)`
   font-size: 27px;
@@ -32,12 +33,15 @@ export default function AllmenuPage() {
   const [member, setMember] = useState<boolean>(false);
   const [payValid, setPayValid] = useState<boolean>(true);
 
+  const fcmApi = new fcmAPI();
+
   const logOut = async () => {
     try {
       const response = await logservice.logOut();
-
+      
       if (response.status === 200) {
         console.log("로그아웃 성공");
+        fcmApi.putUserInfo();
         navigate("/");
       }
     } catch (error) {
