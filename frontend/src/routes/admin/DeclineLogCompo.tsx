@@ -7,7 +7,7 @@ export default function DeclineLogCompo() {
   const [data, setData] = useState<getMortgageDeclineI[]>([]);
 
   const fetch = async () => {
-    const result = await service.getMortgageDecline(20);
+    const result = await service.getMortgageDecline(-10);
 
     const d: getMortgageDeclineI[] = result.data;
 
