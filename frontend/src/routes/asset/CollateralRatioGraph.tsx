@@ -52,7 +52,7 @@ export default function CollateralRatioGraph() {
     data.map((value) => {
       asset.data.push(value.mortgageSum);
       limit.data.push(value.todayLimit);
-      minimum.data.push(value.maxLimit * 1.4);
+      minimum.data.push(value.todayLimit * 1.4);
       xLabels.push(
         value.createdAt.split("-")[1] + "-" + value.createdAt.split("-")[2]
       );
