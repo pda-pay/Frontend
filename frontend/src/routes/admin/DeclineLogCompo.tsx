@@ -31,7 +31,7 @@ export default function DeclineLogCompo() {
 
   return (
     <div>
-      <p className="w-full text-center font-bold text-2xl">
+      <p className="w-[45vw] text-center font-bold text-2xl">
         전일 대비 담보 하락 고객(10% 이상)
       </p>
       <div className="border border-solid max-h-[30vh] h-[30vh]">

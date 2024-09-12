@@ -67,7 +67,7 @@ export default function RepaymentLogCompo() {
 
   return (
     <div>
-      <p className="w-full text-center font-bold text-2xl">실시간 상환로그</p>
+      <p className="w-[45vw] text-center font-bold text-2xl">실시간 상환로그</p>
       <div className="border border-solid max-h-[40vh]">
         <div className="grid grid-cols-6 gap-3 text-center items-center">
           <p>id</p>

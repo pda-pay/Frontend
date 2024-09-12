@@ -42,7 +42,7 @@ export default function PaymentLogCompo() {
 
   return (
     <div>
-      <p className="w-full text-center font-bold text-2xl">실시간 결제로그</p>
+      <p className="w-[45vw] text-center font-bold text-2xl">실시간 결제로그</p>
       <div className="border border-solid max-h-[40vh] overflow-hidden">
         <div className="grid grid-cols-6 gap-3 text-center">
           <p>id</p>

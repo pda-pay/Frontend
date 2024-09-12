@@ -5,12 +5,12 @@ import RepaymentLogCompo from "./RepaymentLogCompo";
 
 export default function AdminPage() {
   return (
-    <div className="flex flex-col">
-      <div className="w-full grid grid-cols-2 gap-5 mb-20">
+    <div className="w-screen h-screen flex flex-col justify-between py-5 px-5">
+      <div className="w-full flex flex-row justify-between">
         <PaymentLogCompo />
         <CollateralRatioCompo />
       </div>
-      <div className="w-full grid grid-cols-2 gap-5">
+      <div className="w-full flex flex-row justify-between">
         <RepaymentLogCompo />
         <DeclineLogCompo />
       </div>

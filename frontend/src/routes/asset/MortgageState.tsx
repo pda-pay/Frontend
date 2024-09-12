@@ -55,16 +55,18 @@ export default function MortgageState() {
         });
       }
 
-      f += (value.quantity - value.mortgagedQuantity) * value.stockPrice;
-      data.free.push({
-        companyName: value.companyName,
-        name: value.stockName,
-        amount: value.quantity - value.mortgagedQuantity,
-        mortgaged: false,
-        stabilityLevel: value.stabilityLevel,
-        limitPrice: value.limitPrice,
-        stockPrice: value.stockPrice,
-      });
+      if (value.quantity - value.mortgagedQuantity > 0) {
+        f += (value.quantity - value.mortgagedQuantity) * value.stockPrice;
+        data.free.push({
+          companyName: value.companyName,
+          name: value.stockName,
+          amount: value.quantity - value.mortgagedQuantity,
+          mortgaged: false,
+          stabilityLevel: value.stabilityLevel,
+          limitPrice: value.limitPrice,
+          stockPrice: value.stockPrice,
+        });
+      }
     });
 
     console.log(m);
