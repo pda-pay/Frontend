@@ -7,7 +7,8 @@
 - pwa, fcm
 
 ## 🏃🏻‍♀️프론트엔드 실행 방법
-vsc 터미널에서 package.json이 있는 위치에서 npm install 후 npm run dev
+vsc 터미널에서 package.json이 있는 위치에서 npm install 후 npm run dev <br />
+(저희 프로젝트는 결제 서비스가 주요 기능인만큼 UI가 앱에 최적화 되어있습니다☺️)
 
 ## 🎨실제 UI
 ### ❤️로그인 및 회원가입
