@@ -22,9 +22,9 @@ vsc 터미널에서 package.json이 있는 위치에서 npm install 후 npm run 
 <img src="https://github.com/user-attachments/assets/8f9ea7ed-d045-4105-9aa4-b7384eb8e465" width="20%">
 <img src="https://github.com/user-attachments/assets/94639ec9-fff2-411b-be95-73ff382820c5" width="20%">
 <img src="https://github.com/user-attachments/assets/4e5494b2-effa-4166-8241-6bac84663232" width="20%">
+<img src="https://github.com/user-attachments/assets/6654348c-7f77-4a6a-9b37-47c17bcd6948" width="20%">
 <img src="https://github.com/user-attachments/assets/c2b8e1dd-8745-4982-ad18-fef8c3b9a805" width="20%">
 <img src="https://github.com/user-attachments/assets/fbfa194e-c6dc-46b7-bd9c-47532faa5150" width="20%">
-<img src="https://github.com/user-attachments/assets/96fbbd3d-0a26-4d3e-aeb1-8a12de2450c8" width="20%">
 <img src="https://github.com/user-attachments/assets/3f597115-e59b-427e-ab8a-2e0e2b3e774f" width="20%">
 
 ### 💛QR 결제 페이지
